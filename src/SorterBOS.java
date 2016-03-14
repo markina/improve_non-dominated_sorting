@@ -88,10 +88,19 @@ final class SorterBOS extends Sorter {
 //        if(C.get(t).size() == 0) {
 //            return false;
 //        }
+        boolean isEq = true;
         for (int j : C.get(s)){
-            if(Double.compare(input[s][j], input[t][j]) < 0) {
+
+            int compRes = Double.compare(input[s][j], input[t][j]);
+            if(compRes < 0) {
                 return false;
             }
+            if(compRes > 0) {
+                isEq = false;
+            }
+        }
+        if(isEq) {
+            return false;
         }
         return true;
     }

@@ -22,7 +22,7 @@ public class Tests {
         int size = input.length;
         int dim = size == 0 ? 0 : input[0].length;
         int[] rv = new int[size];
-        Arrays.fill(rv, -1);
+        Arrays.fill(rv, 0);
         FasterNonDominatedSorting.getSorterBOS(size, dim).sort(input, rv);
         return rv;
     }
@@ -104,9 +104,9 @@ public class Tests {
     }
 
     public static void main(String[] args) {
-        groupCheck("simple test" , new double[][] {
-                {1, 5}, {2, 4}, {4, 2}, {7, 8}, {5, 3}, {8, 1}, {6, 7}, {3, 6}},
-                new int[] {0, 0, 0, 3, 1, 0, 2, 1});
+//        groupCheck("simple test" , new double[][] {
+//                {1, 5}, {2, 4}, {4, 2}, {7, 8}, {5, 3}, {8, 1}, {6, 7}, {3, 6}},
+//                new int[] {0, 0, 0, 3, 1, 0, 2, 1});
 
 
         // a0 = {1, 5};
@@ -118,21 +118,21 @@ public class Tests {
         // g6 = {6, 7};
         // h7 = {3, 6};
 
-        groupCheck("simple test" , new double[][] {{2, 4}, {5, 3}, {3, 4}, {3, 6}, {1, 2}},
-                new int[] {1, 1, 2, 3, 0});
-
-        groupCheck("a single 1D point" , arrayFill(1, 1, 239), new int[1]);
-        groupCheck("a single 100D point" , arrayFill(1, 100, 239), new int[1]);
+//        groupCheck("simple test" , new double[][] {{2, 4}, {5, 3}, {3, 4}, {3, 6}, {1, 2}},
+//                new int[] {1, 1, 2, 3, 0});
+//
+//        groupCheck("a single 1D point" , arrayFill(1, 1, 239), new int[1]);
+//        groupCheck("a single 100D point" , arrayFill(1, 100, 239), new int[1]);
 //        groupCheck("a single 0D point" , arrayFill(1, 0, 239), new int[1]);
 //        groupCheck("some 0D points" , arrayFill(10, 0, 239), new int[10]);
 //
 //        groupCheck("two unequal 1D points ordered decreasing" , new double[][] {{2}, {1}}, new int[] {1, 0});
 //        groupCheck("two unequal 1D points ordered increasing" , new double[][] {{2}, {3}}, new int[] {0, 1});
-//        groupCheck("two equal 1D points"                      , new double[][] {{2}, {2}}, new int[] {0, 0}); // TODO
+//        groupCheck("two equal 1D points"                      , new double[][] {{2}, {2}}, new int[] {0, 0});
 //
 //        groupCheck("two incomparable 2D points"           , new double[][] {{2, 1}, {1, 2}}, new int[] {0, 0});
 //        groupCheck("two 2D points dominated increasingly" , new double[][] {{1, 1}, {1, 2}}, new int[] {0, 1});
-//        groupCheck("two 2D points dominated decreasingly" , new double[][] {{1, 2}, {1, 1}}, new int[] {1, 0});
+        groupCheck("two 2D points dominated decreasingly" , new double[][] {{1, 2}, {1, 1}}, new int[] {1, 0}); // TODO
 //
 //        hypercube.callOn(2, 10, (i, o) -> groupCheck("2D-hypercube of size 10", i, o));
 //        hypercube.callOn(3, 8, (i, o) -> groupCheck("3D-hypercube of size 8", i, o));
