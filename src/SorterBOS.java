@@ -9,6 +9,7 @@ final class SorterBOS extends Sorter {
     int RC;
     int [][] Q = null;
     int[] scratchByKthObj;
+    int time;
 
     private double[][] input;
     private int[] output;
@@ -26,6 +27,7 @@ final class SorterBOS extends Sorter {
         SC = 0;
         RC = 1;
         sorter = new MergeSorter(size);
+        time = 0;
     }
 
     protected void sortImpl(double[][] input, int[] output) {
@@ -58,6 +60,14 @@ final class SorterBOS extends Sorter {
             System.out.print(this.output[i] + " ");
         }
         System.out.println();
+        System.out.println("size = " + size + "; dim = " + dim);
+        System.out.println ("Time for lex sorting: " + sorter.time);
+        double log = Math.log(64) / Math.log(2);
+        double estimated = size * log * dim;
+        System.out.println("O(M N (log N))      = " + estimated);
+        System.out.println("Result time         = " + time);
+        System.out.println("Const               = " + (time / estimated));
+        System.out.println();
 
     }
 
@@ -88,7 +98,7 @@ final class SorterBOS extends Sorter {
     private boolean dominationCheck(int s, int t) {
         boolean isEq = true;
         for (int j : C.get(s)){
-
+            time += 2;
             int compRes = Double.compare(input[s][j], input[t][j]);
             if(compRes < 0) {
                 return false;
@@ -144,9 +154,9 @@ final class SorterBOS extends Sorter {
                 System.out.print(Q[i][x] + " ");
             }
             System.out.println();
-
         }
 
+        time = sorter.time;
     }
 
     private void sortIntByTthObj(int from, int until, int t) {
@@ -156,6 +166,7 @@ final class SorterBOS extends Sorter {
             sortIntByTthObj(mid, until, t);
             int i = from, j = mid, k = 0, kMax = until - from;
             while (k < kMax) {
+                sorter.time += 2;
                 if (i == mid || j < until && Double.compare(input[Q[t][j]][t], input[Q[t][i]][t]) < 0) {
                     scratchByKthObj[k] = Q[t][j];
                     ++j;

@@ -61,11 +61,9 @@ public abstract class Sorter {
                 );
             }
         }
-//            System.out.println("size = " + size + "; dim = " + dim);
-//            double log = Math.log(64) / Math.log(2);
-//            double estimated = size * Math.pow(log, (dim-1));
-//            System.out.println("O(N (log N)^(M-1)) = " + estimated);
         sortImpl(input, output);
+        System.out.println("-------------------------------------------------");
+
     }
     protected abstract void sortImpl(double[][] input, int[] output);
 }

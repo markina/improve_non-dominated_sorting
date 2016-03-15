@@ -4,6 +4,7 @@ class MergeSorter {
     int secondIndex = -1;
     double[][] reference = null;
     int[] eqComp = null;
+    int time = 0;
 
     public MergeSorter(int size) {
         this.scratch = new int[size];
@@ -15,9 +16,11 @@ class MergeSorter {
         this.indices = indices;
         this.reference = reference;
         this.eqComp = eqComp;
+        this.time = 0;
         lexSortImpl(from, until, 0, 0);
         this.eqComp = null;
         this.reference = null;
+
 //        this.indices = null;
     }
 
@@ -30,6 +33,7 @@ class MergeSorter {
                 eqComp[indices[from]] = compSoFar;
                 for (int i = from + 1; i < until; ++i) {
                     int prev = indices[i - 1], curr = indices[i];
+                    time += 2;
                     if (reference[prev][currIndex] != reference[curr][currIndex]) {
                         ++compSoFar;
                     }
@@ -39,6 +43,7 @@ class MergeSorter {
             } else {
                 int lastIndex = from;
                 for (int i = from + 1; i < until; ++i) {
+                    time += 2;
                     if (reference[indices[lastIndex]][currIndex] != reference[indices[i]][currIndex]) {
                         compSoFar = lexSortImpl(lastIndex, i, currIndex + 1, compSoFar);
                         lastIndex = i;
@@ -70,6 +75,7 @@ class MergeSorter {
             sortImpl(mid, until);
             int i = from, j = mid, k = 0, kMax = until - from;
             while (k < kMax) {
+                time += 2;
                 if (i == mid || j < until && reference[indices[j]][secondIndex] < reference[indices[i]][secondIndex]) {
                     scratch[k] = indices[j];
                     ++j;

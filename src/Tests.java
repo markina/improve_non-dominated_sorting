@@ -89,6 +89,17 @@ public class Tests {
         return rv;
     }
 
+    static double[][] getForWorstCase3(int size){
+
+        double[][] res = new double[size][3];
+        for(int i = 0; i < size; i++) {
+            res[i][0] = i;
+            res[i][1] = i;
+            res[i][2] = size - i - 1;
+        }
+        return res;
+    }
+
     static double[][] concat(double[][] a, double[][] b) {
         double[][] rv = new double[a.length + b.length][];
         System.arraycopy(a, 0, rv, 0, a.length);
@@ -275,6 +286,10 @@ public class Tests {
             4, 3, 4, 4, 6, 9, 0, 2, 0, 6, 1, 1, 3, 8, 4, 5, 1, 8, 3, 7, 5, 2, 5, 2, 0, 0, 2, 3, 4, 7, 9, 4, 2, 1
         });
 
+
+        groupCheck("worst case from paper BOS" , getForWorstCase3(10000) , new int[10000] );
+
+
         System.out.println("Tests passed");
     }
 
@@ -293,6 +308,8 @@ public class Tests {
             }
             whatToCall.accept(cube, sums);
         }
+
+
 
         private double[][] genShuffledHypercube(int dim, int size) {
             double[][] cube = genHypercube(dim, size);
