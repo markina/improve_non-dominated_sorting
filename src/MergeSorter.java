@@ -7,6 +7,7 @@ class MergeSorter {
 
     public MergeSorter(int size) {
         this.scratch = new int[size];
+        this.indices = new int[size];
     }
 
 
@@ -17,7 +18,7 @@ class MergeSorter {
         lexSortImpl(from, until, 0, 0);
         this.eqComp = null;
         this.reference = null;
-        this.indices = null;
+//        this.indices = null;
     }
 
     private int lexSortImpl(int from, int until, int currIndex, int compSoFar) {
