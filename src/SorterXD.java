@@ -1,7 +1,7 @@
 import java.util.*;
 
 // XD sorter: the general case.
-final class SorterXD extends Sorter {
+final class SorterXD extends SorterFast {
     private final int[] indices;
     private final int[] swap;
     private final int[] eqComp;
@@ -38,6 +38,7 @@ final class SorterXD extends Sorter {
         }
         Arrays.fill(output, 0);
         sorter.lexSort(indices, 0, size, input, eqComp);
+        time += sorter.time;
         this.input = input;
         this.output = output;
         sort(0, size, dim - 1);
@@ -102,11 +103,18 @@ final class SorterXD extends Sorter {
         int to = until - 1;
         int med = (from + until) >>> 1;
         while (from <= to) {
+            time++;
             double pivot = input[swap[from + random.nextInt(to - from + 1)]][dimension];
             int ff = from, tt = to;
             while (ff <= tt) {
-                while (input[swap[ff]][dimension] < pivot) ++ff;
-                while (input[swap[tt]][dimension] > pivot) --tt;
+                while (input[swap[ff]][dimension] < pivot) {
+                    ++ff;
+                    time++;
+                }
+                while (input[swap[tt]][dimension] > pivot) {
+                    --tt;
+                    time++;
+                }
                 if (ff <= tt) {
                     int tmp = swap[ff];
                     swap[ff] = swap[tt];
@@ -120,9 +128,11 @@ final class SorterXD extends Sorter {
             } else if (med >= ff) {
                 from = ff;
             } else {
+                time++;
                 return input[swap[med]][dimension];
             }
         }
+        time++;
         return input[swap[from]][dimension];
     }
 
@@ -131,6 +141,7 @@ final class SorterXD extends Sorter {
     private void split3(int from, int until, int dimension, double median) {
         lessThan = equalTo = greaterThan = 0;
         for (int i = from; i < until; ++i) {
+            time++;
             int cmp = Double.compare(input[indices[i]][dimension], median);
             if (cmp < 0) {
                 ++lessThan;
@@ -142,6 +153,7 @@ final class SorterXD extends Sorter {
         }
         int lessThanPtr = 0, equalToPtr = lessThan, greaterThanPtr = lessThan + equalTo;
         for (int i = from; i < until; ++i) {
+            time++;
             int cmp = Double.compare(input[indices[i]][dimension], median);
             if (cmp < 0) {
                 swap[lessThanPtr++] = indices[i];
@@ -244,8 +256,10 @@ final class SorterXD extends Sorter {
     }
 
     private boolean allValuesEqual(int from, int until, int k) {
+        time++;
         double value = input[indices[from]][k];
         for (int i = from + 1; i < until; ++i) {
+            time++;
             if (input[indices[i]][k] != value) {
                 return false;
             }
@@ -256,6 +270,7 @@ final class SorterXD extends Sorter {
     private double minValue(int from, int until, int k) {
         double rv = Double.MAX_VALUE;
         for (int i = from; i < until; ++i) {
+            time++;
             rv = Math.min(rv, input[indices[i]][k]);
         }
         return rv;
@@ -264,6 +279,7 @@ final class SorterXD extends Sorter {
     private double maxValue(int from, int until, int k) {
         double rv = Double.MIN_VALUE;
         for (int i = from; i < until; ++i) {
+            time++;
             rv = Math.max(rv, input[indices[i]][k]);
         }
         return rv;
@@ -273,6 +289,7 @@ final class SorterXD extends Sorter {
         int il = indices[l];
         int ir = indices[r];
         for (int i = 0; i <= k; ++i) {
+            time += 2;
             if (input[il][i] > input[ir][i]) {
                 return false;
             }

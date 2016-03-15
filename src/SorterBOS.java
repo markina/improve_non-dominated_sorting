@@ -9,7 +9,6 @@ final class SorterBOS extends Sorter {
     int RC;
     int [][] Q = null;
     int[] scratchByKthObj;
-    int time;
 
     private double[][] input;
     private int[] output;
@@ -27,11 +26,9 @@ final class SorterBOS extends Sorter {
         SC = 0;
         RC = 1;
         sorter = new MergeSorter(size);
-        time = 0;
     }
 
     protected void sortImpl(double[][] input, int[] output) {
-        System.out.println("BOS");
         this.input = input;
         this.output = output;
 
@@ -55,20 +52,10 @@ final class SorterBOS extends Sorter {
                 break;
             }
         }
-        System.out.print("output = ");
-        for(int i = 0; i < size; i++) {
-            System.out.print(this.output[i] + " ");
-        }
-        System.out.println();
-        System.out.println("size = " + size + "; dim = " + dim);
-        System.out.println ("Time for lex sorting: " + sorter.time);
-        double log = Math.log(64) / Math.log(2);
-        double estimated = size * log * dim;
-        System.out.println("O(M N (log N))      = " + estimated);
-        System.out.println("Result time         = " + time);
-        System.out.println("Const               = " + (time / estimated));
-        System.out.println();
-
+//        System.out.print("output = ");
+//        for(int i = 0; i < size; i++) {
+//            System.out.print(this.output[i] + " ");
+//        }
     }
 
     private void findRank(int s, int j) {
@@ -128,11 +115,11 @@ final class SorterBOS extends Sorter {
             }
 
         }
-        System.out.print("C = ");
-        for(int x = 0; x < size; x++) {
-            System.out.print(C.get(x).toString() + " ");
-        }
-        System.out.println();
+//        System.out.print("C = ");
+//        for(int x = 0; x < size; x++) {
+//            System.out.print(C.get(x).toString() + " ");
+//        }
+//        System.out.println();
     }
 
     private void fillQ_second_edition(){
@@ -142,6 +129,7 @@ final class SorterBOS extends Sorter {
         }
         if(dim > 0) {
             sorter.lexSort(indices, 0, size, input, new int[size]);
+            time += sorter.time;
         }
         for(int i = 0; i < dim; i++) {
             System.arraycopy(sorter.indices, 0, Q[i], 0, size);
@@ -149,14 +137,14 @@ final class SorterBOS extends Sorter {
             sortIntByTthObj(0, size, i);
             scratchByKthObj = null;
 
-            System.out.print("Q[" + i + "] = ");
-            for(int x = 0; x < size; x++) {
-                System.out.print(Q[i][x] + " ");
-            }
-            System.out.println();
+//            System.out.print("Q[" + i + "] = ");
+//            for(int x = 0; x < size; x++) {
+//                System.out.print(Q[i][x] + " ");
+//            }
+//            System.out.println();
         }
 
-        time = sorter.time;
+
     }
 
     private void sortIntByTthObj(int from, int until, int t) {
@@ -166,7 +154,7 @@ final class SorterBOS extends Sorter {
             sortIntByTthObj(mid, until, t);
             int i = from, j = mid, k = 0, kMax = until - from;
             while (k < kMax) {
-                sorter.time += 2;
+                time += 2;
                 if (i == mid || j < until && Double.compare(input[Q[t][j]][t], input[Q[t][i]][t]) < 0) {
                     scratchByKthObj[k] = Q[t][j];
                     ++j;
@@ -180,5 +168,19 @@ final class SorterBOS extends Sorter {
         }
     }
 
+    @Override
+    protected double estimated() {
+        double log = Math.log(size) / Math.log(2);
+        return size * dim * log;
+    }
+
+    @Override
+    protected void print_info() {
+        System.out.println("--------------");
+        System.out.println("SorterBOS");
+        System.out.println("N = " + size + "; M = " + dim);
+        System.out.println("O(N M (log N))      = " + estimated());
+        print_time();
+    }
 
 }

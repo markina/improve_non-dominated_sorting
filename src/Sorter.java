@@ -6,9 +6,18 @@
 public abstract class Sorter {
     protected final int size;
     protected final int dim;
+    protected int time;
     protected Sorter(int size, int dim) {
         this.size = size;
         this.dim = dim;
+        this.time = 0;
+    }
+    /**
+     * Returns the size of the problem this sorter can handle.
+     * @return the size of the problem.
+     */
+    public int time() {
+        return time;
     }
     /**
      * Returns the size of the problem this sorter can handle.
@@ -62,8 +71,16 @@ public abstract class Sorter {
             }
         }
         sortImpl(input, output);
-        System.out.println("-------------------------------------------------");
-
+        print_info();
     }
     protected abstract void sortImpl(double[][] input, int[] output);
+    protected abstract double estimated();
+    protected abstract void print_info();
+
+    protected void print_time() {
+        System.out.println("Result time         = " + time);
+        System.out.println("Const               = " + (time / estimated()));
+        System.out.println();
+    }
+
 }

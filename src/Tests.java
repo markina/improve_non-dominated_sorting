@@ -63,15 +63,12 @@ public class Tests {
             throw new AssertionError("Error in duplicate test '" + title + "': " + er.getMessage());
         }
 
-        ///////////////////////////////////////
         try {
             checkEqual(output, findFrontIndicesBOS(input));
             System.out.println("Raw test '" + title + "' passed");
         } catch (AssertionError er) {
             throw new AssertionError("Error in raw test '" + title + "': " + er.getMessage());
-//            return;
         }
-        ///////////////////////////////////////
 
     }
 
@@ -288,7 +285,6 @@ public class Tests {
 
 
         groupCheck("worst case from paper BOS" , getForWorstCase3(10000) , new int[10000] );
-
 
         System.out.println("Tests passed");
     }
