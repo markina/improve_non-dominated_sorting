@@ -32,7 +32,7 @@ final class SorterBOS extends Sorter {
         this.input = input;
         this.output = output;
 
-        fillQ_second_edition();
+        fillQ();
         fillC();
 
         for(int i = 0; i < size; i++) {
@@ -122,7 +122,7 @@ final class SorterBOS extends Sorter {
 //        System.out.println();
     }
 
-    private void fillQ_second_edition(){
+    private void fillQ(){
         int [] indices = new int[size];
         for (int i = 0; i < size; ++i) {
             indices[i] = i;
