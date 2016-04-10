@@ -4,7 +4,7 @@ class MergeSorter {
     int secondIndex = -1;
     double[][] reference = null;
     int[] eqComp = null;
-    int time = 0;
+    long time = 0;
 
     public MergeSorter(int size) {
         this.scratch = new int[size];

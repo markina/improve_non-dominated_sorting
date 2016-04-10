@@ -1,155 +1,443 @@
 --------------
 SorterFast
 N = 6; M = 2
-Result time         = 58
+Result time         = 55
 --------------
 SorterBOS
 N = 6; M = 2
-Result time         = 142
+Result time         = 128
 Stress test passed
 --------------
 SorterFast
 N = 6; M = 3
-Result time         = 111
+Result time         = 105
 --------------
 SorterBOS
 N = 6; M = 3
-Result time         = 164
+Result time         = 168
 Stress test passed
 --------------
 SorterFast
 N = 600; M = 3
-Result time         = 40215
+Result time         = 38692
 --------------
 SorterBOS
 N = 600; M = 3
-Result time         = 104742
+Result time         = 103748
 Stress test passed
 --------------
 SorterFast
 N = 600; M = 5
-Result time         = 255133
+Result time         = 259468
 --------------
 SorterBOS
 N = 600; M = 5
-Result time         = 149184
+Result time         = 143230
 Stress test passed
 --------------
 SorterFast
 N = 600; M = 50
-Result time         = 435502
+Result time         = 422261
 --------------
 SorterBOS
 N = 600; M = 50
-Result time         = 598274
+Result time         = 597488
 Stress test passed
 --------------
 SorterFast
 N = 10000; M = 10
-Result time         = 38496616
+Result time         = 39209566
 --------------
 SorterBOS
 N = 10000; M = 10
-Result time         = 21540384
+Result time         = 21955526
 Stress test passed
 --------------
 SorterFast
 N = 100000; M = 5
-Result time         = 224697992
+Result time         = 225301730
 --------------
 SorterBOS
 N = 100000; M = 5
-Result time         = 498141472
+Result time         = 502896828
 Stress test passed
 --------------
 SorterFast
-N = 4012; M = 9
-Result time         = 8874250
+N = 37737; M = 3
+Result time         = 4247193
 --------------
 SorterBOS
-N = 4012; M = 9
-Result time         = 4352296
+N = 37737; M = 3
+Result time         = 45582138
 Stress test passed
 --------------
 SorterFast
-N = 2683; M = 2
-Result time         = 88036
+N = 92792; M = 2
+Result time         = 4268322
 --------------
 SorterBOS
-N = 2683; M = 2
-Result time         = 842226
+N = 92792; M = 2
+Result time         = 174390858
 Stress test passed
 --------------
 SorterFast
-N = 9399; M = 13
-Result time         = 35661046
+N = 56971; M = 19
+Result time         = 627057075
 --------------
 SorterBOS
-N = 9399; M = 13
-Result time         = 23480188
+N = 56971; M = 19
+Result time         = 729915686
 Stress test passed
 --------------
 SorterFast
-N = 4000; M = 17
-Result time         = 9113315
+N = 76357; M = 2
+Result time         = 3450173
 --------------
 SorterBOS
-N = 4000; M = 17
-Result time         = 5745312
+N = 76357; M = 2
+Result time         = 132287940
 Stress test passed
 --------------
 SorterFast
-N = 1732; M = 18
-Result time         = 2369092
+N = 60114; M = 1
+Result time         = 2033030
 --------------
 SorterBOS
-N = 1732; M = 18
-Result time         = 1413444
+N = 60114; M = 1
+Result time         = -779291116     // oops..
 Stress test passed
 --------------
 SorterFast
-N = 1330; M = 4
-Result time         = 390139
+N = 85904; M = 13
+Result time         = 1208606881
 --------------
 SorterBOS
-N = 1330; M = 4
-Result time         = 404280
+N = 85904; M = 13
+Result time         = 1173518938
 Stress test passed
 --------------
 SorterFast
-N = 8393; M = 6
-Result time         = 16004358
+N = 32490; M = 15
+Result time         = 256756357
 --------------
 SorterBOS
-N = 8393; M = 6
-Result time         = 9711180
+N = 32490; M = 15
+Result time         = 251242120
 Stress test passed
 --------------
 SorterFast
-N = 5234; M = 15
-Result time         = 13989696
+N = 49107; M = 17
+Result time         = 497710598
 --------------
 SorterBOS
-N = 5234; M = 15
-Result time         = 9451694
+N = 49107; M = 17
+Result time         = 555546886
 Stress test passed
 --------------
 SorterFast
-N = 6775; M = 9
-Result time         = 20214023
+N = 49073; M = 14
+Result time         = 497099244
 --------------
 SorterBOS
-N = 6775; M = 9
-Result time         = 10254208
+N = 49073; M = 14
+Result time         = 494818948
 Stress test passed
 --------------
 SorterFast
-N = 5629; M = 16
-Result time         = 15954837
+N = 53591; M = 2
+Result time         = 2351189
 --------------
 SorterBOS
-N = 5629; M = 16
-Result time         = 10471948
+N = 53591; M = 2
+Result time         = 76061852
+Stress test passed
+--------------
+SorterFast
+N = 15734; M = 15
+Result time         = 80954878
+--------------
+SorterBOS
+N = 15734; M = 15
+Result time         = 65562074
+Stress test passed
+--------------
+SorterFast
+N = 58014; M = 12
+Result time         = 645615892
+--------------
+SorterBOS
+N = 58014; M = 12
+Result time         = 538051294
+Stress test passed
+--------------
+SorterFast
+N = 35891; M = 4
+Result time         = 22785089
+--------------
+SorterBOS
+N = 35891; M = 4
+Result time         = 60680700
+Stress test passed
+--------------
+SorterFast
+N = 96594; M = 10
+Result time         = 1342058996
+--------------
+SorterBOS
+N = 96594; M = 10
+Result time         = 1181773158
+Stress test passed
+--------------
+SorterFast
+N = 62346; M = 16
+Result time         = 724896653
+--------------
+SorterBOS
+N = 62346; M = 16
+Result time         = 817444532
+Stress test passed
+--------------
+SorterFast
+N = 59961; M = 10
+Result time         = 637504564
+--------------
+SorterBOS
+N = 59961; M = 10
+Result time         = 509497626
+Stress test passed
+--------------
+SorterFast
+N = 64825; M = 4
+Result time         = 45635396
+--------------
+SorterBOS
+N = 64825; M = 4
+Result time         = 165070732
+Stress test passed
+--------------
+SorterFast
+N = 81852; M = 18
+Result time         = 1117089398
+--------------
+SorterBOS
+N = 81852; M = 18
+Result time         = 1463328010
+Stress test passed
+--------------
+SorterFast
+N = 5396; M = 12
+Result time         = 14620571
+--------------
+SorterBOS
+N = 5396; M = 12
+Result time         = 8895580
+Stress test passed
+--------------
+SorterFast
+N = 9846; M = 17
+Result time         = 38809745
+--------------
+SorterBOS
+N = 9846; M = 17
+Result time         = 28752224
+Stress test passed
+--------------
+SorterFast
+N = 34172; M = 4
+Result time         = 21364311
+--------------
+SorterBOS
+N = 34172; M = 4
+Result time         = 58256984
+Stress test passed
+--------------
+SorterFast
+N = 59464; M = 12
+Result time         = 668365181
+--------------
+SorterBOS
+N = 59464; M = 12
+Result time         = 565342468
+Stress test passed
+--------------
+SorterFast
+N = 8042; M = 2
+Result time         = 295303
+--------------
+SorterBOS
+N = 8042; M = 2
+Result time         = 4257978
+Stress test passed
+--------------
+SorterFast
+N = 57784; M = 16
+Result time         = 641851844
+--------------
+SorterBOS
+N = 57784; M = 16
+Result time         = 745033644
+Stress test passed
+--------------
+SorterFast
+N = 39039; M = 9
+Result time         = 304197125
+--------------
+SorterBOS
+N = 39039; M = 9
+Result time         = 203407238
+Stress test passed
+--------------
+SorterFast
+N = 48584; M = 18
+Result time         = 492767704
+--------------
+SorterBOS
+N = 48584; M = 18
+Result time         = 540864654
+Stress test passed
+--------------
+SorterFast
+N = 10906; M = 13
+Result time         = 45613804
+--------------
+SorterBOS
+N = 10906; M = 13
+Result time         = 31352454
+Stress test passed
+--------------
+SorterFast
+N = 50809; M = 10
+Result time         = 492923181
+--------------
+SorterBOS
+N = 50809; M = 10
+Result time         = 371383718
+Stress test passed
+--------------
+SorterFast
+N = 19902; M = 12
+Result time         = 118357091
+--------------
+SorterBOS
+N = 19902; M = 12
+Result time         = 81745816
+Stress test passed
+--------------
+SorterFast
+N = 96301; M = 0
+Result time         = 0
+--------------
+SorterBOS
+N = 96301; M = 0
+Result time         = 0
+Stress test passed
+--------------
+SorterFast
+N = 94634; M = 0
+Result time         = 0
+--------------
+SorterBOS
+N = 94634; M = 0
+Result time         = 0
+Stress test passed
+--------------
+SorterFast
+N = 36989; M = 0
+Result time         = 0
+--------------
+SorterBOS
+N = 36989; M = 0
+Result time         = 0
+Stress test passed
+--------------
+SorterFast
+N = 94552; M = 15
+Result time         = 1400796025
+--------------
+SorterBOS
+N = 94552; M = 15
+Result time         = 1643905940
+Stress test passed
+--------------
+SorterFast
+N = 18858; M = 11
+Result time         = 107070478
+--------------
+SorterBOS
+N = 18858; M = 11
+Result time         = 69246260
+Stress test passed
+--------------
+SorterFast
+N = 34626; M = 10
+Result time         = 272211053
+--------------
+SorterBOS
+N = 34626; M = 10
+Result time         = 179765470
+Stress test passed
+--------------
+SorterFast
+N = 34332; M = 3
+Result time         = 3828373
+--------------
+SorterBOS
+N = 34332; M = 3
+Result time         = 39676008
+Stress test passed
+--------------
+SorterFast
+N = 40518; M = 11
+Result time         = 357141298
+--------------
+SorterBOS
+N = 40518; M = 11
+Result time         = 274554596
+Stress test passed
+--------------
+SorterFast
+N = 87143; M = 6
+Result time         = 390996249
+--------------
+SorterBOS
+N = 87143; M = 6
+Result time         = 519583408
+Stress test passed
+--------------
+SorterFast
+N = 98812; M = 9
+Result time         = 1257352446
+--------------
+SorterBOS
+N = 98812; M = 9
+Result time         = 1084138372
+Stress test passed
+--------------
+SorterFast
+N = 67116; M = 10
+Result time         = 760054509
+--------------
+SorterBOS
+N = 67116; M = 10
+Result time         = 638785104
+Stress test passed
+--------------
+SorterFast
+N = 96565; M = 12
+Result time         = 1442347688
+--------------
+SorterBOS
+N = 96565; M = 12
+Result time         = 1427169044
+Stress test passed
+--------------
+SorterFast
+N = 36972; M = 11
+Result time         = 310558231
+--------------
+SorterBOS
+N = 36972; M = 11
+Result time         = 223693506
 Stress test passed
 
 Stress tests passed

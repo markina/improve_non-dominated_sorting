@@ -6,14 +6,14 @@
 public abstract class Sorter {
     protected final int size;
     protected final int dim;
-    protected int time;
+    protected long time;
     protected Sorter(int size, int dim) {
         this.size = size;
         this.dim = dim;
         this.time = 0;
     }
 
-    public int time() {
+    public long time() {
         return time;
     }
     /**

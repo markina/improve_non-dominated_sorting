@@ -7,7 +7,7 @@ public class StressTest {
 
         if(doRundomNM) {
             N = rnd.nextInt(N);
-            M = rnd.nextInt(M);
+            M = Math.max(rnd.nextInt(M), 1);
         }
 
         double[][] input = new double[N][M];
@@ -36,11 +36,17 @@ public class StressTest {
         stressTest(600, 5, false);
         stressTest(600, 50, false);
 
-        stressTest(10000, 10, false);
-        stressTest(100000, 5, false);
+//        stressTest(10000, 10, false);
+//        stressTest(10000, 5, false);
+
+//        for(int i = 0; i < 10; i++) {
+//            stressTest(100000, 20, true);
+//        }
+
+        stressTest(6, 3, false);
 
         for(int i = 0; i < 10; i++) {
-            stressTest(10000, 20, true);
+            stressTest(100000, 1, true); // TODO SorterBOS with M=1 works very slowly
         }
 
         System.out.println();
