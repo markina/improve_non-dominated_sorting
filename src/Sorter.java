@@ -12,10 +12,7 @@ public abstract class Sorter {
         this.dim = dim;
         this.time = 0;
     }
-    /**
-     * Returns the size of the problem this sorter can handle.
-     * @return the size of the problem.
-     */
+
     public int time() {
         return time;
     }
@@ -74,13 +71,10 @@ public abstract class Sorter {
         print_info();
     }
     protected abstract void sortImpl(double[][] input, int[] output);
-    protected abstract double estimated();
     protected abstract void print_info();
 
     protected void print_time() {
         System.out.println("Result time         = " + time);
-        System.out.println("Const               = " + (time / estimated()));
-        System.out.println();
     }
 
 }

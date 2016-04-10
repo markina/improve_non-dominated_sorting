@@ -169,17 +169,10 @@ final class SorterBOS extends Sorter {
     }
 
     @Override
-    protected double estimated() {
-        double log = Math.log(size) / Math.log(2);
-        return size * dim * log;
-    }
-
-    @Override
     protected void print_info() {
         System.out.println("--------------");
         System.out.println("SorterBOS");
         System.out.println("N = " + size + "; M = " + dim);
-        System.out.println("O(N M (log N))      = " + estimated());
         print_time();
     }
 
