@@ -36,17 +36,25 @@ public class StressTest {
         stressTest(600, 5, false);
         stressTest(600, 50, false);
 
-//        stressTest(10000, 10, false);
-//        stressTest(10000, 5, false);
+        stressTest(10000, 10, false);
+        stressTest(10000, 5, false);
 
-//        for(int i = 0; i < 10; i++) {
-//            stressTest(100000, 20, true);
-//        }
+        for(int i = 0; i < 10; i++) {
+            stressTest(100000, 20, true);
+        }
 
         stressTest(6, 3, false);
 
         for(int i = 0; i < 10; i++) {
-            stressTest(100000, 1, true); // TODO SorterBOS with M=1 works very slowly
+            stressTest(100000, 1, true);
+        }
+
+        for(int i = 0; i < 10; i++) {
+            stressTest(100000, 3, true);
+        }
+
+        for(int i = 0; i < 10; i++) {
+            stressTest(100000, 3, false);
         }
 
         System.out.println();

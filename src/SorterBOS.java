@@ -59,27 +59,40 @@ final class SorterBOS extends Sorter {
     }
 
     private void findRank(int s, int j) {
-        boolean done = false;
-        for(int k = 0; k < RC; k++) {
-            boolean check = false;
-            for (Integer t : L.get(j).get(k)) {
+        int l = -1;
+        int r = RC - 1;
+        boolean check;
+        while(r - l > 1) {
+            int m = (l + r) / 2;
+            check = false;
+            for (Integer t : L.get(j).get(m)) {
                 check = dominationCheck(s, t);
                 if(check) {
                     break;
                 }
             }
             if(!check) {
-                output[s] = k;
-                done = true;
-                L.get(j).get(output[s]).add(s);
+                r = m;
+            } else {
+                l = m;
+            }
+        }
+        check = false;
+        for (Integer t : L.get(j).get(r)) {
+            check = dominationCheck(s, t);
+            if(check) {
                 break;
             }
         }
-        if(!done) {
+        if(!check) {
+            output[s] = r;
+            L.get(j).get(output[s]).add(s);
+        } else {
             RC++;
             output[s] = RC-1;
             L.get(j).get(output[s]).add(s);
         }
+
     }
 
     private boolean dominationCheck(int s, int t) {

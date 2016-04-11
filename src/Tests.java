@@ -290,7 +290,7 @@ public class Tests {
 
 
         groupCheck("worst case from paper BOS", getForWorstCase3(10000), new int[10000]);
-
+        System.out.println();
         System.out.println("Tests passed");
     }
 
