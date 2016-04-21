@@ -1,3 +1,4 @@
+import java.io.PrintWriter;
 import java.util.Arrays;
 
 // 0D sorter: zero out the answer.
@@ -11,7 +12,5 @@ final class Sorter0D extends SorterFast {
     }
 
     @Override
-    protected void setParamAnalysis(boolean withTiming, boolean withLogging, String nameLogFile) {}
-    @Override
-    protected void resetParamAnalysis() {}
+    protected void setParamAnalysis(boolean withTiming, boolean withLogging, PrintWriter out) {}
 }

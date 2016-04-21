@@ -1,4 +1,5 @@
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 
 /**
  * A base class for all sorters.
@@ -65,11 +66,10 @@ public abstract class Sorter {
             }
         }
         sortImpl(input, output);
-        resetParamAnalysis();
-        print_info();
+
+//        print_info();
     }
     protected abstract void sortImpl(double[][] input, int[] output);
     protected abstract void print_info();
-    protected abstract void setParamAnalysis(boolean withTiming, boolean withLogging, String nameLogFile) throws FileNotFoundException;
-    protected abstract void resetParamAnalysis();
+    protected abstract void setParamAnalysis(boolean withTiming, boolean withLogging, PrintWriter out) throws FileNotFoundException;
 }

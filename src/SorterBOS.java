@@ -18,7 +18,7 @@ final class SorterBOS extends Sorter {
 
     boolean timing = false;
     boolean logging = false;
-    PrintWriter logOut = null;
+    PrintWriter out = null;
 
 
     public SorterBOS(int size, int dim) {
@@ -193,18 +193,9 @@ final class SorterBOS extends Sorter {
     }
 
     @Override
-    protected void setParamAnalysis(boolean withTiming, boolean withLogging, String nameLogFile) throws FileNotFoundException {
+    protected void setParamAnalysis(boolean withTiming, boolean withLogging, PrintWriter out) throws FileNotFoundException {
         timing = withTiming;
         logging = withLogging;
-        if(nameLogFile != null) {
-            logOut = new PrintWriter(nameLogFile);
-        }
-    }
-
-    @Override
-    protected void resetParamAnalysis() {
-        if(logOut != null) {
-            logOut.close();
-        }
+        this.out = out;
     }
 }

@@ -15,6 +15,7 @@
  */
 
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.*;
 
 /**
@@ -88,7 +89,7 @@ public final class FasterNonDominatedSorting {
         return new SorterBOS(size, dim);
     }
 
-    public static Sorter getSorterFastWithAnalysis(int size, int dim, boolean withTiming, boolean withLogging, String nameLogFile) throws IllegalAccessException, FileNotFoundException {
+    public static Sorter getSorterFastWithAnalysis(int size, int dim, boolean withTiming, boolean withLogging, PrintWriter out) throws IllegalAccessException, FileNotFoundException {
         if(!withLogging && !withTiming) {
             return getSorterFast(size, dim);
         }
@@ -96,7 +97,19 @@ public final class FasterNonDominatedSorting {
             throw new IllegalAccessException("Timing + Logging are bad idea");
         }
         Sorter sorter = getSorterFast(size, dim);
-        sorter.setParamAnalysis(withTiming, withLogging, nameLogFile);
+        sorter.setParamAnalysis(withTiming, withLogging, out);
+        return sorter;
+    }
+
+    public static Sorter getSorterBOSWithAnalysis(int size, int dim, boolean withTiming, boolean withLogging, PrintWriter out) throws IllegalAccessException, FileNotFoundException {
+        if(!withLogging && !withTiming) {
+            return getSorterFast(size, dim);
+        }
+        if(withLogging && withTiming) {
+            throw new IllegalAccessException("Timing + Logging are bad idea");
+        }
+        Sorter sorter = getSorterBOS(size, dim);
+        sorter.setParamAnalysis(withTiming, withLogging, out);
         return sorter;
     }
 

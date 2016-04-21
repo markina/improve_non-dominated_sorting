@@ -19,8 +19,7 @@ final class SorterXD extends SorterFast {
     boolean timing = false;
     boolean logging = false;
     int id = 0;
-    PrintWriter logOut = null;
-    ThreadMXBean bean = null;
+    PrintWriter out = null;
 
     private final TreeSet<Integer> set = new TreeSet<>(new Comparator<Integer>() {
         public int compare(Integer lhs, Integer rhs) {
@@ -230,22 +229,16 @@ final class SorterXD extends SorterFast {
         int size = until - from;
         int _id = id;
         id++;
-//        long start = 0;
         if(timing || logging) {
-            if(timing) {
-//                System.out.println(_id + ": timing start");
-//                start = bean.getCurrentThreadUserTime();
-//                System.out.println(_id + ": start " + start);
-            }
             if(logging) {
-                logOut.println(_id);
-                logOut.println(size);
-                logOut.println(dimension + 1);
+                out.println(_id);
+                out.println(size);
+                out.println(dimension + 1);
                 for(int i = 0; i < size; i++) {
                     for(int j = 0; j < dimension + 1; j++) {
-                        logOut.print(input[i][j] + " ");
+                        out.print(input[i][j] + " ");
                     }
-                    logOut.println();
+                    out.println();
                 }
 
             }
@@ -277,19 +270,6 @@ final class SorterXD extends SorterFast {
                 }
             }
         }
-//        if(timing) {
-//            System.out.println(_id + ": timing end");
-//            long end = bean.getCurrentThreadUserTime();
-//            System.out.println(_id + ": end " + end);
-//            System.out.println(_id + ": N = " + size);
-//            System.out.println(_id + ": M = " + dimension);
-//            System.out.println(_id + ": result " + (end - start));
-//            if(_id == 0) {
-//                System.out.println(_id + ": result " + (end - start));
-                // 0: result 24610000000 - without log
-                // 0: result 24790000000 - with log
-//            }
-//        }
     }
 
     private boolean allValuesEqual(int from, int until, int k) {
@@ -330,21 +310,11 @@ final class SorterXD extends SorterFast {
     }
 
     @Override
-    protected void setParamAnalysis(boolean withTiming, boolean withLogging,  String nameLogFile) throws FileNotFoundException {
+    protected void setParamAnalysis(boolean withTiming, boolean withLogging,  PrintWriter out) throws FileNotFoundException {
         timing = withTiming;
         logging = withLogging;
         id = 0;
-        if(nameLogFile != null) {
-            logOut = new PrintWriter(nameLogFile);
-        }
-        bean = ManagementFactory.getThreadMXBean();
-        bean.setThreadCpuTimeEnabled(true);
+        this.out = out;
     }
 
-    @Override
-    protected void resetParamAnalysis() {
-        if(logOut != null) {
-            logOut.close();
-        }
-    }
 }

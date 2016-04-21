@@ -1,3 +1,5 @@
+import java.io.PrintWriter;
+
 // 2D sorter: binary search on layer tails; should be faster than the general one.
 final class Sorter2D extends SorterFast {
     private final int[] indices;
@@ -50,7 +52,5 @@ final class Sorter2D extends SorterFast {
     }
 
     @Override
-    protected void setParamAnalysis(boolean withTiming, boolean withLogging, String nameLogFile) {}
-    @Override
-    protected void resetParamAnalysis() {}
+    protected void setParamAnalysis(boolean withTiming, boolean withLogging, PrintWriter out) {}
 }

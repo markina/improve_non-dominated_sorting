@@ -1,3 +1,5 @@
+import java.io.PrintWriter;
+
 // 1D sorter: do the sorting and uniquification.
 final class Sorter1D extends SorterFast {
     private final int[] indices;
@@ -26,7 +28,5 @@ final class Sorter1D extends SorterFast {
     }
 
     @Override
-    protected void setParamAnalysis(boolean withTiming, boolean withLogging, String nameLogFile) {}
-    @Override
-    protected void resetParamAnalysis() {}
+    protected void setParamAnalysis(boolean withTiming, boolean withLogging, PrintWriter out) {}
 }

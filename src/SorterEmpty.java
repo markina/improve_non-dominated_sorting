@@ -1,3 +1,5 @@
+import java.io.PrintWriter;
+
 // Empty sorter: to rule out the case of empty input array.
 final class SorterEmpty extends SorterFast {
     public SorterEmpty(int dim) {
@@ -7,7 +9,6 @@ final class SorterEmpty extends SorterFast {
         // do nothing
     }
     @Override
-    protected void setParamAnalysis(boolean withTiming, boolean withLogging, String nameLogFile) {}
-    @Override
-    protected void resetParamAnalysis() {}
+    protected void setParamAnalysis(boolean withTiming, boolean withLogging, PrintWriter out) {}
+
 }
