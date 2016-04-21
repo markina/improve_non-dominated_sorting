@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import java.io.FileNotFoundException;
 import java.util.*;
 
 /**
@@ -87,7 +88,7 @@ public final class FasterNonDominatedSorting {
         return new SorterBOS(size, dim);
     }
 
-    public static Sorter getSorterFastWithAnalysis(int size, int dim, boolean withTiming, boolean withLogging) throws IllegalAccessException {
+    public static Sorter getSorterFastWithAnalysis(int size, int dim, boolean withTiming, boolean withLogging, String nameLogFile) throws IllegalAccessException, FileNotFoundException {
         if(!withLogging && !withTiming) {
             return getSorterFast(size, dim);
         }
@@ -95,7 +96,7 @@ public final class FasterNonDominatedSorting {
             throw new IllegalAccessException("Timing + Logging are bad idea");
         }
         Sorter sorter = getSorterFast(size, dim);
-        sorter.setParamAnalysis(withTiming, withLogging);
+        sorter.setParamAnalysis(withTiming, withLogging, nameLogFile);
         return sorter;
     }
 

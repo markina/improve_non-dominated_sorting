@@ -11,5 +11,7 @@ final class Sorter0D extends SorterFast {
     }
 
     @Override
-    protected void setParamAnalysis(boolean withTiming, boolean withLogging) {}
+    protected void setParamAnalysis(boolean withTiming, boolean withLogging, String nameLogFile) {}
+    @Override
+    protected void resetParamAnalysis() {}
 }

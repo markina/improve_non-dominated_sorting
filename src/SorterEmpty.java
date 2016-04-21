@@ -7,5 +7,7 @@ final class SorterEmpty extends SorterFast {
         // do nothing
     }
     @Override
-    protected void setParamAnalysis(boolean withTiming, boolean withLogging) {}
+    protected void setParamAnalysis(boolean withTiming, boolean withLogging, String nameLogFile) {}
+    @Override
+    protected void resetParamAnalysis() {}
 }

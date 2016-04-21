@@ -1,3 +1,5 @@
+import java.io.FileNotFoundException;
+
 /**
  * A base class for all sorters.
  * A sorter supports two getter methods (for size and dimension)
@@ -63,9 +65,11 @@ public abstract class Sorter {
             }
         }
         sortImpl(input, output);
+        resetParamAnalysis();
         print_info();
     }
     protected abstract void sortImpl(double[][] input, int[] output);
     protected abstract void print_info();
-    protected abstract void setParamAnalysis(boolean withTiming, boolean withLogging);
+    protected abstract void setParamAnalysis(boolean withTiming, boolean withLogging, String nameLogFile) throws FileNotFoundException;
+    protected abstract void resetParamAnalysis();
 }

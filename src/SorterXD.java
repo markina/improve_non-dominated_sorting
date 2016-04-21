@@ -1,3 +1,5 @@
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadMXBean;
 import java.util.*;
@@ -17,6 +19,7 @@ final class SorterXD extends SorterFast {
     boolean timing = false;
     boolean logging = false;
     int id = 0;
+    PrintWriter logOut = null;
     ThreadMXBean bean = null;
 
     private final TreeSet<Integer> set = new TreeSet<>(new Comparator<Integer>() {
@@ -227,17 +230,24 @@ final class SorterXD extends SorterFast {
         int size = until - from;
         int _id = id;
         id++;
-        long start = 0;
+//        long start = 0;
         if(timing || logging) {
-            System.out.println(_id + ": N = " + size);
-            System.out.println(_id + ": M = " + dimension);
             if(timing) {
-                System.out.println(_id + ": timing start");
-                start = bean.getCurrentThreadUserTime();
-                System.out.println(_id + ": start " + start);
+//                System.out.println(_id + ": timing start");
+//                start = bean.getCurrentThreadUserTime();
+//                System.out.println(_id + ": start " + start);
             }
             if(logging) {
-                System.out.println(_id + ": logging");
+                logOut.println(_id);
+                logOut.println(size);
+                logOut.println(dimension + 1);
+                for(int i = 0; i < size; i++) {
+                    for(int j = 0; j < dimension + 1; j++) {
+                        logOut.print(input[i][j] + " ");
+                    }
+                    logOut.println();
+                }
+
             }
         }
         if (size == 2) {
@@ -267,12 +277,19 @@ final class SorterXD extends SorterFast {
                 }
             }
         }
-        if(timing) {
-            System.out.println(_id + ": timing end");
-            long end = bean.getCurrentThreadUserTime();
-            System.out.println(_id + ": end " + end);
-            System.out.println(_id + ": result " + (end - start));
-        }
+//        if(timing) {
+//            System.out.println(_id + ": timing end");
+//            long end = bean.getCurrentThreadUserTime();
+//            System.out.println(_id + ": end " + end);
+//            System.out.println(_id + ": N = " + size);
+//            System.out.println(_id + ": M = " + dimension);
+//            System.out.println(_id + ": result " + (end - start));
+//            if(_id == 0) {
+//                System.out.println(_id + ": result " + (end - start));
+                // 0: result 24610000000 - without log
+                // 0: result 24790000000 - with log
+//            }
+//        }
     }
 
     private boolean allValuesEqual(int from, int until, int k) {
@@ -313,11 +330,21 @@ final class SorterXD extends SorterFast {
     }
 
     @Override
-    protected void setParamAnalysis(boolean withTiming, boolean withLogging) {
+    protected void setParamAnalysis(boolean withTiming, boolean withLogging,  String nameLogFile) throws FileNotFoundException {
         timing = withTiming;
         logging = withLogging;
         id = 0;
+        if(nameLogFile != null) {
+            logOut = new PrintWriter(nameLogFile);
+        }
         bean = ManagementFactory.getThreadMXBean();
         bean.setThreadCpuTimeEnabled(true);
+    }
+
+    @Override
+    protected void resetParamAnalysis() {
+        if(logOut != null) {
+            logOut.close();
+        }
     }
 }
