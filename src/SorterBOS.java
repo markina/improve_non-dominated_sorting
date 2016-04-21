@@ -14,6 +14,10 @@ final class SorterBOS extends Sorter {
     private int[] output;
     MergeSorter sorter;
 
+    boolean timing = false;
+    boolean logging = false;
+
+
     public SorterBOS(int size, int dim) {
         super(size, dim);
         initL();
@@ -98,7 +102,6 @@ final class SorterBOS extends Sorter {
     private boolean dominationCheck(int s, int t) {
         boolean isEq = true;
         for (int j : C.get(s)){
-            time += 2;
             int compRes = Double.compare(input[s][j], input[t][j]);
             if(compRes < 0) {
                 return false;
@@ -142,7 +145,6 @@ final class SorterBOS extends Sorter {
         }
         if(dim > 0) {
             sorter.lexSort(indices, 0, size, input, new int[size]);
-            time += sorter.time;
         }
         for(int i = 0; i < dim; i++) {
             System.arraycopy(sorter.indices, 0, Q[i], 0, size);
@@ -167,7 +169,6 @@ final class SorterBOS extends Sorter {
             sortIntByTthObj(mid, until, t);
             int i = from, j = mid, k = 0, kMax = until - from;
             while (k < kMax) {
-                time += 2;
                 if (i == mid || j < until && Double.compare(input[Q[t][j]][t], input[Q[t][i]][t]) < 0) {
                     scratchByKthObj[k] = Q[t][j];
                     ++j;
@@ -186,7 +187,11 @@ final class SorterBOS extends Sorter {
         System.out.println("--------------");
         System.out.println("SorterBOS");
         System.out.println("N = " + size + "; M = " + dim);
-        print_time();
     }
 
+    @Override
+    protected void setParamAnalysis(boolean withTiming, boolean withLogging) {
+        timing = withTiming;
+        logging = withLogging;
+    }
 }

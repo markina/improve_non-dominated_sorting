@@ -8,8 +8,6 @@ public abstract class SorterFast  extends Sorter {
         System.out.println("--------------");
         System.out.println("SorterFast");
         System.out.println("N = " + size + "; M = " + dim);
-        print_time();
-
     }
 
 

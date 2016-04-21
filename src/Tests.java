@@ -13,7 +13,7 @@ public class Tests {
         int size = input.length;
         int dim = size == 0 ? 0 : input[0].length;
         int[] rv = new int[size];
-        FasterNonDominatedSorting.getSorter(size, dim).sort(input, rv);
+        FasterNonDominatedSorting.getSorterFast(size, dim).sort(input, rv);
         return rv;
     }
 

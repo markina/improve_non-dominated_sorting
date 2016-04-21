@@ -6,17 +6,12 @@
 public abstract class Sorter {
     protected final int size;
     protected final int dim;
-    protected long time;
     protected Sorter(int size, int dim) {
         this.size = size;
         this.dim = dim;
-        this.time = 0;
     }
 
-    public long time() {
-        return time;
-    }
-    /**
+     /**
      * Returns the size of the problem this sorter can handle.
      * @return the size of the problem.
      */
@@ -72,9 +67,5 @@ public abstract class Sorter {
     }
     protected abstract void sortImpl(double[][] input, int[] output);
     protected abstract void print_info();
-
-    protected void print_time() {
-        System.out.println("Result time         = " + time);
-    }
-
+    protected abstract void setParamAnalysis(boolean withTiming, boolean withLogging);
 }

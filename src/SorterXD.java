@@ -1,3 +1,5 @@
+import java.lang.management.ManagementFactory;
+import java.lang.management.ThreadMXBean;
 import java.util.*;
 
 // XD sorter: the general case.
@@ -11,6 +13,11 @@ final class SorterXD extends SorterFast {
     private int[] output;
 
     private final Random random = new Random();
+
+    boolean timing = false;
+    boolean logging = false;
+    int id = 0;
+    ThreadMXBean bean = null;
 
     private final TreeSet<Integer> set = new TreeSet<>(new Comparator<Integer>() {
         public int compare(Integer lhs, Integer rhs) {
@@ -38,7 +45,6 @@ final class SorterXD extends SorterFast {
         }
         Arrays.fill(output, 0);
         sorter.lexSort(indices, 0, size, input, eqComp);
-        time += sorter.time;
         this.input = input;
         this.output = output;
         sort(0, size, dim - 1);
@@ -103,17 +109,14 @@ final class SorterXD extends SorterFast {
         int to = until - 1;
         int med = (from + until) >>> 1;
         while (from <= to) {
-            time++;
             double pivot = input[swap[from + random.nextInt(to - from + 1)]][dimension];
             int ff = from, tt = to;
             while (ff <= tt) {
                 while (input[swap[ff]][dimension] < pivot) {
                     ++ff;
-                    time++;
                 }
                 while (input[swap[tt]][dimension] > pivot) {
                     --tt;
-                    time++;
                 }
                 if (ff <= tt) {
                     int tmp = swap[ff];
@@ -128,11 +131,9 @@ final class SorterXD extends SorterFast {
             } else if (med >= ff) {
                 from = ff;
             } else {
-                time++;
                 return input[swap[med]][dimension];
             }
         }
-        time++;
         return input[swap[from]][dimension];
     }
 
@@ -141,7 +142,6 @@ final class SorterXD extends SorterFast {
     private void split3(int from, int until, int dimension, double median) {
         lessThan = equalTo = greaterThan = 0;
         for (int i = from; i < until; ++i) {
-            time++;
             int cmp = Double.compare(input[indices[i]][dimension], median);
             if (cmp < 0) {
                 ++lessThan;
@@ -153,7 +153,6 @@ final class SorterXD extends SorterFast {
         }
         int lessThanPtr = 0, equalToPtr = lessThan, greaterThanPtr = lessThan + equalTo;
         for (int i = from; i < until; ++i) {
-            time++;
             int cmp = Double.compare(input[indices[i]][dimension], median);
             if (cmp < 0) {
                 swap[lessThanPtr++] = indices[i];
@@ -226,6 +225,21 @@ final class SorterXD extends SorterFast {
 
     private void sort(int from, int until, int dimension) {
         int size = until - from;
+        int _id = id;
+        id++;
+        long start = 0;
+        if(timing || logging) {
+            System.out.println(_id + ": N = " + size);
+            System.out.println(_id + ": M = " + dimension);
+            if(timing) {
+                System.out.println(_id + ": timing start");
+                start = bean.getCurrentThreadUserTime();
+                System.out.println(_id + ": start " + start);
+            }
+            if(logging) {
+                System.out.println(_id + ": logging");
+            }
+        }
         if (size == 2) {
             if (dominatesEq(from, from + 1, dimension)) {
                 updateFront(indices[from + 1], indices[from]);
@@ -253,13 +267,17 @@ final class SorterXD extends SorterFast {
                 }
             }
         }
+        if(timing) {
+            System.out.println(_id + ": timing end");
+            long end = bean.getCurrentThreadUserTime();
+            System.out.println(_id + ": end " + end);
+            System.out.println(_id + ": result " + (end - start));
+        }
     }
 
     private boolean allValuesEqual(int from, int until, int k) {
-        time++;
         double value = input[indices[from]][k];
         for (int i = from + 1; i < until; ++i) {
-            time++;
             if (input[indices[i]][k] != value) {
                 return false;
             }
@@ -270,7 +288,6 @@ final class SorterXD extends SorterFast {
     private double minValue(int from, int until, int k) {
         double rv = Double.MAX_VALUE;
         for (int i = from; i < until; ++i) {
-            time++;
             rv = Math.min(rv, input[indices[i]][k]);
         }
         return rv;
@@ -279,7 +296,6 @@ final class SorterXD extends SorterFast {
     private double maxValue(int from, int until, int k) {
         double rv = Double.MIN_VALUE;
         for (int i = from; i < until; ++i) {
-            time++;
             rv = Math.max(rv, input[indices[i]][k]);
         }
         return rv;
@@ -289,11 +305,19 @@ final class SorterXD extends SorterFast {
         int il = indices[l];
         int ir = indices[r];
         for (int i = 0; i <= k; ++i) {
-            time += 2;
             if (input[il][i] > input[ir][i]) {
                 return false;
             }
         }
         return true;
+    }
+
+    @Override
+    protected void setParamAnalysis(boolean withTiming, boolean withLogging) {
+        timing = withTiming;
+        logging = withLogging;
+        id = 0;
+        bean = ManagementFactory.getThreadMXBean();
+        bean.setThreadCpuTimeEnabled(true);
     }
 }

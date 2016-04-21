@@ -59,7 +59,7 @@ public final class FasterNonDominatedSorting {
      * @param dim the problem's dimension (the number of coordinates in each point).
      * @return the sorter adapted for the given size and dimension.
      */
-    public static Sorter getSorter(int size, int dim) {
+    public static Sorter getSorterFast(int size, int dim) {
         if (dim < 0 || size < 0) {
             throw new IllegalArgumentException("Size or dimension is negative");
         }
@@ -87,8 +87,17 @@ public final class FasterNonDominatedSorting {
         return new SorterBOS(size, dim);
     }
 
-
-
+    public static Sorter getSorterFastWithAnalysis(int size, int dim, boolean withTiming, boolean withLogging) throws IllegalAccessException {
+        if(!withLogging && !withTiming) {
+            return getSorterFast(size, dim);
+        }
+        if(withLogging && withTiming) {
+            throw new IllegalAccessException("Timing + Logging are bad idea");
+        }
+        Sorter sorter = getSorterFast(size, dim);
+        sorter.setParamAnalysis(withTiming, withLogging);
+        return sorter;
+    }
 
 
 

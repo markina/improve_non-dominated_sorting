@@ -6,4 +6,6 @@ final class SorterEmpty extends SorterFast {
     protected void sortImpl(double[][] input, int[] output) {
         // do nothing
     }
+    @Override
+    protected void setParamAnalysis(boolean withTiming, boolean withLogging) {}
 }

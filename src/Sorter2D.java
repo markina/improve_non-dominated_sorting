@@ -18,14 +18,12 @@ final class Sorter2D extends SorterFast {
             indices[i] = i;
         }
         sorter.lexSort(indices, 0, size, input, eqComp);
-        time += sorter.time;
         output[indices[0]] = 0;
         frontTails[0] = indices[0];
         int nLayers = 1;
         for (int i = 1; i < size; ++i) {
             int curr = indices[i];
             double curr1 = input[curr][1];
-            time += 2;
             if (eqComp[curr] == eqComp[indices[i - 1]]) {
                 output[curr] = output[indices[i - 1]];
             } else if (input[frontTails[0]][1] > curr1) {
@@ -36,7 +34,6 @@ final class Sorter2D extends SorterFast {
                 // left definitely dominates, right definitely not
                 while (right - left > 1) {
                     int mid = (left + right) >>> 1;
-                    time++;
                     if (input[frontTails[mid]][1] > curr1) {
                         right = mid;
                     } else {
@@ -51,4 +48,7 @@ final class Sorter2D extends SorterFast {
             }
         }
     }
+
+    @Override
+    protected void setParamAnalysis(boolean withTiming, boolean withLogging) {}
 }

@@ -9,4 +9,7 @@ final class Sorter0D extends SorterFast {
     protected void sortImpl(double[][] input, int[] output) {
         Arrays.fill(output, 0);
     }
+
+    @Override
+    protected void setParamAnalysis(boolean withTiming, boolean withLogging) {}
 }

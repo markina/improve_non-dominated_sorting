@@ -14,10 +14,8 @@ final class Sorter1D extends SorterFast {
             indices[i] = i;
         }
         sorter.sort(indices, 0, size, input, 0);
-        time += sorter.time;
         output[indices[0]] = 0;
         for (int i = 1; i < size; ++i) {
-            time += 2;
             int prev = indices[i - 1], curr = indices[i];
             if (input[prev][0] == input[curr][0]) {
                 output[curr] = output[prev];
@@ -27,4 +25,6 @@ final class Sorter1D extends SorterFast {
         }
     }
 
+    @Override
+    protected void setParamAnalysis(boolean withTiming, boolean withLogging) {}
 }
