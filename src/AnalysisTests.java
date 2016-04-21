@@ -71,4 +71,10 @@ public class AnalysisTests {
         return rv;
     }
 
+    public static void main(String[] args) throws Exception {
+        AnalysisLogging.main(args);
+        AnalysisTimingFast.main(args);
+        AnalysisTimingBOS.main(args);
+    }
+
 }
