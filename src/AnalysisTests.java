@@ -23,8 +23,8 @@ public class AnalysisTests {
     }
 
     static void timing(Sorter sorter,
-                        double[][] input,
-                        PrintWriter out) throws IllegalAccessException, FileNotFoundException {
+                       double[][] input,
+                       PrintWriter out) throws IllegalAccessException, FileNotFoundException {
         ThreadMXBean bean = ManagementFactory.getThreadMXBean();
         bean.setThreadCpuTimeEnabled(true);
         boolean good_time = false;
@@ -36,12 +36,12 @@ public class AnalysisTests {
                 sorter.sort(input, rv);
             }
             long end = bean.getCurrentThreadUserTime();
-            if(end - start > 0) {
+            if(end - start > 100000000) {
                 out.print(end - start + " ");
                 out.println(cur_n);
                 good_time = true;
             } else {
-                cur_n *= 10;
+                cur_n *= 2;
             }
         }
     }
