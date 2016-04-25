@@ -71,5 +71,5 @@ public abstract class Sorter {
     }
     protected abstract void sortImpl(double[][] input, int[] output);
     protected abstract void print_info();
-    protected abstract void setParamAnalysis(boolean withTiming, boolean withLogging, PrintWriter out) throws FileNotFoundException;
+    protected abstract void setParamAnalysis(boolean withLogging, PrintWriter out) throws FileNotFoundException;
 }

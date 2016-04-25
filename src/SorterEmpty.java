@@ -9,6 +9,6 @@ final class SorterEmpty extends SorterFast {
         // do nothing
     }
     @Override
-    protected void setParamAnalysis(boolean withTiming, boolean withLogging, PrintWriter out) {}
+    protected void setParamAnalysis(boolean withLogging, PrintWriter out) {}
 
 }

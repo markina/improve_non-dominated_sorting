@@ -16,11 +16,6 @@ final class SorterBOS extends Sorter {
     private int[] output;
     MergeSorter sorter;
 
-    boolean timing = false;
-    boolean logging = false;
-    PrintWriter out = null;
-
-
     public SorterBOS(int size, int dim) {
         super(size, dim);
         initL();
@@ -193,9 +188,5 @@ final class SorterBOS extends Sorter {
     }
 
     @Override
-    protected void setParamAnalysis(boolean withTiming, boolean withLogging, PrintWriter out) throws FileNotFoundException {
-        timing = withTiming;
-        logging = withLogging;
-        this.out = out;
-    }
+    protected void setParamAnalysis(boolean withLogging, PrintWriter out) throws FileNotFoundException {}
 }

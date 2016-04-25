@@ -9,20 +9,11 @@ import java.util.function.BiConsumer;
  * @author Maxim Buzdalov
  */
 public class Tests {
-    static int[] findFrontIndicesFastAlgo(double[][] input) {
+    static int[] findFrontIndices(double[][] input, FactoryNonDominatedSorting sorterFactory) {
         int size = input.length;
         int dim = size == 0 ? 0 : input[0].length;
         int[] rv = new int[size];
-        FasterNonDominatedSorting.getSorterFast(size, dim).sort(input, rv);
-        return rv;
-    }
-
-    static int[] findFrontIndicesBOS(double[][] input) {
-        int size = input.length;
-        int dim = size == 0 ? 0 : input[0].length;
-        int[] rv = new int[size];
-        Arrays.fill(rv, 0);
-        FasterNonDominatedSorting.getSorterBOS(size, dim).sort(input, rv);
+        sorterFactory.getSorter(size, dim).sort(input, rv);
         return rv;
     }
 
@@ -49,29 +40,32 @@ public class Tests {
         System.arraycopy(input, 0, input2, 0, input.length);
         System.arraycopy(input, 0, input2, input.length, input.length);
 
+        FactoryNonDominatedSorting fastFactory = new FasterNonDominatedSorting();
+        FactoryNonDominatedSorting bosFactory = new BOSNonDominatedSorting();
+
         try {
-            checkEqual(output, findFrontIndicesFastAlgo(input));
+            checkEqual(output, findFrontIndices(input, fastFactory));
             System.out.println("Raw test '" + title + "' passed");
         } catch(AssertionError er) {
             throw new AssertionError("Error in raw test '" + title + "': " + er.getMessage());
         }
 
         try {
-            checkEqual(output, findFrontIndicesBOS(input));
+            checkEqual(output, findFrontIndices(input, bosFactory));
             System.out.println("Raw test '" + title + "' passed");
         } catch(AssertionError er) {
             throw new AssertionError("Error in raw test '" + title + "': " + er.getMessage());
         }
 
         try {
-            checkEqual(output2, findFrontIndicesFastAlgo(input2));
+            checkEqual(output2, findFrontIndices(input2, fastFactory));
             System.out.println("Duplicate test '" + title + "' passed");
         } catch(AssertionError er) {
             throw new AssertionError("Error in duplicate test '" + title + "': " + er.getMessage());
         }
 
         try {
-            checkEqual(output2, findFrontIndicesBOS(input2));
+            checkEqual(output2, findFrontIndices(input2, bosFactory));
             System.out.println("Duplicate test '" + title + "' passed");
         } catch(AssertionError er) {
             throw new AssertionError("Error in duplicate test '" + title + "': " + er.getMessage());

@@ -1,7 +1,5 @@
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.lang.management.ManagementFactory;
-import java.lang.management.ThreadMXBean;
 import java.util.*;
 
 // XD sorter: the general case.
@@ -16,7 +14,6 @@ final class SorterXD extends SorterFast {
 
     private final Random random = new Random();
 
-    boolean timing = false;
     boolean logging = false;
     int id = 0;
     PrintWriter out = null;
@@ -25,7 +22,7 @@ final class SorterXD extends SorterFast {
         public int compare(Integer lhs, Integer rhs) {
             int ilhs = lhs, irhs = rhs;
             int cmp1 = Double.compare(input[ilhs][1], input[irhs][1]);
-            if (cmp1 != 0) {
+            if(cmp1 != 0) {
                 return cmp1;
             } else {
                 return Double.compare(input[ilhs][0], input[irhs][0]);
@@ -42,7 +39,7 @@ final class SorterXD extends SorterFast {
     }
 
     protected void sortImpl(double[][] input, int[] output) {
-        for (int i = 0; i < size; ++i) {
+        for(int i = 0; i < size; ++i) {
             indices[i] = i;
         }
         Arrays.fill(output, 0);
@@ -55,7 +52,7 @@ final class SorterXD extends SorterFast {
     }
 
     private void updateFront(int target, int source) {
-        if (eqComp[target] == eqComp[source]) {
+        if(eqComp[target] == eqComp[source]) {
             output[target] = output[source];
         } else {
             output[target] = Math.max(output[target], output[source] + 1);
@@ -64,8 +61,8 @@ final class SorterXD extends SorterFast {
 
     private void cleanup(int curr) {
         Iterator<Integer> greaterIterator = set.tailSet(curr, true).iterator();
-        while (greaterIterator.hasNext()) {
-            if (output[greaterIterator.next()] <= output[curr]) {
+        while(greaterIterator.hasNext()) {
+            if(output[greaterIterator.next()] <= output[curr]) {
                 greaterIterator.remove();
             } else {
                 break;
@@ -74,10 +71,10 @@ final class SorterXD extends SorterFast {
     }
 
     private void sort2D(int from, int until) {
-        for (int i = from; i < until; ++i) {
+        for(int i = from; i < until; ++i) {
             int curr = indices[i];
             Iterator<Integer> lessIterator = set.headSet(curr, true).descendingIterator();
-            if (lessIterator.hasNext()) {
+            if(lessIterator.hasNext()) {
                 updateFront(curr, lessIterator.next());
             }
             cleanup(curr);
@@ -88,19 +85,19 @@ final class SorterXD extends SorterFast {
 
     private void sortHighByLow2D(int lFrom, int lUntil, int hFrom, int hUntil) {
         int li = lFrom;
-        for (int hi = hFrom; hi < hUntil; ++hi) {
+        for(int hi = hFrom; hi < hUntil; ++hi) {
             int currH = indices[hi];
             int eCurrH = eqComp[currH];
-            while (li < lUntil && eqComp[indices[li]] < eCurrH) {
+            while(li < lUntil && eqComp[indices[li]] < eCurrH) {
                 int curr = indices[li++];
                 Iterator<Integer> lessIterator = set.headSet(curr, true).descendingIterator();
-                if (!lessIterator.hasNext() || output[lessIterator.next()] < output[curr]) {
+                if(!lessIterator.hasNext() || output[lessIterator.next()] < output[curr]) {
                     cleanup(curr);
                     set.add(curr);
                 }
             }
             Iterator<Integer> lessIterator = set.headSet(currH, true).descendingIterator();
-            if (lessIterator.hasNext()) {
+            if(lessIterator.hasNext()) {
                 updateFront(currH, lessIterator.next());
             }
         }
@@ -110,17 +107,17 @@ final class SorterXD extends SorterFast {
     private double medianInSwap(int from, int until, int dimension) {
         int to = until - 1;
         int med = (from + until) >>> 1;
-        while (from <= to) {
+        while(from <= to) {
             double pivot = input[swap[from + random.nextInt(to - from + 1)]][dimension];
             int ff = from, tt = to;
-            while (ff <= tt) {
-                while (input[swap[ff]][dimension] < pivot) {
+            while(ff <= tt) {
+                while(input[swap[ff]][dimension] < pivot) {
                     ++ff;
                 }
-                while (input[swap[tt]][dimension] > pivot) {
+                while(input[swap[tt]][dimension] > pivot) {
                     --tt;
                 }
-                if (ff <= tt) {
+                if(ff <= tt) {
                     int tmp = swap[ff];
                     swap[ff] = swap[tt];
                     swap[tt] = tmp;
@@ -128,9 +125,9 @@ final class SorterXD extends SorterFast {
                     --tt;
                 }
             }
-            if (med <= tt) {
+            if(med <= tt) {
                 to = tt;
-            } else if (med >= ff) {
+            } else if(med >= ff) {
                 from = ff;
             } else {
                 return input[swap[med]][dimension];
@@ -143,22 +140,22 @@ final class SorterXD extends SorterFast {
 
     private void split3(int from, int until, int dimension, double median) {
         lessThan = equalTo = greaterThan = 0;
-        for (int i = from; i < until; ++i) {
+        for(int i = from; i < until; ++i) {
             int cmp = Double.compare(input[indices[i]][dimension], median);
-            if (cmp < 0) {
+            if(cmp < 0) {
                 ++lessThan;
-            } else if (cmp == 0) {
+            } else if(cmp == 0) {
                 ++equalTo;
             } else {
                 ++greaterThan;
             }
         }
         int lessThanPtr = 0, equalToPtr = lessThan, greaterThanPtr = lessThan + equalTo;
-        for (int i = from; i < until; ++i) {
+        for(int i = from; i < until; ++i) {
             int cmp = Double.compare(input[indices[i]][dimension], median);
-            if (cmp < 0) {
+            if(cmp < 0) {
                 swap[lessThanPtr++] = indices[i];
-            } else if (cmp == 0) {
+            } else if(cmp == 0) {
                 swap[equalToPtr++] = indices[i];
             } else {
                 swap[greaterThanPtr++] = indices[i];
@@ -169,8 +166,8 @@ final class SorterXD extends SorterFast {
 
     private void merge(int from, int mid, int until) {
         int p0 = from, p1 = mid;
-        for (int i = from; i < until; ++i) {
-            if (p0 == mid || p1 < until && eqComp[indices[p1]] < eqComp[indices[p0]]) {
+        for(int i = from; i < until; ++i) {
+            if(p0 == mid || p1 < until && eqComp[indices[p1]] < eqComp[indices[p0]]) {
                 swap[i] = indices[p1++];
             } else {
                 swap[i] = indices[p0++];
@@ -181,25 +178,25 @@ final class SorterXD extends SorterFast {
 
     private void sortHighByLow(int lFrom, int lUntil, int hFrom, int hUntil, int dimension) {
         int lSize = lUntil - lFrom, hSize = hUntil - hFrom;
-        if (lSize == 0 || hSize == 0) {
+        if(lSize == 0 || hSize == 0) {
             return;
         }
-        if (lSize == 1) {
-            for (int hi = hFrom; hi < hUntil; ++hi) {
-                if (dominatesEq(lFrom, hi, dimension)) {
+        if(lSize == 1) {
+            for(int hi = hFrom; hi < hUntil; ++hi) {
+                if(dominatesEq(lFrom, hi, dimension)) {
                     updateFront(indices[hi], indices[lFrom]);
                 }
             }
-        } else if (hSize == 1) {
-            for (int li = lFrom; li < lUntil; ++li) {
-                if (dominatesEq(li, hFrom, dimension)) {
+        } else if(hSize == 1) {
+            for(int li = lFrom; li < lUntil; ++li) {
+                if(dominatesEq(li, hFrom, dimension)) {
                     updateFront(indices[hFrom], indices[li]);
                 }
             }
-        } else if (dimension == 1) {
+        } else if(dimension == 1) {
             sortHighByLow2D(lFrom, lUntil, hFrom, hUntil);
         } else {
-            if (maxValue(lFrom, lUntil, dimension) <= minValue(hFrom, hUntil, dimension)) {
+            if(maxValue(lFrom, lUntil, dimension) <= minValue(hFrom, hUntil, dimension)) {
                 sortHighByLow(lFrom, lUntil, hFrom, hUntil, dimension - 1);
             } else {
                 System.arraycopy(indices, lFrom, swap, 0, lSize);
@@ -229,29 +226,26 @@ final class SorterXD extends SorterFast {
         int size = until - from;
         int _id = id;
         id++;
-        if(timing || logging) {
-            if(logging) {
-                out.println(_id);
-                out.println(size);
-                out.println(dimension + 1);
-                for(int i = 0; i < size; i++) {
-                    for(int j = 0; j < dimension + 1; j++) {
-                        out.print(input[i][j] + " ");
-                    }
-                    out.println();
+        if(logging) {
+            out.print(_id + " ");
+            out.print(size + " ");
+            out.println(dimension + 1);
+            for(int i = 0; i < size; i++) {
+                for(int j = 0; j < dimension + 1; j++) {
+                    out.print(input[i][j] + " ");
                 }
-
+                out.println();
             }
         }
-        if (size == 2) {
-            if (dominatesEq(from, from + 1, dimension)) {
+        if(size == 2) {
+            if(dominatesEq(from, from + 1, dimension)) {
                 updateFront(indices[from + 1], indices[from]);
             }
-        } else if (size > 2) {
-            if (dimension == 1) {
+        } else if(size > 2) {
+            if(dimension == 1) {
                 sort2D(from, until);
             } else {
-                if (allValuesEqual(from, until, dimension)) {
+                if(allValuesEqual(from, until, dimension)) {
                     sort(from, until, dimension - 1);
                 } else {
                     System.arraycopy(indices, from, swap, from, size);
@@ -274,8 +268,8 @@ final class SorterXD extends SorterFast {
 
     private boolean allValuesEqual(int from, int until, int k) {
         double value = input[indices[from]][k];
-        for (int i = from + 1; i < until; ++i) {
-            if (input[indices[i]][k] != value) {
+        for(int i = from + 1; i < until; ++i) {
+            if(input[indices[i]][k] != value) {
                 return false;
             }
         }
@@ -284,7 +278,7 @@ final class SorterXD extends SorterFast {
 
     private double minValue(int from, int until, int k) {
         double rv = Double.MAX_VALUE;
-        for (int i = from; i < until; ++i) {
+        for(int i = from; i < until; ++i) {
             rv = Math.min(rv, input[indices[i]][k]);
         }
         return rv;
@@ -292,7 +286,7 @@ final class SorterXD extends SorterFast {
 
     private double maxValue(int from, int until, int k) {
         double rv = Double.MIN_VALUE;
-        for (int i = from; i < until; ++i) {
+        for(int i = from; i < until; ++i) {
             rv = Math.max(rv, input[indices[i]][k]);
         }
         return rv;
@@ -301,8 +295,8 @@ final class SorterXD extends SorterFast {
     private boolean dominatesEq(int l, int r, int k) {
         int il = indices[l];
         int ir = indices[r];
-        for (int i = 0; i <= k; ++i) {
-            if (input[il][i] > input[ir][i]) {
+        for(int i = 0; i <= k; ++i) {
+            if(input[il][i] > input[ir][i]) {
                 return false;
             }
         }
@@ -310,8 +304,7 @@ final class SorterXD extends SorterFast {
     }
 
     @Override
-    protected void setParamAnalysis(boolean withTiming, boolean withLogging,  PrintWriter out) throws FileNotFoundException {
-        timing = withTiming;
+    protected void setParamAnalysis(boolean withLogging, PrintWriter out) throws FileNotFoundException {
         logging = withLogging;
         id = 0;
         this.out = out;

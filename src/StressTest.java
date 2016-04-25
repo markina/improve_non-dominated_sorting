@@ -18,7 +18,9 @@ public class StressTest {
         }
 
         try {
-            Tests.checkEqual(Tests.findFrontIndicesFastAlgo(input), Tests.findFrontIndicesBOS(input));
+            Tests.checkEqual(
+                    Tests.findFrontIndices(input, new FasterNonDominatedSorting()),
+                    Tests.findFrontIndices(input, new BOSNonDominatedSorting()));
             System.out.println("Stress test passed");
         } catch(AssertionError er) {
             throw new AssertionError("Error in stress test : " + er.getMessage());
