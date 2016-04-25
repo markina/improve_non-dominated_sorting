@@ -1,7 +1,11 @@
+import com.sun.tools.javac.util.Assert;
+
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadMXBean;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class AnalysisTests {
@@ -70,13 +74,13 @@ public class AnalysisTests {
         in.close();
     }
 
-    public static void timing_fast(int N, int M, String prefix) throws Exception {
+    public static void timing_fast(String prefix) throws Exception {
         FasterNonDominatedSorting sorterFactory = new FasterNonDominatedSorting();
         String suffix = "fast";
         init_timing(sorterFactory, prefix, suffix);
     }
 
-    public static void timing_bos(int N, int M, String prefix) throws Exception {
+    public static void timing_bos(String prefix) throws Exception {
         BOSNonDominatedSorting sorterFactory = new BOSNonDominatedSorting();
         String suffix = "bos";
         init_timing(sorterFactory, prefix, suffix);
@@ -86,12 +90,129 @@ public class AnalysisTests {
     public static void test_cube(int N, int M) throws Exception {
         String name = "cube" + "_" + N + "_" + M;
         logging(name, AnalysisTests.genHypercube(M, N));
-        timing_fast(N, M, name);
-        timing_bos(N, M, name);
+        timing_fast(name);
+        timing_bos(name);
+    }
+
+    static class AggregationStruct {
+        int N, M;
+        long t_fast, t_bos;
+        int n_fast, n_bos;
+        long speed_fast, speed_bos;
+
+        public AggregationStruct(int size, int dim) {
+            N = size;
+            M = dim;
+        }
+
+        public void setFastInfo(long time, int cnt) {
+            t_fast = time;
+            n_fast = cnt;
+            speed_fast = t_fast / n_fast;
+            Assert.check(speed_fast > 0);
+        }
+
+        public void setBOSInfo(long time, int cnt) {
+            t_bos = time;
+            n_bos = cnt;
+            speed_bos = t_bos / n_bos;
+            Assert.check(speed_bos > 0);
+        }
+
+        @Override
+        public String toString() {
+            return "" + N + " " + M + "\n"
+                    + speed_fast + "\n"
+                    + speed_bos + "\n";
+        }
+    }
+
+    public static List<AggregationStruct> get_aggregation_info(String prefix) throws Exception {
+        Reader in_fast = new Reader(prefix + "_time_fast.txt");
+        Reader in_bos = new Reader(prefix + "_time_bos.txt");
+        List<AggregationStruct> res = new ArrayList<>();
+        while(in_fast.hasMore()) {
+            Assert.check(in_bos.hasMore(), prefix + "_time_bos.txt" + "ended");
+            int id = in_fast.nextInt();
+            int id_bos = in_bos.nextInt();
+            Assert.check(id == id_bos, "Bad id");
+            Assert.check(res.size() == id, "Bad id");
+            int N = in_fast.nextInt(), M = in_fast.nextInt();
+            int N_bos = in_bos.nextInt(), M_bos = in_bos.nextInt();
+            Assert.check(N == N_bos, "N from fast != N from bos for id = " + id);
+            Assert.check(M == M_bos, "N from fast != N from bos for id = " + id);
+            AggregationStruct elem = new AggregationStruct(N, M);
+            elem.setFastInfo(in_fast.nextLong(), in_fast.nextInt());
+            elem.setBOSInfo(in_bos.nextLong(), in_bos.nextInt());
+            res.add(elem);
+        }
+        in_fast.close();
+        in_bos.close();
+        return res;
+    }
+
+    private static void print_result(String prefix, List<AggregationStruct> res) throws FileNotFoundException {
+        PrintWriter out_fast_better = new PrintWriter(prefix + "_result_fast_better" + ".txt");
+        PrintWriter out_bos_better = new PrintWriter(prefix + "_result_bos_better" + ".txt");
+
+        int [] cnt_success_fast = new int[res.get(0).N + 1];
+
+        for(AggregationStruct elem : res) {
+            if(elem.speed_bos / elem.speed_fast >= 10 || elem.speed_fast / elem.speed_bos >= 10) {
+                if(elem.speed_bos < elem.speed_fast) {
+                    out_fast_better.print(elem.toString());
+                    out_fast_better.println("----");
+                    cnt_success_fast[elem.N]++;
+                } else {
+                    out_bos_better.print(elem.toString());
+                    out_bos_better.println("****");
+                }
+            }
+        }
+        out_fast_better.close();
+        out_bos_better.close();
+    }
+
+    public static void aggregation_result(String prefix) throws Exception {
+        List<AggregationStruct> res = get_aggregation_info(prefix);
+        print_result(prefix, res);
+        print_statistic(prefix, res);
+
+    }
+
+    private static void print_statistic(String prefix, List<AggregationStruct> res) throws FileNotFoundException {
+
+        int N = res.get(0).N;
+        int [] cnt_success_fast = new int[N + 1];
+        int [] cnt_success_bos = new int[N + 1];
+
+        for(AggregationStruct elem : res) {
+            if(elem.speed_bos / elem.speed_fast >= 10 || elem.speed_fast / elem.speed_bos >= 10) {
+                if(elem.speed_bos < elem.speed_fast) {
+                    cnt_success_fast[elem.N]++;
+                } else {
+                    cnt_success_bos[elem.N]++;
+                }
+            }
+        }
+
+        PrintWriter out_fast = new PrintWriter(prefix + "_statistic_fast" + ".txt");
+        PrintWriter out_bos = new PrintWriter(prefix + "_statistic_bos" + ".txt");
+
+        for(int i = 0; i < N + 1; i++) {
+            if(cnt_success_fast[i] != 0 || cnt_success_bos[i] != 0) {
+                out_fast.println(i + " " + cnt_success_fast[i]);
+                out_bos.println(i + " " + cnt_success_bos[i]);
+            }
+        }
+        out_fast.close();
+        out_bos.close();
     }
 
     public static void main(String[] args) throws Exception {
-        test_cube(1000, 4);
+//        test_cube(100000, 20);
+        aggregation_result("cube_100000_20");
+
     }
 
 }
