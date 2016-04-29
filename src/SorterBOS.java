@@ -1,15 +1,18 @@
+import units.SmartC;
+import units.SmartL;
+
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.*;
 
 // Best Order Sort sorter
 final class SorterBOS extends Sorter {
-    private List<List<Set<Integer>>> L = null;
-    private List<Set<Integer>> C = null;
-    private boolean [] isRanked = null;
+    private SmartL L = null;
+    private SmartC C = null;
+    private boolean[] isRanked = null;
     private int SC;
     private int RC;
-    private int [][] Q = null;
+    private int[][] Q = null;
     private int[] scratchByKthObj;
 
     private double[][] input;
@@ -18,13 +21,14 @@ final class SorterBOS extends Sorter {
 
     SorterBOS(int size, int dim) {
         super(size, dim);
-        initL();
-        C = new ArrayList<>(size);
+        L = new SmartL(dim, size);
+
+        C = new SmartC(size, dim);
         isRanked = new boolean[size];
         Arrays.fill(isRanked, false);
         output = new int[size];
         Arrays.fill(output, -1);
-        Q = new int [dim][size];
+        Q = new int[dim][size];
         SC = 0;
         RC = 1;
         sorter = new MergeSorter(size);
@@ -35,20 +39,21 @@ final class SorterBOS extends Sorter {
         this.output = output;
 
         fillQ();
-        fillC();
+//        fillC();
 
-        for(int i = 0; i < size; i++) {
-            for(int j = 0; j < dim; j++) {
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < dim; j++) {
                 int s = Q[j][i];
 //                C.get(s).remove(j); // in original algorithm here
-                if(isRanked[s]) {
-                    L.get(j).get(this.output[s]).add(s);
+                if (isRanked[s]) {
+                    L.addTo(j, this.output[s], s);
                 } else {
                     findRank(s, j);
                     isRanked[s] = true;
                     SC++;
                 }
-                C.get(s).remove(j); //
+                C.removeFrom(s, j); //
+//                printC();
             }
             if (SC == size) {
                 break;
@@ -59,7 +64,7 @@ final class SorterBOS extends Sorter {
 
     private void printOutput() {
         System.out.print("output = ");
-        for(int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++) {
             System.out.print(output[i] + " ");
         }
     }
@@ -68,112 +73,97 @@ final class SorterBOS extends Sorter {
         int l = -1;
         int r = RC - 1;
         boolean check;
-        while(r - l > 1) {
+        while (r - l > 1) {
             int m = (l + r) / 2;
             check = false;
-            for (Integer t : L.get(j).get(m)) {
+            for (Integer t : L.get(j, m)) {
                 check = dominationCheck(s, t);
-                if(check) {
+                if (check) {
                     break;
                 }
             }
-            if(!check) {
+            if (!check) {
                 r = m;
             } else {
                 l = m;
             }
         }
         check = false;
-        for (Integer t : L.get(j).get(r)) {
+//        L.printSout();
+        for (Integer t : L.get(j, r)) {
             check = dominationCheck(s, t);
-            if(check) {
+            if (check) {
                 break;
             }
         }
-        if(!check) {
+        if (!check) {
             output[s] = r;
-            L.get(j).get(output[s]).add(s);
+            L.addTo(j, output[s], s);
         } else {
             RC++;
-            output[s] = RC-1;
-            L.get(j).get(output[s]).add(s);
+            output[s] = RC - 1;
+            L.addTo(j, output[s], s);
         }
-
+//        L.printSout();
     }
 
     private boolean dominationCheck(int s, int t) {
         boolean isEq = true;
-        for (int j : C.get(s)){
+        for (int j : C.get(s)) {
             int compRes = Double.compare(input[s][j], input[t][j]);
-            if(compRes < 0) {
+            if (compRes < 0) {
                 return false;
             }
-            if(compRes > 0) {
+            if (compRes > 0) {
                 isEq = false;
             }
         }
         return !isEq;
     }
 
-    private void initL() {
-        L = new ArrayList<>(dim);
-        for(int x = 0; x < dim; x++) {
-            L.add(new ArrayList<>(size));
-            for(int y = 0; y < size; y++){
-                L.get(x).add(new TreeSet<>());
-            }
-        }
-    }
-
-    private void fillC() {
-        for(int i = 0; i < size; i++) {
-            C.add(new TreeSet<>());
-            for(int j = 0; j < dim; j++) {
-                C.get(i).add(j);
-            }
-
-        }
-        printC();
-    }
+//    private void fillC() {
+//        for (int i = 0; i < size; i++) {
+//            C.add(new TreeSet<>());
+//            for (int j = 0; j < dim; j++) {
+//                C.get(i).add(j);
+//            }
+//
+//        }
+////        printC();
+//    }
 
     private void printC() {
         System.out.print("C = ");
-        for(int x = 0; x < size; x++) {
-            System.out.print(C.get(x).toString() + " ");
+        for (int x = 0; x < size; x++) {
+            System.out.print("{ ");
+            for(int y: C.get(x)) {
+                System.out.print(y + " ");
+            }
+            System.out.print("}  ");
         }
         System.out.println();
     }
 
-    private void printL() {
-        System.out.println("L = ");
-        for(int i = 0; i < dim; i++) {
-            for(int j = 0; j < size; j++) {
-                L.get(i).get(j).forEach(System.out::print);
-            }
-            System.out.println();
-        }
-    }
-
-    private void fillQ(){
-        int [] indices = new int[size];
+    private void fillQ() {
+        int[] indices = new int[size];
         for (int i = 0; i < size; ++i) {
             indices[i] = i;
         }
-        if(dim > 0) {
+        if (dim > 0) {
             sorter.lexSort(indices, 0, size, input, new int[size]);
         }
-        for(int i = 0; i < dim; i++) {
+        for (int i = 0; i < dim; i++) {
             System.arraycopy(sorter.indices, 0, Q[i], 0, size);
             scratchByKthObj = new int[size];
             sortIntByTthObj(0, size, i);
             scratchByKthObj = null;
 
         }
-        printQ();
+//        printQ();
     }
 
     private void printQ() {
-        for(int i = 0; i < dim; i++) {
+        for (int i = 0; i < dim; i++) {
             System.out.print("Q[" + i + "] = ");
             for (int x = 0; x < size; x++) {
                 System.out.print(Q[i][x] + " ");
@@ -210,5 +200,6 @@ final class SorterBOS extends Sorter {
     }
 
     @Override
-    protected void setParamAnalysis(boolean withLogging, PrintWriter out) throws FileNotFoundException {}
+    protected void setParamAnalysis(boolean withLogging, PrintWriter out) throws FileNotFoundException {
+    }
 }
