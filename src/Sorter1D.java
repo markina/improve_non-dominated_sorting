@@ -5,7 +5,7 @@ final class Sorter1D extends SorterFast {
     private final int[] indices;
     private final MergeSorter sorter;
 
-    public Sorter1D(int size) {
+    Sorter1D(int size) {
         super(size, 1);
         indices = new int[size];
         sorter = new MergeSorter(size);

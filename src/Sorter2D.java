@@ -7,7 +7,7 @@ final class Sorter2D extends SorterFast {
     private final int[] frontTails;
     private final MergeSorter sorter;
 
-    public Sorter2D(int size) {
+    Sorter2D(int size) {
         super(size, 2);
         indices = new int[size];
         eqComp = new int[size];

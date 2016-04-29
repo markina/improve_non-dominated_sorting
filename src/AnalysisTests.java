@@ -10,9 +10,9 @@ import java.util.Random;
 
 public class AnalysisTests {
 
-    static Random rng = new Random(366239);
+    private static Random rng = new Random(366239);
 
-    static double[][] genHypercube(int dim, int size) {
+    private static double[][] genHypercube(int dim, int size) {
         double[][] rv = new double[size][dim];
         for(int i = 0; i < size; i++) {
             for(int j = 0; j < dim; j++) {
@@ -22,9 +22,9 @@ public class AnalysisTests {
         return rv;
     }
 
-    static void timing(Sorter sorter,
-                       double[][] input,
-                       PrintWriter out) throws IllegalAccessException, FileNotFoundException {
+    private static void timing(Sorter sorter,
+                               double[][] input,
+                               PrintWriter out) throws IllegalAccessException, FileNotFoundException {
         ThreadMXBean bean = ManagementFactory.getThreadMXBean();
         bean.setThreadCpuTimeEnabled(true);
         boolean good_time = false;
@@ -46,7 +46,7 @@ public class AnalysisTests {
         }
     }
 
-    public static void logging(String prefix, double[][] input) throws IllegalAccessException, FileNotFoundException {
+    private static void logging(String prefix, double[][] input) throws IllegalAccessException, FileNotFoundException {
         PrintWriter out = new PrintWriter(prefix + "_data.txt");
         int size = input.length;
         int dim = size == 0 ? 0 : input[0].length;
@@ -74,13 +74,13 @@ public class AnalysisTests {
         in.close();
     }
 
-    public static void timing_fast(String prefix) throws Exception {
+    private static void timing_fast(String prefix) throws Exception {
         FasterNonDominatedSorting sorterFactory = new FasterNonDominatedSorting();
         String suffix = "fast";
         init_timing(sorterFactory, prefix, suffix);
     }
 
-    public static void timing_bos(String prefix) throws Exception {
+    private static void timing_bos(String prefix) throws Exception {
         BOSNonDominatedSorting sorterFactory = new BOSNonDominatedSorting();
         String suffix = "bos";
         init_timing(sorterFactory, prefix, suffix);
@@ -94,25 +94,25 @@ public class AnalysisTests {
         timing_bos(name);
     }
 
-    static class AggregationStruct {
+    private static class AggregationStruct {
         int N, M;
         long t_fast, t_bos;
         int n_fast, n_bos;
         long speed_fast, speed_bos;
 
-        public AggregationStruct(int size, int dim) {
+        AggregationStruct(int size, int dim) {
             N = size;
             M = dim;
         }
 
-        public void setFastInfo(long time, int cnt) {
+        void setFastInfo(long time, int cnt) {
             t_fast = time;
             n_fast = cnt;
             speed_fast = t_fast / n_fast;
             Assert.check(speed_fast > 0);
         }
 
-        public void setBOSInfo(long time, int cnt) {
+        void setBOSInfo(long time, int cnt) {
             t_bos = time;
             n_bos = cnt;
             speed_bos = t_bos / n_bos;
@@ -127,7 +127,7 @@ public class AnalysisTests {
         }
     }
 
-    public static List<AggregationStruct> get_aggregation_info(String prefix) throws Exception {
+    private static List<AggregationStruct> get_aggregation_info(String prefix) throws Exception {
         Reader in_fast = new Reader(prefix + "_time_fast.txt");
         Reader in_bos = new Reader(prefix + "_time_bos.txt");
         List<AggregationStruct> res = new ArrayList<>();
@@ -173,7 +173,7 @@ public class AnalysisTests {
         out_bos_better.close();
     }
 
-    public static void aggregation_result(String prefix) throws Exception {
+    private static void aggregation_result(String prefix) throws Exception {
         List<AggregationStruct> res = get_aggregation_info(prefix);
         print_result(prefix, res);
         print_statistic(prefix, res);

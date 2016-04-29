@@ -4,19 +4,19 @@ import java.util.*;
 
 // Best Order Sort sorter
 final class SorterBOS extends Sorter {
-    List<List<Set<Integer>>> L = null;
-    List<Set<Integer>> C = null;
-    boolean [] isRanked = null;
-    int SC;
-    int RC;
-    int [][] Q = null;
-    int[] scratchByKthObj;
+    private List<List<Set<Integer>>> L = null;
+    private List<Set<Integer>> C = null;
+    private boolean [] isRanked = null;
+    private int SC;
+    private int RC;
+    private int [][] Q = null;
+    private int[] scratchByKthObj;
 
     private double[][] input;
     private int[] output;
     MergeSorter sorter;
 
-    public SorterBOS(int size, int dim) {
+    SorterBOS(int size, int dim) {
         super(size, dim);
         initL();
         C = new ArrayList<>(size);
@@ -54,10 +54,14 @@ final class SorterBOS extends Sorter {
                 break;
             }
         }
-//        System.out.print("output = ");
-//        for(int i = 0; i < size; i++) {
-//            System.out.print(this.output[i] + " ");
-//        }
+        // printOutput();
+    }
+
+    private void printOutput() {
+        System.out.print("output = ");
+        for(int i = 0; i < size; i++) {
+            System.out.print(output[i] + " ");
+        }
     }
 
     private void findRank(int s, int j) {
@@ -129,11 +133,25 @@ final class SorterBOS extends Sorter {
             }
 
         }
-//        System.out.print("C = ");
-//        for(int x = 0; x < size; x++) {
-//            System.out.print(C.get(x).toString() + " ");
-//        }
-//        System.out.println();
+        printC();
+    }
+
+    private void printC() {
+        System.out.print("C = ");
+        for(int x = 0; x < size; x++) {
+            System.out.print(C.get(x).toString() + " ");
+        }
+        System.out.println();
+    }
+
+    private void printL() {
+        System.out.println("L = ");
+        for(int i = 0; i < dim; i++) {
+            for(int j = 0; j < size; j++) {
+                L.get(i).get(j).forEach(System.out::print);
+            }
+            System.out.println();
+        }
     }
 
     private void fillQ(){
@@ -150,14 +168,18 @@ final class SorterBOS extends Sorter {
             sortIntByTthObj(0, size, i);
             scratchByKthObj = null;
 
-//            System.out.print("Q[" + i + "] = ");
-//            for(int x = 0; x < size; x++) {
-//                System.out.print(Q[i][x] + " ");
-//            }
-//            System.out.println();
         }
+        printQ();
+    }
 
-
+    private void printQ() {
+        for(int i = 0; i < dim; i++) {
+            System.out.print("Q[" + i + "] = ");
+            for (int x = 0; x < size; x++) {
+                System.out.print(Q[i][x] + " ");
+            }
+            System.out.println();
+        }
     }
 
     private void sortIntByTthObj(int from, int until, int t) {

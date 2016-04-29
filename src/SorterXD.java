@@ -14,8 +14,8 @@ final class SorterXD extends SorterFast {
 
     private final Random random = new Random();
 
-    boolean logging = false;
-    int id = 0;
+    private boolean logging = false;
+    private int id = 0;
     PrintWriter out = null;
 
     private final TreeSet<Integer> set = new TreeSet<>(new Comparator<Integer>() {
@@ -30,7 +30,7 @@ final class SorterXD extends SorterFast {
         }
     });
 
-    public SorterXD(int size, int dim) {
+    SorterXD(int size, int dim) {
         super(size, dim);
         indices = new int[size];
         eqComp = new int[size];

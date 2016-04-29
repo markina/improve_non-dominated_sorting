@@ -3,7 +3,7 @@ import java.util.Arrays;
 
 // 0D sorter: zero out the answer.
 final class Sorter0D extends SorterFast {
-    public Sorter0D(int size) {
+    Sorter0D(int size) {
         super(size, 0);
     }
 

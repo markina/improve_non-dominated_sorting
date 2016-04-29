@@ -2,7 +2,7 @@ import java.util.Random;
 
 public class StressTest {
 
-    static void stressTest(int N, int M, boolean doRundomNM) {
+    private static void stressTest(int N, int M, boolean doRundomNM) {
         Random rnd = new Random();
 
         if(doRundomNM) {

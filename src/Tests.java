@@ -31,7 +31,7 @@ public class Tests {
         }
     }
 
-    static void groupCheck(String title, double[][] input, int[] output) {
+    private static void groupCheck(String title, double[][] input, int[] output) {
         int[] output2 = new int[output.length * 2];
         System.arraycopy(output, 0, output2, 0, output.length);
         System.arraycopy(output, 0, output2, output.length, output.length);
@@ -72,7 +72,7 @@ public class Tests {
         }
     }
 
-    static double[][] arrayFill(int dim1, int dim2, double value) {
+    private static double[][] arrayFill(int dim1, int dim2, double value) {
         double[][] rv = new double[dim1][dim2];
         for(double[] ar : rv) {
             Arrays.fill(ar, value);
@@ -80,13 +80,13 @@ public class Tests {
         return rv;
     }
 
-    static int[] arrayFill(int dim, int value) {
+    private static int[] arrayFill(int dim, int value) {
         int[] rv = new int[dim];
         Arrays.fill(rv, value);
         return rv;
     }
 
-    static double[][] getForWorstCase3(int size) {
+    private static double[][] getForWorstCase3(int size) {
 
         double[][] res = new double[size][3];
         for(int i = 0; i < size; i++) {
@@ -97,14 +97,14 @@ public class Tests {
         return res;
     }
 
-    static double[][] concat(double[][] a, double[][] b) {
+    private static double[][] concat(double[][] a, double[][] b) {
         double[][] rv = new double[a.length + b.length][];
         System.arraycopy(a, 0, rv, 0, a.length);
         System.arraycopy(b, 0, rv, a.length, b.length);
         return rv;
     }
 
-    static int[] concat(int[] a, int[] b) {
+    private static int[] concat(int[] a, int[] b) {
         int[] rv = new int[a.length + b.length];
         System.arraycopy(a, 0, rv, 0, a.length);
         System.arraycopy(b, 0, rv, a.length, b.length);
@@ -141,7 +141,7 @@ public class Tests {
         groupCheck("two incomparable 2D points", new double[][]{{2, 1}, {1, 2}}, new int[]{0, 0});
         groupCheck("two 2D points dominated increasingly", new double[][]{{1, 1}, {1, 2}}, new int[]{0, 1});
         groupCheck("two 2D points dominated decreasingly", new double[][]{{0, 2}, {0, 2}, {0, 1}, {0, 2}, {0, 3}}, new int[]{1, 1, 0, 1, 2});
-        groupCheck("two 2D points dominated decreasingly", new double[][]{{1, 2}, {1, 1}}, new int[]{1, 0}); // TODO
+        groupCheck("two 2D points dominated decreasingly", new double[][]{{1, 2}, {1, 1}}, new int[]{1, 0});
 
         hypercube.callOn(2, 10, (i, o) -> groupCheck("2D-hypercube of size 10", i, o));
         hypercube.callOn(3, 8, (i, o) -> groupCheck("3D-hypercube of size 8", i, o));
@@ -291,7 +291,7 @@ public class Tests {
     private static class Hypercube {
         Random rng = new Random(366239);
 
-        public void callOn(int dim, int size, BiConsumer<double[][], int[]> whatToCall) {
+        void callOn(int dim, int size, BiConsumer<double[][], int[]> whatToCall) {
             double[][] cube = genShuffledHypercube(dim, size);
             int[] sums = new int[cube.length];
             for(int i = 0; i < cube.length; ++i) {

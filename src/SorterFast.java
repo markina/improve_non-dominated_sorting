@@ -1,5 +1,5 @@
-public abstract class SorterFast  extends Sorter {
-    public SorterFast(int size, int dim) {
+abstract class SorterFast  extends Sorter {
+    SorterFast(int size, int dim) {
         super(size, dim);
     }
 
