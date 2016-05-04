@@ -1,0 +1,225 @@
+\documentclass{beamer}
+\usetheme{CambridgeUS}
+
+%\documentclass[handout]{beamer}
+%\usetheme{Pittsburgh}
+%\beamertemplatesolidbackgroundcolor{black!2}
+%\setbeamertemplate{footline}[frame number]
+%\usepackage{pgfpages}
+%%\pgfpagesuselayout{4 on 1}[a4paper,border shrink=5mm,landscape]
+%\pgfpagesuselayout{8 on 1}[a4paper,border shrink=5mm]
+
+%%% PACKAGES
+\usepackage[russian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{graphics}
+
+%%% BEAMER SETTINGS
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{headline}{}
+
+%%% TIKZ SETTINGS
+\usetikzlibrary{fit}
+
+%%% NEW COMMANDS
+\def\pitem{\pause \item}
+
+\DeclareGraphicsRule{.1}{mps}{*}{}
+\DeclareGraphicsRule{.2}{mps}{*}{}
+\DeclareGraphicsRule{.3}{mps}{*}{}
+\DeclareGraphicsRule{.4}{mps}{*}{}
+\DeclareGraphicsRule{.5}{mps}{*}{}
+\DeclareGraphicsRule{.6}{mps}{*}{}
+
+%\includeonlyframes{current} % leaves only the given frames
+
+\title[Гибридный алгоритм недоминирующей сортировки]{Разработка гибридного алгоритма недоминирующей сортировки}
+%\transduration{20}
+\author[Маргарита Маркина]{Маргарита Маркина}
+\institute[Университет ИТМО]{Национальный исследовательский университет информационных технологий, механики и оптики}
+\date{}
+
+\begin{document}
+
+\begin{frame}
+%\transduration{20}
+\begin{center}
+{\scriptsize Санкт-Петербургский национальный исследовательский университет \\ информационных технологий, механики и оптики}
+
+\vspace{1cm}
+
+{\scriptsize Факультет информационных технологий и программирования
+
+Кафедра компьютерных технологий}
+
+\vspace{1cm}
+
+\vbox{\large\bfseries
+Разработка гибридного алгоритма недоминирующей сортировки}
+
+\vspace{1cm}
+
+{\large Маркина Маргарита Анатольевна \\}
+{\large Группа M3438}
+
+
+\vspace{1cm}
+
+{\large Научный руководитель: к.т.н. доцент кафедры КТ \\}
+{\large М.~B.~Буздалов}
+
+
+\end{center}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\frame[label=title]{\titlepage}
+
+\begin{frame}{Решаемая проблема}
+%\transduration{20}
+\begin{block}{Предметная область}
+\begin{itemize}
+\item aaa.
+\item aaa.
+\item aaa.
+\item aaa.
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Решаемая проблема}
+%\transduration{20}
+\begin{block}{Введение}
+\begin{itemize}
+\item aaa.
+\item aaa.
+\item aaa.
+\begin{center}
+%\includegraphics*[height=3cm]{pic/illustrations.5}
+\end{center}
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Решаемая проблема}
+%\transduration{20}
+\begin{block}{Цель исследования}
+\begin{itemize}
+\item aaa.
+\item aaa.
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Постановка задачи}
+%\transduration{20}
+\begin{block}{Aaa $EA + RL$}
+\begin{center}
+%\includegraphics*[height=3cm]{pic/illustrations.6}
+\end{center}
+\begin{itemize}
+\item $RL$: aaa.
+\item $MO$: aaa.
+\item $MO$: aaa.
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Решение}
+%\transduration{20}
+\begin{block}{Aaaaaa $O(N^2 \log N)$}
+\begin{itemize}
+\item Aaaa $N$ aaa
+\item Aaaa
+\item Aaaaaa
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Практические результаты}
+%\transduration{20}
+\begin{block}{Эксперименты}
+Алгоритм запускался $100\,000$ раз при $N \in \{10, 20, 30, 40, 60\}$
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{r|c|c|c|c}
+$N$ & Среднее & Дисперсия & $2eN \ln N$ & $\frac{16e^2}{7}N \ln N$ \\\hline
+10 & 98.33 & 36.30 & 125.18 & 388.89 \\
+20 & 269.90 & 78.11 & 325.73 & 1011.91 \\
+30 & 476.38 & 121.37 & 554.72 & 1723.31 \\
+40 & 704.24 & 163.87 & 802.19 & 2492.10 \\
+50 & 950.93 & 208.66 & 1063.40 & 3303.56 \\
+60 & 1209.98 & 251.52 & 1335.55 & 4149.03
+\end{tabular}
+\end{center}
+\end{table}
+\end{block}
+\end{frame}
+
+\begin{frame}{Практические результаты}
+%\transduration{20}
+\begin{block}{Эксперименты}
+
+Aaaa aaaaaaa a a a aaaaa a aaaaaaaaa $N = 2$ и $N = 3$, aa aaaaaaa a $4 \leq N \leq 20$ и, aaaaa, aaaaaa $N$ тоже.
+
+\begin{table}
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|} \hline
+N    & 4    & 5    & 6    & 7    & 8    & 9    & 10   & 11   & 12   \\\hline
+diff & 0.03 & 0.10 & 0.15 & 0.18 & 0.20 & 0.21 & 0.23 & 0.24 & 0.25 \\\hline
+\end{tabular}
+\end{center}
+\end{table}
+\begin{table}
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|} \hline
+N    & 13   & 14   & 15   & 16   & 17   & 18   & 19   & 20   \\\hline
+diff & 0.25 & 0.26 & 0.27 & 0.27 & 0.27 & 0.28 & 0.28 & 0.28 \\\hline
+\end{tabular}
+\end{center}
+\end{table}
+\end{block}
+\end{frame}
+
+
+\begin{frame}{Полученные результаты}
+%\transduration{20}
+\begin{block}{}
+\begin{itemize}
+\item Aaaaaaaa.
+\item Aaaaaaaa.
+\item Aaaaaaaa aaaaa.
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Дальнейшие действия}
+%\transduration{20}
+\begin{block}{}
+\begin{itemize}
+\item Aaaaa.
+\item Aaaaaaa aaaa.
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{}
+\begin{center}
+Спасибо за внимание!
+\end{center}
+\end{frame}
+
+\begin{frame}{Дополнительные материалы}
+%\transduration{20}
+\begin{block}{Aaaaa}
+Пример aaaa для $N = 3$
+\begin{center}
+%\includegraphics[height=5cm]{pic/illustrations.2}
+\end{center}
+\end{block}
+\end{frame}
+
+\end{document}
