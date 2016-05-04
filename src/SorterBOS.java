@@ -59,7 +59,7 @@ final class SorterBOS extends Sorter {
                 break;
             }
         }
-        // printOutput();
+//         printOutput();
     }
 
     private void printOutput() {
@@ -77,11 +77,13 @@ final class SorterBOS extends Sorter {
             int m = (l + r) / 2;
             check = false;
             for (Integer t : L.get(j, m)) {
+//                System.out.print(t + " ");
                 check = dominationCheck(s, t);
                 if (check) {
                     break;
                 }
             }
+//            System.out.println();
             if (!check) {
                 r = m;
             } else {

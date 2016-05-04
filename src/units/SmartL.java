@@ -2,9 +2,9 @@ package units;
 
 // List<List<Set<Integer>>>
 public class SmartL {
-    int dim;
-    int size;
-    RefStruct [] L; // TODO a strange test inherited from old git-based NGP
+    private int dim;
+    private int size;
+    private RefStruct [] L;
 
 
     public SmartL(int dim, int size) {
@@ -89,8 +89,8 @@ public class SmartL {
             res[cnt] = elems[refToLast[rank]];
             cnt--;
             while (p != -1) {
+                res[cnt] = elems[p];
                 p = pref[p];
-                res[cnt] = elems[refToLast[rank]];
                 cnt--;
             }
             return res;
