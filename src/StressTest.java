@@ -27,6 +27,16 @@ public class StressTest {
         }
     }
 
+    private static void stressTest(double[][] input) {
+        try {
+            Tests.checkEqual(
+                    Tests.findFrontIndices(input, new FasterNonDominatedSorting()),
+                    Tests.findFrontIndices(input, new BOSNonDominatedSorting()));
+            System.out.println("Stress test passed");
+        } catch(AssertionError er) {
+            throw new AssertionError("Error in stress test : " + er.getMessage());
+        }
+    }
 
     public static void main(String[] args) {
         stressTest(6, 2, false);
@@ -59,7 +69,8 @@ public class StressTest {
             stressTest(100000, 3, false);
         }
 
+
         System.out.println();
-        System.out.println("Stress tests passed");
+        System.out.println("All stress tests passed");
     }
 }

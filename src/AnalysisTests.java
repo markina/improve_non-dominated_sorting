@@ -15,8 +15,8 @@ public class AnalysisTests {
 
     private static double[][] genHypercube(int dim, int size) {
         double[][] rv = new double[size][dim];
-        for(int i = 0; i < size; i++) {
-            for(int j = 0; j < dim; j++) {
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < dim; j++) {
                 rv[i][j] = rng.nextDouble();
             }
         }
@@ -30,14 +30,14 @@ public class AnalysisTests {
         bean.setThreadCpuTimeEnabled(true);
         boolean good_time = false;
         int cur_n = 1;
-        while(!good_time) {
+        while (!good_time) {
             long start = bean.getCurrentThreadUserTime();
-            for(int i = 0; i < cur_n; i++) {
-                int [] rv = new int[input.length];
+            for (int i = 0; i < cur_n; i++) {
+                int[] rv = new int[input.length];
                 sorter.sort(input, rv);
             }
             long end = bean.getCurrentThreadUserTime();
-            if(end - start > 100000000) {
+            if (end - start > 100000000) {
                 out.print(end - start + " ");
                 out.println(cur_n);
                 good_time = true;
@@ -62,7 +62,7 @@ public class AnalysisTests {
     private static void init_timing(FactoryNonDominatedSorting sorterFactory, String prefix, String suffix) throws Exception {
         Reader in = new Reader(prefix + "_data.txt");
         PrintWriter out = new PrintWriter(prefix + "_time_" + suffix + ".txt");
-        while(in.hasMore()) {
+        while (in.hasMore()) {
             int id = in.nextInt();
             double[][] input = in.getNextData();
             out.print(id + " " +
@@ -88,8 +88,8 @@ public class AnalysisTests {
     }
 
 
-    public static void test_cube(int N, int M) throws Exception {
-        String name = "cube" + "_" + N + "_" + M;
+    private static void test_cube(int N, int M) throws Exception {
+        String name = "cube" + "_" + N + "_" + M + "_opt";
         logging(name, AnalysisTests.genHypercube(M, N));
         timing_fast(name);
         timing_bos(name);
@@ -132,8 +132,8 @@ public class AnalysisTests {
         Reader in_fast = new Reader(prefix + "_time_fast.txt");
         Reader in_bos = new Reader(prefix + "_time_bos.txt");
         List<AggregationStruct> res = new ArrayList<>();
-        while(in_fast.hasMore()) {
-            Assert.check(in_bos.hasMore(), prefix + "_time_bos.txt" + "ended");
+        while (in_fast.hasMore()) {
+            Assert.check(in_bos.hasMore(), prefix + "_time_bos.txt" + " ended");
             int id = in_fast.nextInt();
             int id_bos = in_bos.nextInt();
             Assert.check(id == id_bos, "Bad id");
@@ -156,11 +156,11 @@ public class AnalysisTests {
         PrintWriter out_fast_better = new PrintWriter(prefix + "_result_fast_better" + ".txt");
         PrintWriter out_bos_better = new PrintWriter(prefix + "_result_bos_better" + ".txt");
 
-        int [] cnt_success_fast = new int[res.get(0).N + 1];
+        int[] cnt_success_fast = new int[res.get(0).N + 1];
 
-        for(AggregationStruct elem : res) {
-            if(elem.speed_bos / elem.speed_fast >= 10 || elem.speed_fast / elem.speed_bos >= 10) {
-                if(elem.speed_bos < elem.speed_fast) {
+        for (AggregationStruct elem : res) {
+            if (elem.speed_bos / elem.speed_fast >= 10 || elem.speed_fast / elem.speed_bos >= 10) {
+                if (elem.speed_bos < elem.speed_fast) {
                     out_fast_better.print(elem.toString());
                     out_fast_better.println("----");
                     cnt_success_fast[elem.N]++;
@@ -184,12 +184,12 @@ public class AnalysisTests {
     private static void print_statistic(String prefix, List<AggregationStruct> res) throws FileNotFoundException {
 
         int N = res.get(0).N;
-        int [] cnt_success_fast = new int[N + 1];
-        int [] cnt_success_bos = new int[N + 1];
+        int[] cnt_success_fast = new int[N + 1];
+        int[] cnt_success_bos = new int[N + 1];
 
-        for(AggregationStruct elem : res) {
-            if(elem.speed_bos / elem.speed_fast >= 10 || elem.speed_fast / elem.speed_bos >= 10) {
-                if(elem.speed_bos < elem.speed_fast) {
+        for (AggregationStruct elem : res) {
+            if (elem.speed_bos / elem.speed_fast >= 10 || elem.speed_fast / elem.speed_bos >= 10) {
+                if (elem.speed_bos < elem.speed_fast) {
                     cnt_success_fast[elem.N]++;
                 } else {
                     cnt_success_bos[elem.N]++;
@@ -200,8 +200,8 @@ public class AnalysisTests {
         PrintWriter out_fast = new PrintWriter(prefix + "_statistic_fast" + ".txt");
         PrintWriter out_bos = new PrintWriter(prefix + "_statistic_bos" + ".txt");
 
-        for(int i = 0; i < N + 1; i++) {
-            if(cnt_success_fast[i] != 0 || cnt_success_bos[i] != 0) {
+        for (int i = 0; i < N + 1; i++) {
+            if (cnt_success_fast[i] != 0 || cnt_success_bos[i] != 0) {
                 out_fast.println(i + " " + cnt_success_fast[i]);
                 out_bos.println(i + " " + cnt_success_bos[i]);
             }
@@ -212,7 +212,10 @@ public class AnalysisTests {
 
     public static void main(String[] args) throws Exception {
 //        test_cube(100000, 20);
-        aggregation_result("cube_100000_20");
+//        aggregation_result("cube_100000_20_opt");
+
+        test_cube(10, 5);
+//        aggregation_result("cube_10_5_opt");
 
     }
 

@@ -17,6 +17,12 @@ public class SmartL {
         }
     }
 
+    public void init() {
+        for (int x = 0; x < dim; x++) {
+            L[x].init();
+        }
+    }
+
     public int[] get(int dim_i, int rank_i) {
         return L[dim_i].get(rank_i);
     }
@@ -44,17 +50,22 @@ public class SmartL {
         int[] refToLast; // null == -1
         int[] pref;      // null == -1
         int[] elems;
-        int last_id = 0;
+        int last_id;
 
         RefStruct(int size) {
             refToLast = new int[size];
             pref = new int[size];
             elems = new int[size]; // empty == -1
+            init();
+        }
+
+        void init() {
             for (int i = 0; i < size; i++) {
                 refToLast[i] = -1;
                 pref[i] = -1;
                 elems[i] = -1;
             }
+            last_id = 0;
         }
 
         void add(int rank, int s) {
@@ -95,6 +106,8 @@ public class SmartL {
             }
             return res;
         }
+
+
     }
 
 

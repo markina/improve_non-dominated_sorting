@@ -22,24 +22,30 @@ final class SorterBOS extends Sorter {
     SorterBOS(int size, int dim) {
         super(size, dim);
         L = new SmartL(dim, size);
-
         C = new SmartC(size, dim);
         isRanked = new boolean[size];
-        Arrays.fill(isRanked, false);
         output = new int[size];
-        Arrays.fill(output, -1);
         Q = new int[dim][size];
+        sorter = new MergeSorter(size);
+        initAll();
+    }
+
+    private void initAll() {
+        L.init();
+        C.init();
+        Arrays.fill(isRanked, false);
+        Arrays.fill(output, 0);
         SC = 0;
         RC = 1;
-        sorter = new MergeSorter(size);
+
     }
 
     protected void sortImpl(double[][] input, int[] output) {
         this.input = input;
         this.output = output;
 
+        initAll();
         fillQ();
-//        fillC();
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < dim; j++) {
@@ -52,8 +58,7 @@ final class SorterBOS extends Sorter {
                     isRanked[s] = true;
                     SC++;
                 }
-                C.removeFrom(s, j); //
-//                printC();
+                C.removeFrom(s, j);
             }
             if (SC == size) {
                 break;
@@ -62,11 +67,14 @@ final class SorterBOS extends Sorter {
 //         printOutput();
     }
 
+
+
     private void printOutput() {
         System.out.print("output = ");
         for (int i = 0; i < size; i++) {
             System.out.print(output[i] + " ");
         }
+        System.out.println();
     }
 
     private void findRank(int s, int j) {

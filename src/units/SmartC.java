@@ -2,12 +2,22 @@ package units;
 
 //List<Set<Integer>>
 public class SmartC {
-    SetOnArray [] C = null;
+    private SetOnArray [] C = null;
+    private int size;
+//    private int dim;
 
     public SmartC(int size, int dim) {
+        this.size = size;
+//        this.dim = dim;
         C = new SetOnArray[size];
         for(int i = 0; i < size; i++) {
             C[i] = new SetOnArray(dim);
+        }
+    }
+
+    public void init() {
+        for(int i = 0; i < size; i++) {
+            C[i].init();
         }
     }
 
@@ -23,10 +33,16 @@ public class SmartC {
         int cnt;
         int [] elems;
         boolean [] flags;
+        int dim;
 
         SetOnArray(int dim) {
+            this.dim = dim;
             elems = new int[dim];
             flags = new boolean[dim];
+            init();
+        }
+
+        void init() {
             cnt = dim;
             for(int i = 0; i < dim; i++) {
                 elems[i] = i;
@@ -56,6 +72,7 @@ public class SmartC {
         void remove(int j) {
             flags[j] = false;
         }
+
 
     }
 }

@@ -47,28 +47,28 @@ public class Tests {
             checkEqual(output, findFrontIndices(input, fastFactory));
             System.out.println("Raw test '" + title + "' passed");
         } catch(AssertionError er) {
-            throw new AssertionError("Error in raw test '" + title + "': " + er.getMessage());
+            throw new AssertionError("Fast: Error in raw test '" + title + "': " + er.getMessage());
         }
 
         try {
             checkEqual(output, findFrontIndices(input, bosFactory));
             System.out.println("Raw test '" + title + "' passed");
         } catch(AssertionError er) {
-            throw new AssertionError("Error in raw test '" + title + "': " + er.getMessage());
+            throw new AssertionError("BOS: Error in raw test '" + title + "': " + er.getMessage());
         }
 
         try {
             checkEqual(output2, findFrontIndices(input2, fastFactory));
             System.out.println("Duplicate test '" + title + "' passed");
         } catch(AssertionError er) {
-            throw new AssertionError("Error in duplicate test '" + title + "': " + er.getMessage());
+            throw new AssertionError("Fast: Error in duplicate test '" + title + "': " + er.getMessage());
         }
 
         try {
             checkEqual(output2, findFrontIndices(input2, bosFactory));
             System.out.println("Duplicate test '" + title + "' passed");
         } catch(AssertionError er) {
-            throw new AssertionError("Error in duplicate test '" + title + "': " + er.getMessage());
+            throw new AssertionError("BOS: Error in duplicate test '" + title + "': " + er.getMessage());
         }
     }
 
@@ -284,6 +284,7 @@ public class Tests {
 
 
         groupCheck("worst case from paper BOS", getForWorstCase3(10000), new int[10000]);
+
         System.out.println();
         System.out.println("Tests passed");
     }
