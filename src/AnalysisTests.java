@@ -89,10 +89,11 @@ public class AnalysisTests {
 
 
     private static void test_cube(int N, int M) throws Exception {
-        String name = "cube" + "_" + N + "_" + M + "_opt";
+        String name = "cube_opt" + "_" + N + "_" + M;
         logging(name, AnalysisTests.genHypercube(M, N));
         timing_fast(name);
         timing_bos(name);
+        aggregation_result(name);
     }
 
     private static class AggregationStruct {
@@ -142,6 +143,7 @@ public class AnalysisTests {
             int N_bos = in_bos.nextInt(), M_bos = in_bos.nextInt();
             Assert.check(N == N_bos, "N from fast != N from bos for id = " + id);
             Assert.check(M == M_bos, "N from fast != N from bos for id = " + id);
+
             AggregationStruct elem = new AggregationStruct(N, M);
             elem.setFastInfo(in_fast.nextLong(), in_fast.nextInt());
             elem.setBOSInfo(in_bos.nextLong(), in_bos.nextInt());
@@ -152,70 +154,59 @@ public class AnalysisTests {
         return res;
     }
 
+
+
     private static void print_result(String prefix, List<AggregationStruct> res) throws FileNotFoundException {
-        PrintWriter out_fast_better = new PrintWriter(prefix + "_result_fast_better" + ".txt");
-        PrintWriter out_bos_better = new PrintWriter(prefix + "_result_bos_better" + ".txt");
+        PrintWriter out = new PrintWriter(prefix + "_result.txt");
 
-        int[] cnt_success_fast = new int[res.get(0).N + 1];
-
-        for (AggregationStruct elem : res) {
-            if (elem.speed_bos / elem.speed_fast >= 10 || elem.speed_fast / elem.speed_bos >= 10) {
-                if (elem.speed_bos < elem.speed_fast) {
-                    out_fast_better.print(elem.toString());
-                    out_fast_better.println("----");
-                    cnt_success_fast[elem.N]++;
-                } else {
-                    out_bos_better.print(elem.toString());
-                    out_bos_better.println("****");
-                }
+        for(AggregationStruct elem : res) {
+            out.print(elem.toString());
+            if(elem.speed_bos < elem.speed_fast) {
+                out.println("----");
+            } else {
+                out.println("****");
             }
         }
-        out_fast_better.close();
-        out_bos_better.close();
+        out.close();
     }
 
     private static void aggregation_result(String prefix) throws Exception {
         List<AggregationStruct> res = get_aggregation_info(prefix);
         print_result(prefix, res);
-        print_statistic(prefix, res);
-
     }
 
-    private static void print_statistic(String prefix, List<AggregationStruct> res) throws FileNotFoundException {
-
-        int N = res.get(0).N;
-        int[] cnt_success_fast = new int[N + 1];
-        int[] cnt_success_bos = new int[N + 1];
-
-        for (AggregationStruct elem : res) {
-            if (elem.speed_bos / elem.speed_fast >= 10 || elem.speed_fast / elem.speed_bos >= 10) {
-                if (elem.speed_bos < elem.speed_fast) {
-                    cnt_success_fast[elem.N]++;
-                } else {
-                    cnt_success_bos[elem.N]++;
-                }
-            }
-        }
-
-        PrintWriter out_fast = new PrintWriter(prefix + "_statistic_fast" + ".txt");
-        PrintWriter out_bos = new PrintWriter(prefix + "_statistic_bos" + ".txt");
-
-        for (int i = 0; i < N + 1; i++) {
-            if (cnt_success_fast[i] != 0 || cnt_success_bos[i] != 0) {
-                out_fast.println(i + " " + cnt_success_fast[i]);
-                out_bos.println(i + " " + cnt_success_bos[i]);
-            }
-        }
-        out_fast.close();
-        out_bos.close();
-    }
+//    private static void print_statistic(String prefix, List<AggregationStruct> res) throws FileNotFoundException {
+//        int N = res.get(0).N;
+//        int[] cnt_success_fast = new int[N + 1];
+//        int[] cnt_success_bos = new int[N + 1];
+//
+//        for (AggregationStruct elem : res) {
+//            if (elem.speed_bos / elem.speed_fast >= 10 || elem.speed_fast / elem.speed_bos >= 10) {
+//                if (elem.speed_bos < elem.speed_fast) {
+//                    cnt_success_fast[elem.N]++;
+//                } else {
+//                    cnt_success_bos[elem.N]++;
+//                }
+//            }
+//        }
+//
+//        PrintWriter out_fast = new PrintWriter(prefix + "_statistic_fast" + ".txt");
+//        PrintWriter out_bos = new PrintWriter(prefix + "_statistic_bos" + ".txt");
+//
+//        for (int i = 0; i < N + 1; i++) {
+//            if (cnt_success_fast[i] != 0 || cnt_success_bos[i] != 0) {
+//                out_fast.println(i + " " + cnt_success_fast[i]);
+//                out_bos.println(i + " " + cnt_success_bos[i]);
+//            }
+//        }
+//        out_fast.close();
+//        out_bos.close();
+//    }
 
     public static void main(String[] args) throws Exception {
-//        test_cube(100000, 20);
-//        aggregation_result("cube_100000_20_opt");
+        test_cube(100000, 20);
+//        test_cube(10, 5);
 
-        test_cube(10, 5);
-//        aggregation_result("cube_10_5_opt");
 
     }
 
