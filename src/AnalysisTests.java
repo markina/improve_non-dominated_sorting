@@ -1,4 +1,3 @@
-import com.sun.tools.javac.util.Assert;
 import units.Reader;
 
 import java.io.FileNotFoundException;
@@ -10,6 +9,20 @@ import java.util.List;
 import java.util.Random;
 
 public class AnalysisTests {
+
+    private static void check(boolean v) {
+        if(!v) {
+            throw new AssertionError();
+        }
+    }
+
+    private static void check(boolean v, String st) {
+        if(!v) {
+            throw new AssertionError(st);
+        }
+    }
+
+
 
     private static Random rng = new Random(366239);
 
@@ -111,14 +124,14 @@ public class AnalysisTests {
             t_fast = time;
             n_fast = cnt;
             speed_fast = t_fast / n_fast;
-            Assert.check(speed_fast > 0);
+            check(speed_fast > 0);
         }
 
         void setBOSInfo(long time, int cnt) {
             t_bos = time;
             n_bos = cnt;
             speed_bos = t_bos / n_bos;
-            Assert.check(speed_bos > 0);
+            check(speed_bos > 0);
         }
 
         @Override
@@ -134,15 +147,15 @@ public class AnalysisTests {
         Reader in_bos = new Reader(prefix + "_time_bos.txt");
         List<AggregationStruct> res = new ArrayList<>();
         while (in_fast.hasMore()) {
-            Assert.check(in_bos.hasMore(), prefix + "_time_bos.txt" + " ended");
+            check(in_bos.hasMore(), prefix + "_time_bos.txt" + " ended");
             int id = in_fast.nextInt();
             int id_bos = in_bos.nextInt();
-            Assert.check(id == id_bos, "Bad id");
-            Assert.check(res.size() == id, "Bad id");
+            check(id == id_bos, "Bad id");
+            check(res.size() == id, "Bad id");
             int N = in_fast.nextInt(), M = in_fast.nextInt();
             int N_bos = in_bos.nextInt(), M_bos = in_bos.nextInt();
-            Assert.check(N == N_bos, "N from fast != N from bos for id = " + id);
-            Assert.check(M == M_bos, "N from fast != N from bos for id = " + id);
+            check(N == N_bos, "N from fast != N from bos for id = " + id);
+            check(M == M_bos, "N from fast != N from bos for id = " + id);
 
             AggregationStruct elem = new AggregationStruct(N, M);
             elem.setFastInfo(in_fast.nextLong(), in_fast.nextInt());
@@ -204,7 +217,7 @@ public class AnalysisTests {
 //    }
 
     public static void main(String[] args) throws Exception {
-        test_cube(100000, 20);
+//        test_cube(100000, 20);
 //        test_cube(10, 5);
 
 
