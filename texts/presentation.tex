@@ -82,10 +82,10 @@
 %\transduration{20}
 \begin{block}{Предметная область}
 \begin{itemize}
-\item aaa.
-\item aaa.
-\item aaa.
-\item aaa.
+\item Недоминирующая сортировка.
+\item Многокритериальная задача оптимизации.
+\item Гибритизация алгоритмов.
+\item Оценка времени работы в худших случаях.
 \end{itemize}
 \end{block}
 \end{frame}
@@ -94,15 +94,35 @@
 %\transduration{20}
 \begin{block}{Введение}
 \begin{itemize}
-\item aaa.
-\item aaa.
-\item aaa.
-\begin{center}
-%\includegraphics*[height=3cm]{pic/illustrations.5}
-\end{center}
+\item Точка $A=(a_1,...,a_M)$ доминирует точку $B=(b_1,...,b_M)$, \\
+когда $\forall ~ 1 \leq i \leq M : a_i \leq b_i$ и $\exists j : a_j < b_j $.
+\item \textit{Недоминирующая сортировка} множества точек $S$ в $M$-мерном пространстве — это процедура, назначающая всем точкам из $S$ \textit{ранг}.
+\item Все точки, которые не доминируются ни одной точкой из $S$, имеют ранг 0.
+\item Все точки, которые доминируются хотя бы одной точкой с рангом $i$, имеют ранг $i+1$.
 \end{itemize}
 \end{block}
 \end{frame}
+
+
+\begin{frame}{Решаемая проблема}
+%\transduration{20}
+\begin{block}{Введение}
+\begin{center}
+\includegraphics*[height=6cm]{pic/non_dominated_sort.png}
+\end{center}
+\end{block}
+\end{frame}
+
+\begin{frame}{Решаемая проблема}
+%\transduration{20}
+\begin{block}{Актуальность}
+\begin{itemize}
+\item Многокритериальные эвалюционные алгоритмы. 
+\item Задача минимазациии.
+\end{itemize}
+\end{block}
+\end{frame}
+
 
 \begin{frame}{Решаемая проблема}
 %\transduration{20}
