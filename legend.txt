@@ -25,17 +25,17 @@ Tests:
 
 Figure:
 - figure_m=4.png
-        m1 = 7
-        m2 = 1561
+        n1 = 7
+        n2 = 1561
 - figure_m=6.png
-        m1 = 11
-        m2 = 9865
+        n1 = 11
+        n2 = 9865
 - figure_m=8.png
-        m1 = 11
-        m2 = 15805
+        n1 = 11
+        n2 = 15805
 - figure_m=20.png
-        m1 = 24
-        m2 = 6249
+        n1 = 24
+        n2 = 6249
 
 
 
