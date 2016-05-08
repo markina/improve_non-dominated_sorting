@@ -13,23 +13,32 @@
     id N M t n
 - агрегирование данных.
  Сравнение скоростей:
- (NAMETEST_N_M_time_result_fast_better.txt + NAMETEST_N_M_result_bos_better.txt)
+ (NAMETEST_N_M_time_result.txt)
     Фомат вывода:
     N M
     speed_fast (time_fast / n_fast)
     speed_bos (time_bos / n_bos)
-    ----
- Статистика:
- (NAMETEST_N_M_statistic_bos.txt, NAMETEST_N_M_statistic_fast.txt)
-    Формат вывода:
-    N cnt
-    cnt - сколько раз при количестве точек N был лучше алгоритм bos/fast
 
 Tests:
-- cube_10^5_20 - Hypercube random double.
-     Константа для сравнения скоростей = 10.
+- cube_OPT_10^5_20 - Hypercube random double.
      Поскольку все критерии различны, рассматривались M = 20 и 19.
-     Bos часто работает лучше для маленьких N <= 11
+
+Figure:
+- figure_m=4.png
+        m1 = 7
+        m2 = 1561
+- figure_m=6.png
+        m1 = 11
+        m2 = 9865
+- figure_m=8.png
+        m1 = 11
+        m2 = 15805
+- figure_m=20.png
+        m1 = 24
+        m2 = 6249
+
+
+
 
 
 

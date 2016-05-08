@@ -8,21 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static units.Assert.check;
+
 public class AnalysisTests {
-
-    private static void check(boolean v) {
-        if(!v) {
-            throw new AssertionError();
-        }
-    }
-
-    private static void check(boolean v, String st) {
-        if(!v) {
-            throw new AssertionError(st);
-        }
-    }
-
-
 
     private static Random rng = new Random(366239);
 
@@ -102,7 +90,7 @@ public class AnalysisTests {
 
 
     private static void test_cube(int N, int M) throws Exception {
-        String name = "cube_opt" + "_" + N + "_" + M;
+        String name = "cube" + "_" + N + "_" + M;
         logging(name, AnalysisTests.genHypercube(M, N));
         timing_fast(name);
         timing_bos(name);
@@ -217,10 +205,16 @@ public class AnalysisTests {
 //    }
 
     public static void main(String[] args) throws Exception {
-//        test_cube(100000, 20);
+        test_cube(100000, 2);
+//        test_cube(100000, 4);
+//        test_cube(100000, 6);
+//        test_cube(100000, 8);
+//        test_cube(100000, 10);
+//        test_cube(100000, 12);
+//        test_cube(100000, 14);
+//        test_cube(100000, 16);
+//        test_cube(100000, 18);
 //        test_cube(10, 5);
-
-
     }
 
 }
