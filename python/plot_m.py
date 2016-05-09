@@ -3,8 +3,8 @@ from matplotlib import pyplot as plt
 # постоение графика по name N M
 
 N = 100000
-M = 16
-name = "cube"
+M = 20
+name = "cube_opt"
 prefix = "_result.txt"
 
 full_name = name + "_" + str(N) + "_" + str(M) + prefix
