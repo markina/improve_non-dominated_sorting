@@ -24,6 +24,17 @@ public class AnalysisTests {
         return rv;
     }
 
+    static double[][] getOneRank(int N, int M) {
+        double[][] res = new double[N][M];
+        for(int i = 0; i < N; i++) {
+            for(int j = 0; j < M-1; j++) {
+                res[i][j] = j + i;
+            }
+            res[i][M-1] = N - i;
+        }
+        return res;
+    }
+
     private static void timing(Sorter sorter,
                                double[][] input,
                                PrintWriter out) throws IllegalAccessException, FileNotFoundException {
@@ -91,7 +102,15 @@ public class AnalysisTests {
 
     private static void test_cube(int N, int M) throws Exception {
         String name = "cube" + "_" + N + "_" + M;
-        logging(name, AnalysisTests.genHypercube(M, N));
+        logging(name, genHypercube(M, N));
+        timing_fast(name);
+        timing_bos(name);
+        aggregation_result(name);
+    }
+
+    private static void test_one_rank(int N, int M) throws Exception {
+        String name = "one_rank" + "_" + N + "_" + M;
+        logging(name, getOneRank(N, M));
         timing_fast(name);
         timing_bos(name);
         aggregation_result(name);
@@ -163,9 +182,9 @@ public class AnalysisTests {
         for(AggregationStruct elem : res) {
             out.print(elem.toString());
             if(elem.speed_bos < elem.speed_fast) {
-                out.println("----");
+                out.println("-");
             } else {
-                out.println("****");
+                out.println("*");
             }
         }
         out.close();
@@ -205,16 +224,15 @@ public class AnalysisTests {
 //    }
 
     public static void main(String[] args) throws Exception {
-        test_cube(100000, 2);
-//        test_cube(100000, 4);
-//        test_cube(100000, 6);
-//        test_cube(100000, 8);
-//        test_cube(100000, 10);
-//        test_cube(100000, 12);
-//        test_cube(100000, 14);
-//        test_cube(100000, 16);
-//        test_cube(100000, 18);
-//        test_cube(10, 5);
+//        test_one_rank(100000, 4);
+//        test_one_rank(100000, 6);
+//        test_one_rank(100000, 8);
+//        test_one_rank(100000, 10);
+//        test_one_rank(100000, 12);
+//        test_one_rank(100000, 14);
+//        test_one_rank(100000, 16);
+//        test_one_rank(100000, 18);
+//        test_one_rank(100000, 20);
     }
 
 }

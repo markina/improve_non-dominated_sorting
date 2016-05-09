@@ -20,8 +20,15 @@
     speed_bos (time_bos / n_bos)
 
 Tests:
-- cube_OPT_10^5_20 - Hypercube random double.
-     Поскольку все критерии различны, рассматривались M = 20 и 19.
+- cube_10^5_* - Hypercube random double.
+Tests:
+- one_rank_10^5_* - all points have one rank
+ {0, 1, 2 ... M-2,   N}
+ {1, 2, 3 ... M-1, N-1}
+ {2, 3, 4 ... M,   N-2}
+ {3, 4, 5 ... M+1, N-3}
+           ...
+ {N-1,     ...       1}
 
 Figure:
 - figure_m=4.png
