@@ -36,10 +36,10 @@
 
 %\includeonlyframes{current} % leaves only the given frames
 
-\title[Гибридный алгоритм недоминирующей сортировки]{Разработка гибридного алгоритма недоминирующей сортировки}
+\title[Недоминирующая сортировка]{Разработка гибридного алгоритма недоминирующей сортировки}
 %\transduration{20}
 \author[Маргарита Маркина]{Маргарита Маркина}
-\institute[Университет ИТМО]{Национальный исследовательский университет информационных технологий, механики и оптики}
+\institute[]{Национальный исследовательский университет информационных технологий, механики и оптики}
 \date{}
 
 \begin{document}
@@ -98,7 +98,7 @@
 когда $\forall ~ 1 \leq i \leq M : a_i \leq b_i$ и $\exists j : a_j < b_j $.
 \item \textit{Недоминирующая сортировка} множества точек $S$ в $M$-мерном пространстве — это процедура, назначающая всем точкам из $S$ \textit{ранг}.
 \item Все точки, которые не доминируются ни одной точкой из $S$, имеют ранг 0.
-\item Все точки, которые доминируются хотя бы одной точкой с рангом $i$, имеют ранг $i+1$.
+\item Все точки, которые доминируются хотя бы одной точкой с рангом $i$, имеют ранг $i+1$. %TODO 
 \end{itemize}
 \end{block}
 \end{frame}
@@ -117,7 +117,7 @@
 %\transduration{20}
 \begin{block}{Актуальность}
 \begin{itemize}
-\item Многокритериальные эвалюционные алгоритмы. 
+\item Многокритериальные эволюционные алгоритмы. 
 \item Задача минимазациии.
 \end{itemize}
 \end{block}
@@ -128,25 +128,65 @@
 %\transduration{20}
 \begin{block}{Цель исследования}
 \begin{itemize}
-\item aaa.
-\item aaa.
+\item Выбрать наиболее подходящие алгоритмы.
+\item Выявить преимущества каждого алгоритма.
+\item Научиться по входным данным выбирать стратегию.
+\item Сделать гибридный алгоритм.
 \end{itemize}
 \end{block}
 \end{frame}
 
-\begin{frame}{Постановка задачи}
+
+\begin{frame}{Решение}
 %\transduration{20}
-\begin{block}{Aaa $EA + RL$}
+\begin{block}{Fast + BOS}
 \begin{center}
 %\includegraphics*[height=3cm]{pic/illustrations.6}
 \end{center}
 \begin{itemize}
-\item $RL$: aaa.
-\item $MO$: aaa.
-\item $MO$: aaa.
+\item Fast Version of the Generalized Jensen Algorithm. % TODO 
+\item Best Order Sort.
 \end{itemize}
 \end{block}
 \end{frame}
+
+\begin{frame}{Решение}
+%\transduration{20}
+\begin{block}{Fast}
+\begin{center}
+%\includegraphics*[height=3cm]{pic/illustrations.6}
+\end{center}
+\begin{itemize}
+\item Fast Version of the Generalized Jensen Algorithm.
+\begin{itemize}
+\item Разделяй и властвуй по $N$ и $M$. 
+\item На каждом этапе делим на 3 множества по $k_i$ критерию текущее множество точек.
+\item Если все $k_i$ в одном из подмножеств равны между собой, переходим к $k_{i-1}$
+\item Запускаем алгоритм на каждом подмножестве.
+\item $O(N log^{M-1}N)$.
+\end{itemize}
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Решение}
+%\transduration{20}
+\begin{block}{BOS}
+\begin{center}
+%\includegraphics*[height=3cm]{pic/illustrations.6}
+\end{center}
+\begin{itemize}
+\item Best Order Sort.
+\begin{itemize}
+\item $M$ отсортированных списков, $i$ список отсортирован по $i$ критерию. 
+\item Далее определяем ранг начиная с наиболее подходящих элементов. 
+\item Во время определения ранга используем уже обработанные точки.
+\item $O(MNlogN + N^2)$
+\end{itemize}
+\end{itemize}
+\end{block}
+\end{frame}
+
 
 \begin{frame}{Решение}
 %\transduration{20}
