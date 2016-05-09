@@ -26,16 +26,31 @@ Tests:
 Figure:
 - figure_m=4.png
         n1 = 7
-        n2 = 1561
+        n2 = 1560
 - figure_m=6.png
         n1 = 11
-        n2 = 9865
+        n2 = 9860
 - figure_m=8.png
         n1 = 11
-        n2 = 15805
+        n2 = 15800
+- figure_m=10.png
+        n1 = 13
+        n2 = 14200
+- figure_m=12.png
+        n1 = 17
+        n2 = 8300
+- figure_m=14.png
+        n1 = 17
+        n2 = 6250
+- figure_m=16.png
+        n1 = 23
+        n2 = 4500
+- figure_m=18.png
+        n1 = 27
+        n2 = 5500
 - figure_m=20.png
         n1 = 24
-        n2 = 6249
+        n2 = 6250
 
 
 
