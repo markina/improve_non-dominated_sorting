@@ -98,7 +98,7 @@
 когда $\forall ~ 1 \leq i \leq M : a_i \leq b_i$ и $\exists j : a_j < b_j $.
 \item \textit{Недоминирующая сортировка} множества точек $S$ в $M$-мерном пространстве — это процедура, назначающая всем точкам из $S$ \textit{ранг}.
 \item Все точки, которые не доминируются ни одной точкой из $S$, имеют ранг 0.
-\item Все точки, которые доминируются хотя бы одной точкой с рангом $i$, имеют ранг $i+1$. %TODO 
+\item Точка имеет ранг $i+1$, если максимальный ранг среди доминирующих  её точек равен $i$.
 \end{itemize}
 \end{block}
 \end{frame}
@@ -107,6 +107,9 @@
 \begin{frame}{Решаемая проблема}
 %\transduration{20}
 \begin{block}{Введение}
+На рисунке 3 фронта: 
+
+$\{a, b, c, d\}$ имеет ранг 0, $\{e, f\}$ - ранг 1, $\{g, h, i\}$ - ранг 2.
 \begin{center}
 \includegraphics*[height=6cm]{pic/non_dominated_sort.png}
 \end{center}
@@ -144,7 +147,7 @@
 %\includegraphics*[height=3cm]{pic/illustrations.6}
 \end{center}
 \begin{itemize}
-\item Fast Version of the Generalized Jensen Algorithm. % TODO 
+\item Fast Version of the Generalized Jensen Algorithm. Сделать нормельное названиеTODO 
 \item Best Order Sort.
 \end{itemize}
 \end{block}
@@ -163,7 +166,7 @@
 \item На каждом этапе делим на 3 множества по $k_i$ критерию текущее множество точек.
 \item Если все $k_i$ в одном из подмножеств равны между собой, переходим к $k_{i-1}$
 \item Запускаем алгоритм на каждом подмножестве.
-\item $O(N log^{M-1}N)$.
+\item Картинка TODO
 \end{itemize}
 \end{itemize}
 \end{block}
@@ -181,7 +184,7 @@
 \item $M$ отсортированных списков, $i$ список отсортирован по $i$ критерию. 
 \item Далее определяем ранг начиная с наиболее подходящих элементов. 
 \item Во время определения ранга используем уже обработанные точки.
-\item $O(MNlogN + N^2)$
+\item Картинка TODO
 \end{itemize}
 \end{itemize}
 \end{block}
@@ -190,19 +193,42 @@
 
 \begin{frame}{Решение}
 %\transduration{20}
-\begin{block}{Aaaaaa $O(N^2 \log N)$}
+\begin{block}{Асимптотика}
 \begin{itemize}
-\item Aaaa $N$ aaa
-\item Aaaa
-\item Aaaaaa
+\item Fast $O(N log^{M-1}N)$.
+\item BOS $O(MNlogN + N^2)$.
+\item Пояснение TODO
 \end{itemize}
 \end{block}
 \end{frame}
 
+
+\begin{frame}{Решение}
+%\transduration{20}
+\begin{block}{Гибритизация}
+\begin{itemize}
+\item Сделать рисунок иллюстрирующий момент изменения стратегии TODO
+\end{itemize}
+\end{block}
+\end{frame}
+
+
+\begin{frame}{Решение}
+%\transduration{20}
+\begin{block}{Идея}
+Рассмотреть влияние входные данных на время работы алгоритмов
+\begin{itemize}
+\item Рандомные точки в гиперкубе.
+\item Точки одного ранга.
+\end{itemize}
+\end{block}
+\end{frame}
+
+
 \begin{frame}{Практические результаты}
 %\transduration{20}
-\begin{block}{Эксперименты}
-Алгоритм запускался $100\,000$ раз при $N \in \{10, 20, 30, 40, 60\}$
+\begin{block}{Рандомные точки в гиперкубе}
+Алгоритм запускался для N = $100\,000$ раз при $M \in \{4, 6, 8, 10, 12, 14, 16, 18, 20\}$
 \begin{table}[h]
 \begin{center}
 \begin{tabular}{r|c|c|c|c}
@@ -256,15 +282,18 @@ diff & 0.25 & 0.26 & 0.27 & 0.27 & 0.27 & 0.28 & 0.28 & 0.28 \\\hline
 \end{block}
 \end{frame}
 
+
 \begin{frame}{Дальнейшие действия}
 %\transduration{20}
 \begin{block}{}
 \begin{itemize}
-\item Aaaaa.
-\item Aaaaaaa aaaa.
+\item Рассмотреть входные данные с другими параметрими. 
+\item Понять как оценивать входные данные и предугадывать стратегию.
+\item Реализовать гибридный алгоритм.
 \end{itemize}
 \end{block}
 \end{frame}
+
 
 \begin{frame}{}
 \begin{center}

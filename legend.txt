@@ -31,33 +31,41 @@ Tests:
  {N-1,     ...       1}
 
 Figure:
-- figure_m=4.png
+- cube_m=4.png
         n1 = 7
         n2 = 1560
-- figure_m=6.png
+- cube_m=6.png
         n1 = 11
         n2 = 9860
-- figure_m=8.png
+- cube_m=8.png
         n1 = 11
         n2 = 15800
-- figure_m=10.png
+- cube_m=10.png
         n1 = 13
         n2 = 14200
-- figure_m=12.png
+- cube_m=12.png
         n1 = 17
         n2 = 8300
-- figure_m=14.png
+- cube_m=14.png
         n1 = 17
         n2 = 6250
-- figure_m=16.png
+- cube_m=16.png
         n1 = 23
         n2 = 4500
-- figure_m=18.png
+- cube_m=18.png
         n1 = 27
         n2 = 5500
-- figure_m=20.png
+- cube_m=20.png
         n1 = 24
         n2 = 6250
+
+- one_rank_m=4.png
+- one_rank_m=8.png
+- one_rank_m=10.png
+- one_rank_m=12.png
+- one_rank_m=16.png
+- one_rank_m=18.png
+- one_rank_m=20.png
 
 
 
