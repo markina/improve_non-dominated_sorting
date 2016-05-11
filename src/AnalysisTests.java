@@ -224,15 +224,15 @@ public class AnalysisTests {
 //    }
 
     public static void main(String[] args) throws Exception {
-//        test_one_rank(100000, 4);
-//        test_one_rank(100000, 6);
-//        test_one_rank(100000, 8);
-//        test_one_rank(100000, 10);
-//        test_one_rank(100000, 12);
-//        test_one_rank(100000, 14);
-//        test_one_rank(100000, 16);
-//        test_one_rank(100000, 18);
-//        test_one_rank(100000, 20);
+//        test_cube(100000, 11);
+//        test_cube(100000, 13);
+//        test_cube(100000, 15);
+//        test_cube(100000, 17);
+//        test_cube(100000, 19);
+//        test_cube(100000, 21);
+//        test_cube(100000, 30);
+//        test_cube(100000, 40);
+
     }
 
 }
