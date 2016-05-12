@@ -85,7 +85,7 @@
 \item Недоминирующая сортировка.
 \item Многокритериальная задача оптимизации.
 \item Гибритизация алгоритмов.
-\item Оценка времени работы в худших случаях.
+\item Оценка времени работы алгоритмов.
 \end{itemize}
 \end{block}
 \end{frame}
@@ -147,7 +147,8 @@ $\{a, b, c, d\}$ имеет ранг 0, $\{e, f\}$ - ранг 1, $\{g, h, i\}$ -
 %\includegraphics*[height=3cm]{pic/illustrations.6}
 \end{center}
 \begin{itemize}
-\item Fast Version of the Generalized Jensen Algorithm. Сделать нормельное названиеTODO 
+\item Fast Version of the Generalized Algorithm. 
+%\item Сделать нормальное назввние TODO 
 \item Best Order Sort.
 \end{itemize}
 \end{block}
@@ -160,13 +161,13 @@ $\{a, b, c, d\}$ имеет ранг 0, $\{e, f\}$ - ранг 1, $\{g, h, i\}$ -
 %\includegraphics*[height=3cm]{pic/illustrations.6}
 \end{center}
 \begin{itemize}
-\item Fast Version of the Generalized Jensen Algorithm.
+\item Fast Version of the Generalized Algorithm.
 \begin{itemize}
 \item Разделяй и властвуй по $N$ и $M$. 
 \item На каждом этапе делим на 3 множества по $k_i$ критерию текущее множество точек.
 \item Если все $k_i$ в одном из подмножеств равны между собой, переходим к $k_{i-1}$
-\item Запускаем алгоритм на каждом подмножестве.
-\item Картинка TODO
+\item Запускаемся рекрсивно.
+%\item Картинка TODO
 \end{itemize}
 \end{itemize}
 \end{block}
@@ -184,7 +185,7 @@ $\{a, b, c, d\}$ имеет ранг 0, $\{e, f\}$ - ранг 1, $\{g, h, i\}$ -
 \item $M$ отсортированных списков, $i$ список отсортирован по $i$ критерию. 
 \item Далее определяем ранг начиная с наиболее подходящих элементов. 
 \item Во время определения ранга используем уже обработанные точки.
-\item Картинка TODO
+%\item Картинка TODO
 \end{itemize}
 \end{itemize}
 \end{block}
@@ -196,8 +197,12 @@ $\{a, b, c, d\}$ имеет ранг 0, $\{e, f\}$ - ранг 1, $\{g, h, i\}$ -
 \begin{block}{Асимптотика}
 \begin{itemize}
 \item Fast $O(N log^{M-1}N)$.
-\item BOS $O(MNlogN + N^2)$.
-\item Пояснение TODO
+\item BOS $O(MNlogN + MN^2)$.
+\begin{itemize}
+\item лучшем случае -- за $\Theta(MN\log{M})$
+\item худшем случае -- за $\Theta(MN^2)$
+\end{itemize}
+
 \end{itemize}
 \end{block}
 \end{frame}
@@ -207,15 +212,18 @@ $\{a, b, c, d\}$ имеет ранг 0, $\{e, f\}$ - ранг 1, $\{g, h, i\}$ -
 %\transduration{20}
 \begin{block}{Гибритизация}
 \begin{itemize}
-\item Сделать рисунок иллюстрирующий момент изменения стратегии TODO
+\item По входным данным подбирать стратегию сортировки
+\item В момент рекурсивного запуска мы можем переключиться на BOS. 
+\item Оценка входных данных должна быть очень быстрая, так как она принимается неоднократно.
+%Сделать рисунок иллюстрирующий момент изменения стратегии TODO
 \end{itemize}
 \end{block}
 \end{frame}
 
 
-\begin{frame}{Решение}
+\begin{frame}{Практические результаты}
 %\transduration{20}
-\begin{block}{Идея}
+\begin{block}{Эксперименты}
 Рассмотреть влияние входные данных на время работы алгоритмов
 \begin{itemize}
 \item Рандомные точки в гиперкубе.
@@ -231,15 +239,8 @@ $\{a, b, c, d\}$ имеет ранг 0, $\{e, f\}$ - ранг 1, $\{g, h, i\}$ -
 Алгоритм запускался для N = $100\,000$ раз при $M \in \{4, 6, 8, 10, 12, 14, 16, 18, 20\}$
 \begin{table}[h]
 \begin{center}
-\begin{tabular}{r|c|c|c|c}
-$N$ & Среднее & Дисперсия & $2eN \ln N$ & $\frac{16e^2}{7}N \ln N$ \\\hline
-10 & 98.33 & 36.30 & 125.18 & 388.89 \\
-20 & 269.90 & 78.11 & 325.73 & 1011.91 \\
-30 & 476.38 & 121.37 & 554.72 & 1723.31 \\
-40 & 704.24 & 163.87 & 802.19 & 2492.10 \\
-50 & 950.93 & 208.66 & 1063.40 & 3303.56 \\
-60 & 1209.98 & 251.52 & 1335.55 & 4149.03
-\end{tabular}
+\includegraphics[width=6cm]{pic/cube_m=4}
+\includegraphics[width=6cm]{pic/cube_m=10}
 \end{center}
 \end{table}
 \end{block}
@@ -247,51 +248,67 @@ $N$ & Среднее & Дисперсия & $2eN \ln N$ & $\frac{16e^2}{7}N \ln 
 
 \begin{frame}{Практические результаты}
 %\transduration{20}
-\begin{block}{Эксперименты}
-
-Aaaa aaaaaaa a a a aaaaa a aaaaaaaaa $N = 2$ и $N = 3$, aa aaaaaaa a $4 \leq N \leq 20$ и, aaaaa, aaaaaa $N$ тоже.
-
-\begin{table}
+\begin{block}{Рандомные точки в гиперкубе}
+Алгоритм запускался для N = $100\,000$ раз при $M \in \{4, 6, 8, 10, 12, 14, 16, 18, 20\}$
+\begin{table}[h]
 \begin{center}
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|} \hline
-N    & 4    & 5    & 6    & 7    & 8    & 9    & 10   & 11   & 12   \\\hline
-diff & 0.03 & 0.10 & 0.15 & 0.18 & 0.20 & 0.21 & 0.23 & 0.24 & 0.25 \\\hline
-\end{tabular}
-\end{center}
-\end{table}
-\begin{table}
-\begin{center}
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|} \hline
-N    & 13   & 14   & 15   & 16   & 17   & 18   & 19   & 20   \\\hline
-diff & 0.25 & 0.26 & 0.27 & 0.27 & 0.27 & 0.28 & 0.28 & 0.28 \\\hline
-\end{tabular}
+\includegraphics[width=6cm]{pic/cube_m=14}
+\includegraphics[width=6cm]{pic/cube_m=20}
 \end{center}
 \end{table}
 \end{block}
 \end{frame}
 
-
-\begin{frame}{Полученные результаты}
+\begin{frame}{Практические результаты}
 %\transduration{20}
-\begin{block}{}
-\begin{itemize}
-\item Aaaaaaaa.
-\item Aaaaaaaa.
-\item Aaaaaaaa aaaaa.
-\end{itemize}
+\begin{block}{Рандомные точки в гиперкубе}
+Левая и правая границы 
+\begin{table}[h]
+\begin{center}
+\includegraphics[width=6cm]{pic/cube_n1-}
+\includegraphics[width=6cm]{pic/cube_n2-}
+\end{center}
+\end{table}
+\end{block}
+\end{frame}
+
+\begin{frame}{Практические результаты}
+%\transduration{20}
+\begin{block}{Точки одного ранга}
+Алгоритм запускался для N = $100\,000$ раз при $M \in \{4, 6, 8, 10, 12, 14, 16, 18, 20\}$
+\begin{table}[h]
+\begin{center}
+\includegraphics[width=6cm]{pic/one_rank_m=4}
+\includegraphics[width=6cm]{pic/one_rank_m=10}
+\end{center}
+\end{table}
+\end{block}
+\end{frame}
+
+\begin{frame}{Практические результаты}
+%\transduration{20}
+\begin{block}{Точки одного ранга}
+Алгоритм запускался для N = $100\,000$ раз при $M \in \{4, 6, 8, 10, 12, 14, 16, 18, 20\}$
+\begin{table}[h]
+\begin{center}
+\includegraphics[width=6cm]{pic/one_rank_m=16}
+\includegraphics[width=6cm]{pic/one_rank_m=20}
+\end{center}
+\end{table}
+\end{block}
+\end{frame}
+
+\begin{frame}{Практические результаты}
+%\transduration{20}
+\begin{block}{Выводы}
+TODO
 \end{block}
 \end{frame}
 
 
 \begin{frame}{Дальнейшие действия}
 %\transduration{20}
-\begin{block}{}
-\begin{itemize}
-\item Рассмотреть входные данные с другими параметрими. 
-\item Понять как оценивать входные данные и предугадывать стратегию.
-\item Реализовать гибридный алгоритм.
-\end{itemize}
-\end{block}
+TODO
 \end{frame}
 
 
@@ -302,13 +319,7 @@ diff & 0.25 & 0.26 & 0.27 & 0.27 & 0.27 & 0.28 & 0.28 & 0.28 \\\hline
 \end{frame}
 
 \begin{frame}{Дополнительные материалы}
-%\transduration{20}
-\begin{block}{Aaaaa}
-Пример aaaa для $N = 3$
-\begin{center}
-%\includegraphics[height=5cm]{pic/illustrations.2}
-\end{center}
-\end{block}
+TODO
 \end{frame}
 
 \end{document}
