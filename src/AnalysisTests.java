@@ -12,13 +12,13 @@ import static units.Assert.check;
 
 public class AnalysisTests {
 
-    private static Random rng = new Random(366239);
+    private static Random rnd = new Random(366239);
 
     private static double[][] genHypercube(int dim, int size) {
         double[][] rv = new double[size][dim];
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < dim; j++) {
-                rv[i][j] = rng.nextDouble();
+                rv[i][j] = rnd.nextDouble();
             }
         }
         return rv;
@@ -188,6 +188,14 @@ public class AnalysisTests {
         print_result(prefix, res);
     }
 
+    private static int get_max(int[] rv) {
+        int m = -1;
+        for(int i = 0; i < rv.length; i++) {
+            m = Math.max(m, rv[i]);
+        }
+        return m;
+    }
+
 //    private static void print_statistic(String prefix, List<AggregationStruct> res) throws FileNotFoundException {
 //        int N = res.get(0).N;
 //        int[] cnt_success_fast = new int[N + 1];
@@ -216,17 +224,51 @@ public class AnalysisTests {
 //        out_bos.close();
 //    }
 
+    private static double[][] getOneRankWithNoise(int N, int M, int K) {
+        double[][] res = new double[N][M];
+        for(int i = 0; i < N; i++) {
+            for(int j = 0; j < M-1; j++) {
+                res[i][j] = j + i;
+            }
+            res[i][M-1] = N - i;
+        }
+
+        while(K > 0) {
+            int a = rnd.nextInt(N);
+            for(int j = 0; j < M-1; j++) {
+                res[a][j] = rnd.nextDouble();
+            }
+            K--;
+        }
+        return res;
+    }
+
     private static void test_cube(int N, int M) throws Exception {
         String name = "cube" + "_" + N + "_" + M;
-//        logging(name, genHypercube(M, N));
-//        timing_fast(name);
-//        timing_bos(name);
+        logging(name, genHypercube(M, N));
+        timing_fast(name);
+        timing_bos(name);
+        aggregation_result(name);
+    }
+
+    private static void test_one_with_noise(int N, int M, int K) throws Exception {
+        String name = "noise" + "_" + N + "_" + M + "_" + K;
+        double[][] in = getOneRankWithNoise(N, M, K);
+
+        int[] rv_fast = Tests.findFrontIndices(in, new FasterNonDominatedSorting());
+        int[] rv_bos = Tests.findFrontIndices(in, new BOSNonDominatedSorting());
+        Tests.checkEqual(rv_fast, rv_bos);
+
+        logging(name, in);
+        timing_fast(name);
+        timing_bos(name);
         aggregation_result(name);
     }
 
     public static void main(String[] args) {
+        int k = 10;
         try {
-            test_cube(100000, 17);
+            test_one_with_noise(100000, 17, k);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -234,5 +276,7 @@ public class AnalysisTests {
 
 
     }
+
+
 
 }

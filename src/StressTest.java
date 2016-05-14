@@ -27,7 +27,7 @@ public class StressTest {
         }
     }
 
-    private static void stressTest(double[][] input) {
+    public static void stressTest(double[][] input) {
         try {
             Tests.checkEqual(
                     Tests.findFrontIndices(input, new FasterNonDominatedSorting()),

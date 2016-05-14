@@ -3,8 +3,8 @@ from matplotlib import pyplot as plt
 # постоение графика по name N M
 
 # N = 100000
-N = 100000
-M = 17
+N = 10000
+M = 25
 name = "cube"
 prefix = "_result.txt"
 
@@ -23,7 +23,7 @@ with open(full_name) as f:
             y.append((Tb - Tf) / max(Tf, Tb))
 
 plt.title(name)
-plt.semilogx(x, y, 'b.-', label = 'M = ' + str(M))
+plt.semilogx(x, y, 'bo', label = 'M = ' + str(M))
 plt.semilogx(x, [0] * len(x), 'r-', label = 'y = 0')
 # plt.plot(x, y, 'b.', label='M = 20')
 plt.xlabel('N')
