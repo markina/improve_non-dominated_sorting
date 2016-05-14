@@ -24,7 +24,8 @@ public class AnalysisTests {
         return rv;
     }
 
-    static double[][] getOneRank(int N, int M) {
+    static double[][] getOneRankSimple(int N, int M) {
+
         double[][] res = new double[N][M];
         for(int i = 0; i < N; i++) {
             for(int j = 0; j < M-1; j++) {
@@ -101,7 +102,7 @@ public class AnalysisTests {
 
     private static void test_one_rank(int N, int M) throws Exception {
         String name = "one_rank" + "_" + N + "_" + M;
-        logging(name, getOneRank(N, M));
+        logging(name, getOneRankSimple(N, M));
         timing_fast(name);
         timing_bos(name);
         aggregation_result(name);
@@ -224,24 +225,50 @@ public class AnalysisTests {
 //        out_bos.close();
 //    }
 
-    private static double[][] getOneRankWithNoise(int N, int M, int K) {
-        double[][] res = new double[N][M];
-        for(int i = 0; i < N; i++) {
-            for(int j = 0; j < M-1; j++) {
-                res[i][j] = j + i;
-            }
-            res[i][M-1] = N - i;
+    private static void getArrayWithSum(double C, double [] ans, int l, int r) throws Exception {
+        if(r - l == 0) {
+            throw new Exception("r == l");
         }
+        if(r - l == 1) {
+            ans[l] = C;
+            return;
+        }
+        int cnt = r - l;
+        int sep = rnd.nextInt(cnt);
+        if(cnt - 1 == sep) {
+            ans[r-1] = C/2;
+            getArrayWithSum(C/2, ans, l, r-1);
+            return;
+        }
+        getArrayWithSum(C/2, ans, l, l+sep+1);
+        getArrayWithSum(C/2, ans, l+sep+1, r);
+    }
 
-        while(K > 0) {
-            int a = rnd.nextInt(N);
-            for(int j = 0; j < M-1; j++) {
-                res[a][j] = rnd.nextDouble();
+    private static double[][] getOneRankRundom(int N, int M) throws Exception {
+        double [][] res = new double[N][M];
+        double C = M * 100;
+        for(int i = 0; i < N; i++) {
+            double[] temp = new double[M];
+            getArrayWithSum(C, temp, 0, M);
+            for(int j = 0; j < M; j++) {
+                res[i][j] = temp[j];
             }
-            K--;
         }
         return res;
     }
+
+    private static double[][] getOneRankWithNoise(int N, int M, double A) throws Exception {
+        double[][] res = getOneRankRundom(N, M);
+        Tests.checkEqual(new int[N], Tests.findFrontIndices(res, new FasterNonDominatedSorting()));
+
+        for(int i = 0; i < N; i++) {
+            for(int j = 0; j < M; j++) {
+                res[i][j] += (2 * rnd.nextDouble() - 1) * A;
+            }
+        }
+        return res;
+    }
+
 
     private static void test_cube(int N, int M) throws Exception {
         String name = "cube" + "_" + N + "_" + M;
@@ -251,24 +278,24 @@ public class AnalysisTests {
         aggregation_result(name);
     }
 
-    private static void test_one_with_noise(int N, int M, int K) throws Exception {
-        String name = "noise" + "_" + N + "_" + M + "_" + K;
-        double[][] in = getOneRankWithNoise(N, M, K);
+    private static void test_one_with_noise(int N, int M, double A) throws Exception {
+        String name = "noise" + "_" + N + "_" + M + "_" + A;
+        double[][] in = getOneRankWithNoise(N, M, A);
 
         int[] rv_fast = Tests.findFrontIndices(in, new FasterNonDominatedSorting());
         int[] rv_bos = Tests.findFrontIndices(in, new BOSNonDominatedSorting());
         Tests.checkEqual(rv_fast, rv_bos);
 
-        logging(name, in);
-        timing_fast(name);
-        timing_bos(name);
-        aggregation_result(name);
+//        logging(name, in);
+//        timing_fast(name);
+//        timing_bos(name);
+//        aggregation_result(name);
     }
 
     public static void main(String[] args) {
-        int k = 10;
+        double A = 10;
         try {
-            test_one_with_noise(100000, 17, k);
+            test_one_with_noise(10, 5, A);
         } catch (Exception e) {
             e.printStackTrace();
         }

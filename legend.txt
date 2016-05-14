@@ -37,9 +37,15 @@ Figure:
 - cube_m=6.png
         n1 = 11
         n2 = 9860
+- cube_m=7.png
+        n1 =9
+        n2 = 13000
 - cube_m=8.png
         n1 = 11
         n2 = 15800
+- cube_m=9.png
+        n1 = 12
+        n2 = 14800
 - cube_m=10.png
         n1 = 13
         n2 = 14200
@@ -67,6 +73,9 @@ Figure:
 - cube_m=21.png
         n1 = 37
         n2 = 7100
+- cube_m=25.png
+        n1 = 39
+        n2 = 10000
 - cube_m=30.png
         n1 = 70
         n2 = 27177
