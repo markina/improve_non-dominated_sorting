@@ -99,15 +99,6 @@ public class AnalysisTests {
         init_timing(sorterFactory, prefix, suffix);
     }
 
-
-    private static void test_cube(int N, int M) throws Exception {
-        String name = "cube" + "_" + N + "_" + M;
-        logging(name, genHypercube(M, N));
-        timing_fast(name);
-        timing_bos(name);
-        aggregation_result(name);
-    }
-
     private static void test_one_rank(int N, int M) throws Exception {
         String name = "one_rank" + "_" + N + "_" + M;
         logging(name, getOneRank(N, M));
@@ -154,7 +145,9 @@ public class AnalysisTests {
         Reader in_bos = new Reader(prefix + "_time_bos.txt");
         List<AggregationStruct> res = new ArrayList<>();
         while (in_fast.hasMore()) {
-            check(in_bos.hasMore(), prefix + "_time_bos.txt" + " ended");
+            if(!in_bos.hasMore()) {
+                break;
+            }
             int id = in_fast.nextInt();
             int id_bos = in_bos.nextInt();
             check(id == id_bos, "Bad id");
@@ -223,15 +216,22 @@ public class AnalysisTests {
 //        out_bos.close();
 //    }
 
-    public static void main(String[] args) throws Exception {
-//        test_cube(100000, 11);
-//        test_cube(100000, 13);
-//        test_cube(100000, 15);
-//        test_cube(100000, 17);
-//        test_cube(100000, 19);
-//        test_cube(100000, 21);
-//        test_cube(100000, 30);
-//        test_cube(100000, 40);
+    private static void test_cube(int N, int M) throws Exception {
+        String name = "cube" + "_" + N + "_" + M;
+//        logging(name, genHypercube(M, N));
+//        timing_fast(name);
+//        timing_bos(name);
+        aggregation_result(name);
+    }
+
+    public static void main(String[] args) {
+        try {
+            test_cube(100000, 17);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
 
     }
 

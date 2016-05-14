@@ -16,6 +16,7 @@
 \usepackage{amssymb}
 \usepackage{tikz}
 \usepackage{graphics}
+\usepackage{appendixnumberbeamer}
 
 %%% BEAMER SETTINGS
 \setbeamertemplate{navigation symbols}{}
@@ -84,7 +85,7 @@
 \begin{itemize}
 \item Недоминирующая сортировка.
 \item Многокритериальная задача оптимизации.
-\item Гибритизация алгоритмов.
+\item Гибридизация алгоритмов.
 \item Оценка времени работы алгоритмов.
 \end{itemize}
 \end{block}
@@ -196,10 +197,10 @@ $\{a, b, c, d\}$ имеет ранг 0, $\{e, f\}$ - ранг 1, $\{g, h, i\}$ -
 %\transduration{20}
 \begin{block}{Асимптотика}
 \begin{itemize}
-\item Fast $O(N log^{M-1}N)$.
-\item BOS $O(MNlogN + MN^2)$.
+\item Fast $O(N \log^{M-1}N)$.
+\item BOS $O(MN \log N + MN^2)$.
 \begin{itemize}
-\item лучшем случае -- за $\Theta(MN\log{M})$
+\item лучшем случае -- за $\Theta(MN\log{N})$
 \item худшем случае -- за $\Theta(MN^2)$
 \end{itemize}
 
@@ -210,7 +211,7 @@ $\{a, b, c, d\}$ имеет ранг 0, $\{e, f\}$ - ранг 1, $\{g, h, i\}$ -
 
 \begin{frame}{Решение}
 %\transduration{20}
-\begin{block}{Гибритизация}
+\begin{block}{Гибридизация}
 \begin{itemize}
 \item По входным данным подбирать стратегию сортировки
 \item В момент рекурсивного запуска мы можем переключиться на BOS. 
@@ -224,9 +225,9 @@ $\{a, b, c, d\}$ имеет ранг 0, $\{e, f\}$ - ранг 1, $\{g, h, i\}$ -
 \begin{frame}{Практические результаты}
 %\transduration{20}
 \begin{block}{Эксперименты}
-Рассмотреть влияние входные данных на время работы алгоритмов
+Рассмотриваем влияние входные данных на время работы алгоритмов
 \begin{itemize}
-\item Рандомные точки в гиперкубе.
+\item Случайные точки в гиперкубе.
 \item Точки одного ранга.
 \end{itemize}
 \end{block}
@@ -235,8 +236,21 @@ $\{a, b, c, d\}$ имеет ранг 0, $\{e, f\}$ - ранг 1, $\{g, h, i\}$ -
 
 \begin{frame}{Практические результаты}
 %\transduration{20}
-\begin{block}{Рандомные точки в гиперкубе}
-Алгоритм запускался для N = $100\,000$ раз при $M \in \{4, 6, 8, 10, 12, 14, 16, 18, 20\}$
+\begin{block}{Случайные точки в гиперкубе}
+Алгоритм запускался для N = $100\,000$ при $M \in \{4, 6, 8, 10, 12, 14, 16, 18, 20\}$
+\begin{itemize}
+\item $T_\text{Fast}$ - время за которое алгоритм Fast отсортировал экспериментальное множество точек S.
+\item $T_\text{BOS}$ - время алгоритма BOS.  
+\item $T_\text{max} = max (T_\text{BOS}, T_\text{Fast})$
+\item Оценивать будем с помощью графика, где по абсциссе будет мощность множества S для которого проводился эксперимент. По ординате будет $\frac{T_\text{BOS} - T_\text{Fast}}{T_\text{max}}$.
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Практические результаты}
+%\transduration{20}
+\begin{block}{Случайные точки в гиперкубе}
+t = $\frac{T_\text{BOS} - T_\text{Fast}}{T_\text{max}}$.
 \begin{table}[h]
 \begin{center}
 \includegraphics[width=6cm]{pic/cube_m=4}
@@ -248,8 +262,8 @@ $\{a, b, c, d\}$ имеет ранг 0, $\{e, f\}$ - ранг 1, $\{g, h, i\}$ -
 
 \begin{frame}{Практические результаты}
 %\transduration{20}
-\begin{block}{Рандомные точки в гиперкубе}
-Алгоритм запускался для N = $100\,000$ раз при $M \in \{4, 6, 8, 10, 12, 14, 16, 18, 20\}$
+\begin{block}{Случайные точки в гиперкубе}
+t = $\frac{T_\text{BOS} - T_\text{Fast}}{T_\text{max}}$.
 \begin{table}[h]
 \begin{center}
 \includegraphics[width=6cm]{pic/cube_m=14}
@@ -259,10 +273,15 @@ $\{a, b, c, d\}$ имеет ранг 0, $\{e, f\}$ - ранг 1, $\{g, h, i\}$ -
 \end{block}
 \end{frame}
 
+
 \begin{frame}{Практические результаты}
 %\transduration{20}
-\begin{block}{Рандомные точки в гиперкубе}
-Левая и правая границы 
+\begin{block}{Случайные точки в гиперкубе}
+Левая и правая границы: 
+\begin{itemize}
+	\item m - размерность входных данных, 
+	\item n1 и n2 - размеры входных данных при которых меняется более эффективный алгоритм.
+\end{itemize}
 \begin{table}[h]
 \begin{center}
 \includegraphics[width=6cm]{pic/cube_n1-}
@@ -275,7 +294,7 @@ $\{a, b, c, d\}$ имеет ранг 0, $\{e, f\}$ - ранг 1, $\{g, h, i\}$ -
 \begin{frame}{Практические результаты}
 %\transduration{20}
 \begin{block}{Точки одного ранга}
-Алгоритм запускался для N = $100\,000$ раз при $M \in \{4, 6, 8, 10, 12, 14, 16, 18, 20\}$
+t = $\frac{T_\text{BOS} - T_\text{Fast}}{T_\text{max}}$.
 \begin{table}[h]
 \begin{center}
 \includegraphics[width=6cm]{pic/one_rank_m=4}
@@ -288,7 +307,7 @@ $\{a, b, c, d\}$ имеет ранг 0, $\{e, f\}$ - ранг 1, $\{g, h, i\}$ -
 \begin{frame}{Практические результаты}
 %\transduration{20}
 \begin{block}{Точки одного ранга}
-Алгоритм запускался для N = $100\,000$ раз при $M \in \{4, 6, 8, 10, 12, 14, 16, 18, 20\}$
+t = $\frac{T_\text{BOS} - T_\text{Fast}}{T_\text{max}}$.
 \begin{table}[h]
 \begin{center}
 \includegraphics[width=6cm]{pic/one_rank_m=16}
@@ -301,14 +320,20 @@ $\{a, b, c, d\}$ имеет ранг 0, $\{e, f\}$ - ранг 1, $\{g, h, i\}$ -
 \begin{frame}{Практические результаты}
 %\transduration{20}
 \begin{block}{Выводы}
-TODO
+\begin{itemize}
+	\item Стратегия выбора алгоритма, основывающаяся на размере входных данных и их размерности, будет достаточно эффективной на случайных входных данных
+	\item Для более эффективной работы в крайних случаях требуется предсказывать число слоев входных данных. 
+\end{itemize}
 \end{block}
 \end{frame}
 
 
 \begin{frame}{Дальнейшие действия}
 %\transduration{20}
-TODO
+\begin{itemize}
+	\item Выявить зависимость правой границы для случайных входных данных
+	\item Научиться детектировать крайние случаи и разработать стратегию выбора наиболее подходящего алгоритма для них
+\end{itemize}
 \end{frame}
 
 
@@ -318,8 +343,10 @@ TODO
 \end{center}
 \end{frame}
 
+\appendix
+
 \begin{frame}{Дополнительные материалы}
-TODO
+
 \end{frame}
 
 \end{document}
