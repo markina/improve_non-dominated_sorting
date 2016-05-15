@@ -272,9 +272,9 @@ public class AnalysisTests {
 
     private static void test_cube(int N, int M) throws Exception {
         String name = "cube" + "_" + N + "_" + M;
-        logging(name, genHypercube(M, N));
-        timing_fast(name);
-        timing_bos(name);
+//        logging(name, genHypercube(M, N));
+//        timing_fast(name);
+//        timing_bos(name);
         aggregation_result(name);
     }
 
@@ -292,14 +292,14 @@ public class AnalysisTests {
 //        aggregation_result(name);
     }
 
-    public static void main(String[] args) {
-        double A = 10;
-        try {
-            test_one_with_noise(10, 5, A);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+    public static void main(String[] args) throws Exception {
+//        double A = 0.2;
+//        try {
+//            test_one_with_noise(100000, 5, A);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+        test_cube(150000, 10);
 
 
     }
