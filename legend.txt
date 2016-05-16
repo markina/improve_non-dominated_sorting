@@ -4,13 +4,14 @@
     N строчек по M double
 - сбор времени работы BOS алгоритма на этих же данных (NAMETEST_N_M_time_bos.txt)
     Формат вывода:
-    id N M t n
+    id N M t n k
     id - соответствует id из первого запуска
     t - время в наносекундах
     n - количество запусков алгоритма
+    k - количество ранов
 - сбор времени работы Fast алгоритма на этих данных (NAMETEST_N_M_time_fast.txt)
     Формат вывода:
-    id N M t n
+    id N M t n k
 - агрегирование данных.
  Сравнение скоростей:
  (NAMETEST_N_M_time_result.txt)
@@ -18,88 +19,12 @@
     N M
     speed_fast (time_fast / n_fast)
     speed_bos (time_bos / n_bos)
+    k
 
 Tests:
 - cube_10^5_* - Hypercube random double.
 Tests:
 - one_rank_10^5_* - all points have one rank
- {0, 1, 2 ... M-2,   N}
- {1, 2, 3 ... M-1, N-1}
- {2, 3, 4 ... M,   N-2}
- {3, 4, 5 ... M+1, N-3}
-           ...
- {N-1,     ...       1}
-
-Figure:
-- cube_m=4.png
-        n1 = 7
-        n2 = 1560
-- cube_m=6.png
-        n1 = 11
-        n2 = 9860
-- cube_m=7.png
-        n1 =9
-        n2 = 13000
-- cube_m=8.png
-        n1 = 11
-        n2 = 15800
-- cube_m=9.png
-        n1 = 12
-        n2 = 14800
-- cube_m=10.png
-        n1 = 13
-        n2 = 14200
-- cube_m=12.png
-        n1 = 17
-        n2 = 8300
-- cube_m=14.png
-        n1 = 17
-        n2 = 6250
-- cube_m=16.png
-        n1 = 23
-        n2 = 4500
-- cube_m=17.png
-        n1 =22
-        n2 =5532
-- cube_m=18.png
-        n1 = 27
-        n2 = 5500
-- cube_m=19.png
-        n1 = 33
-        n2 = 6250
-- cube_m=20.png
-        n1 = 33
-        n2 = 6250
-- cube_m=21.png
-        n1 = 37
-        n2 = 7100
-- cube_m=25.png
-        n1 = 39
-        n2 = 10000
-- cube_m=30.png
-        n1 = 70
-        n2 = 27177
-- cube_m=35.png
-        n1 = 96
-        n2 = 28900
-- cube_m=40.png
-        n1 = 194
-        n2 = 29900
-- cube_m=50.png
-        n1 = 275
-        n2 = 32700
-- cube_m=60.png
-        n1 = 521
-        n2 = 30400
-
-
-- one_rank_m=4.png
-- one_rank_m=8.png
-- one_rank_m=10.png
-- one_rank_m=12.png
-- one_rank_m=16.png
-- one_rank_m=18.png
-- one_rank_m=20.png
 
 
 
