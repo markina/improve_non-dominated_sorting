@@ -12,29 +12,9 @@ import static units.Assert.check;
 
 public class AnalysisTests {
 
+    private static final String NOISE = "noise";
+    private static final String CUBE = "cube";
     private static Random rnd = new Random(366239);
-
-    private static double[][] genHypercube(int dim, int size) {
-        double[][] rv = new double[size][dim];
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < dim; j++) {
-                rv[i][j] = rnd.nextDouble();
-            }
-        }
-        return rv;
-    }
-
-    static double[][] getOneRankSimple(int N, int M) {
-
-        double[][] res = new double[N][M];
-        for(int i = 0; i < N; i++) {
-            for(int j = 0; j < M-1; j++) {
-                res[i][j] = j + i;
-            }
-            res[i][M-1] = N - i;
-        }
-        return res;
-    }
 
     private static void timing(Sorter sorter,
                                double[][] input,
@@ -43,21 +23,30 @@ public class AnalysisTests {
         bean.setThreadCpuTimeEnabled(true);
         boolean good_time = false;
         int cur_n = 1;
+        int[] rv = new int[input.length];
         while (!good_time) {
             long start = bean.getCurrentThreadUserTime();
             for (int i = 0; i < cur_n; i++) {
-                int[] rv = new int[input.length];
                 sorter.sort(input, rv);
             }
             long end = bean.getCurrentThreadUserTime();
             if (end - start > 100000000) {
                 out.print(end - start + " ");
-                out.println(cur_n);
+                out.print(cur_n + " ");
                 good_time = true;
             } else {
                 cur_n *= 2;
             }
         }
+        out.println(get_max(rv)+1);
+    }
+
+    private static int get_max(int[] rv) {
+        int m = -1;
+        for (int e : rv) {
+            m = Math.max(m, e);
+        }
+        return m;
     }
 
     private static void logging(String prefix, double[][] input) throws IllegalAccessException, FileNotFoundException {
@@ -83,6 +72,7 @@ public class AnalysisTests {
                     (input.length != 0 ? input[0].length : 0) + " ");
             Sorter sorter = sorterFactory.getSorter(input.length, input.length != 0 ? input[0].length : 0);
             timing(sorter, input, out);
+
         }
         out.close();
         in.close();
@@ -94,22 +84,14 @@ public class AnalysisTests {
         init_timing(sorterFactory, prefix, suffix);
     }
 
-    private static void timing_bos(String prefix) throws Exception {
+    public static void timing_bos(String prefix) throws Exception {
         BOSNonDominatedSorting sorterFactory = new BOSNonDominatedSorting();
         String suffix = "bos";
         init_timing(sorterFactory, prefix, suffix);
     }
 
-    private static void test_one_rank(int N, int M) throws Exception {
-        String name = "one_rank" + "_" + N + "_" + M;
-        logging(name, getOneRankSimple(N, M));
-        timing_fast(name);
-        timing_bos(name);
-        aggregation_result(name);
-    }
-
     private static class AggregationStruct {
-        int N, M;
+        int N, M, k;
         long t_fast, t_bos;
         int n_fast, n_bos;
         long speed_fast, speed_bos;
@@ -135,7 +117,7 @@ public class AnalysisTests {
 
         @Override
         public String toString() {
-            return "" + N + " " + M + "\n"
+            return "" + N + " " + M + " " + k + "\n"
                     + speed_fast + "\n"
                     + speed_bos + "\n";
         }
@@ -146,9 +128,7 @@ public class AnalysisTests {
         Reader in_bos = new Reader(prefix + "_time_bos.txt");
         List<AggregationStruct> res = new ArrayList<>();
         while (in_fast.hasMore()) {
-            if(!in_bos.hasMore()) {
-                break;
-            }
+            check(in_bos.hasMore(), prefix + "_time_bos.txt ended");
             int id = in_fast.nextInt();
             int id_bos = in_bos.nextInt();
             check(id == id_bos, "Bad id");
@@ -161,6 +141,9 @@ public class AnalysisTests {
             AggregationStruct elem = new AggregationStruct(N, M);
             elem.setFastInfo(in_fast.nextLong(), in_fast.nextInt());
             elem.setBOSInfo(in_bos.nextLong(), in_bos.nextInt());
+            int k1 = in_fast.nextInt(), k2 = in_bos.nextInt();
+            check(k1 == k2);
+            elem.k = k1;
             res.add(elem);
         }
         in_fast.close();
@@ -168,62 +151,29 @@ public class AnalysisTests {
         return res;
     }
 
-
-
     private static void print_result(String prefix, List<AggregationStruct> res) throws FileNotFoundException {
         PrintWriter out = new PrintWriter(prefix + "_result.txt");
 
         for(AggregationStruct elem : res) {
             out.print(elem.toString());
-            if(elem.speed_bos < elem.speed_fast) {
-                out.println("-");
-            } else {
-                out.println("*");
-            }
         }
         out.close();
     }
 
-    private static void aggregation_result(String prefix) throws Exception {
+    public static void aggregation_result(String prefix) throws Exception {
         List<AggregationStruct> res = get_aggregation_info(prefix);
         print_result(prefix, res);
     }
 
-    private static int get_max(int[] rv) {
-        int m = -1;
-        for(int i = 0; i < rv.length; i++) {
-            m = Math.max(m, rv[i]);
+    private static double[][] genHypercube(int dim, int size) {
+        double[][] rv = new double[size][dim];
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < dim; j++) {
+                rv[i][j] = rnd.nextDouble();
+            }
         }
-        return m;
+        return rv;
     }
-
-//    private static void print_statistic(String prefix, List<AggregationStruct> res) throws FileNotFoundException {
-//        int N = res.get(0).N;
-//        int[] cnt_success_fast = new int[N + 1];
-//        int[] cnt_success_bos = new int[N + 1];
-//
-//        for (AggregationStruct elem : res) {
-//            if (elem.speed_bos / elem.speed_fast >= 10 || elem.speed_fast / elem.speed_bos >= 10) {
-//                if (elem.speed_bos < elem.speed_fast) {
-//                    cnt_success_fast[elem.N]++;
-//                } else {
-//                    cnt_success_bos[elem.N]++;
-//                }
-//            }
-//        }
-//
-//        PrintWriter out_fast = new PrintWriter(prefix + "_statistic_fast" + ".txt");
-//        PrintWriter out_bos = new PrintWriter(prefix + "_statistic_bos" + ".txt");
-//
-//        for (int i = 0; i < N + 1; i++) {
-//            if (cnt_success_fast[i] != 0 || cnt_success_bos[i] != 0) {
-//                out_fast.println(i + " " + cnt_success_fast[i]);
-//                out_bos.println(i + " " + cnt_success_bos[i]);
-//            }
-//        }
-//        out_fast.close();
-//        out_bos.close();
-//    }
 
     private static void getArrayWithSum(double C, double [] ans, int l, int r) throws Exception {
         if(r - l == 0) {
@@ -234,19 +184,20 @@ public class AnalysisTests {
             return;
         }
         int cnt = r - l;
-        int sep = rnd.nextInt(cnt);
-        if(cnt - 1 == sep) {
+        int sep = rnd.nextInt(cnt-1) + 1;
+        if(cnt == sep) {
             ans[r-1] = C/2;
             getArrayWithSum(C/2, ans, l, r-1);
             return;
         }
-        getArrayWithSum(C/2, ans, l, l+sep+1);
-        getArrayWithSum(C/2, ans, l+sep+1, r);
+
+        getArrayWithSum(C/2, ans, l, l+sep);
+        getArrayWithSum(C/2, ans, l+sep, r);
     }
 
-    private static double[][] getOneRankRundom(int N, int M) throws Exception {
+    private static double[][] getOneRankRandom(int N, int M) throws Exception {
         double [][] res = new double[N][M];
-        double C = M * 100;
+        double C = 1;
         for(int i = 0; i < N; i++) {
             double[] temp = new double[M];
             getArrayWithSum(C, temp, 0, M);
@@ -258,7 +209,7 @@ public class AnalysisTests {
     }
 
     private static double[][] getOneRankWithNoise(int N, int M, double A) throws Exception {
-        double[][] res = getOneRankRundom(N, M);
+        double[][] res = getOneRankRandom(N, M);
         Tests.checkEqual(new int[N], Tests.findFrontIndices(res, new FasterNonDominatedSorting()));
 
         for(int i = 0; i < N; i++) {
@@ -269,41 +220,64 @@ public class AnalysisTests {
         return res;
     }
 
-
-    private static void test_cube(int N, int M) throws Exception {
-        String name = "cube" + "_" + N + "_" + M;
-//        logging(name, genHypercube(M, N));
-//        timing_fast(name);
-//        timing_bos(name);
-        aggregation_result(name);
+    static void run_experiment(String name, int N, int M) throws Exception {
+        run_experiment(name, N, M, 0);
     }
 
-    private static void test_one_with_noise(int N, int M, double A) throws Exception {
-        String name = "noise" + "_" + N + "_" + M + "_" + A;
-        double[][] in = getOneRankWithNoise(N, M, A);
+    private static double[][] getTestIn(int N, int M) throws Exception {
+        double[][] res = new double[N][M];
+
+        for(int i = 0; i < N; i++) {
+            for(int j = 0; j < M; j++) {
+                res[i][j] = i;
+            }
+        }
+        return res;
+    }
+
+    private static void run_experiment(String name, int N, int M, double A) throws Exception {
+        double[][] in;
+        String prefix;
+        if(name.equals(CUBE)) {
+            prefix = name + "_" + N + "_" + M;
+            in = genHypercube(M, N);
+        } else if (name.equals(NOISE)) {
+            prefix = name + "_" + N + "_" + M + "_" + A;
+            in = getOneRankWithNoise(N, M, A);
+        } else if (name.equals("test")) {
+            prefix = name + "_" + N + "_" + M;
+            in = getTestIn(N, M);
+        } else {
+            throw new Exception("Bad name");
+        }
+
 
         int[] rv_fast = Tests.findFrontIndices(in, new FasterNonDominatedSorting());
         int[] rv_bos = Tests.findFrontIndices(in, new BOSNonDominatedSorting());
         Tests.checkEqual(rv_fast, rv_bos);
 
-//        logging(name, in);
-//        timing_fast(name);
-//        timing_bos(name);
-//        aggregation_result(name);
+        logging(prefix, in);
+        timing_fast(prefix);
+        timing_bos(prefix);
+        aggregation_result(prefix);
     }
+
 
     public static void main(String[] args) throws Exception {
-//        double A = 0.2;
-//        try {
-//            test_one_with_noise(100000, 5, A);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-        test_cube(150000, 10);
+        if(args.length < 3) {
+            throw new Exception("Args: (cube|noise) N M [A]");
+        }
 
+        String name = args[0];
+        int N = Integer.parseInt(args[1]);
+        int M = Integer.parseInt(args[2]);
+        double A = 0;
+        if(args.length == 4) {
+            A = Double.parseDouble(args[3]);
+        }
 
+        run_experiment(name, N, M, A);
     }
-
 
 
 }

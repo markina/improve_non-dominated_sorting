@@ -225,12 +225,12 @@ final class SorterXD extends SorterFast {
     private void sort(int from, int until, int dimension) {
         int size = until - from;
         int _id = id;
-        id++;
-        if(logging) {
+        if(logging && size >= 2) {
+            id++;
             out.print(_id + " ");
             out.print(size + " ");
             out.println(dimension + 1);
-            for(int i = 0; i < size; i++) {
+            for(int i = from; i < until; i++) {
                 for(int j = 0; j < dimension + 1; j++) {
                     out.print(input[i][j] + " ");
                 }
