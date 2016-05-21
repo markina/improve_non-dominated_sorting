@@ -1,5 +1,6 @@
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.function.Consumer;
 
 /**
  * A base class for all sorters.
@@ -66,10 +67,10 @@ public abstract class Sorter {
             }
         }
         sortImpl(input, output);
-
-//        print_info();
     }
     protected abstract void sortImpl(double[][] input, int[] output);
     protected abstract void print_info();
-    protected abstract void setParamAnalysis(boolean withLogging, PrintWriter out) throws FileNotFoundException;
+    protected void setParamAnalysis(boolean withLogging, Consumer<double[][]> out) {
+        throw new UnsupportedOperationException("setParamAnalysis is not implemented");
+    }
 }

@@ -26,7 +26,4 @@ final class Sorter1D extends SorterFast {
             }
         }
     }
-
-    @Override
-    protected void setParamAnalysis(boolean withLogging, PrintWriter out) {}
 }

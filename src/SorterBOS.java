@@ -4,6 +4,7 @@ import units.SmartL;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.*;
+import java.util.function.Consumer;
 
 // Best Order Sort sorter
 final class SorterBOS extends Sorter {
@@ -207,9 +208,5 @@ final class SorterBOS extends Sorter {
         System.out.println("--------------");
         System.out.println("SorterBOS");
         System.out.println("N = " + size + "; M = " + dim);
-    }
-
-    @Override
-    protected void setParamAnalysis(boolean withLogging, PrintWriter out) throws FileNotFoundException {
     }
 }

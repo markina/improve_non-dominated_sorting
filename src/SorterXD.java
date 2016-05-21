@@ -1,6 +1,7 @@
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.*;
+import java.util.function.Consumer;
 
 // XD sorter: the general case.
 final class SorterXD extends SorterFast {
@@ -15,8 +16,7 @@ final class SorterXD extends SorterFast {
     private final Random random = new Random();
 
     private boolean logging = false;
-    private int id = 0;
-    PrintWriter out = null;
+    private Consumer<double[][]> out = null;
 
     private final TreeSet<Integer> set = new TreeSet<>(new Comparator<Integer>() {
         public int compare(Integer lhs, Integer rhs) {
@@ -224,18 +224,12 @@ final class SorterXD extends SorterFast {
 
     private void sort(int from, int until, int dimension) {
         int size = until - from;
-        int _id = id;
         if(logging && size >= 2) {
-            id++;
-            out.print(_id + " ");
-            out.print(size + " ");
-            out.println(dimension + 1);
-            for(int i = from; i < until; i++) {
-                for(int j = 0; j < dimension + 1; j++) {
-                    out.print(input[i][j] + " ");
-                }
-                out.println();
+            double[][] test = new double[size][];
+            for (int i = 0; i < size; ++i) {
+                test[i] = Arrays.copyOf(input[indices[from + i]], dimension + 1);
             }
+            out.accept(test);
         }
         if(size == 2) {
             if(dominatesEq(from, from + 1, dimension)) {
@@ -304,10 +298,8 @@ final class SorterXD extends SorterFast {
     }
 
     @Override
-    protected void setParamAnalysis(boolean withLogging, PrintWriter out) throws FileNotFoundException {
+    protected void setParamAnalysis(boolean withLogging, Consumer<double[][]> out) {
         logging = withLogging;
-        id = 0;
         this.out = out;
     }
-
 }

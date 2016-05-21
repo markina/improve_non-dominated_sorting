@@ -50,7 +50,4 @@ final class Sorter2D extends SorterFast {
             }
         }
     }
-
-    @Override
-    protected void setParamAnalysis(boolean withLogging, PrintWriter out) {}
 }
