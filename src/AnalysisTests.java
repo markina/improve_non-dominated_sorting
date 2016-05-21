@@ -145,6 +145,7 @@ public class AnalysisTests {
                     for (int i = 0; i < test.length; ++i) {
                         maxK = Math.max(maxK, output[i]);
                     }
+                    ++maxK;
                     out.println(localN + " " + localM + " " + maxK + "\n" + fastTime + "\n" + bosTime);
                     System.out.println(countDone.incrementAndGet() + "/" + tests.size());
                     return null;
