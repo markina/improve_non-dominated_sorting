@@ -19,8 +19,6 @@ final class SorterBOS extends Sorter {
     private double[][] input;
     private int[] output;
     MergeSorter sorter;
-    int _size;
-    int _dim;
     private int[] temp4CompEq;
 
     SorterBOS(int capacity_size, int capacity_dim) {
@@ -36,8 +34,8 @@ final class SorterBOS extends Sorter {
     }
 
     private void initAll(int sz, int d) {
-        _size = sz;
-        _dim = d;
+        size = sz;
+        dim = d;
         L.init(sz, d);
         C.init(sz, d);
         Arrays.fill(isRanked, false);
@@ -53,8 +51,8 @@ final class SorterBOS extends Sorter {
         initAll(input.length, input.length > 0 ? input[0].length : 0);
         fillQ();
 
-        for (int i = 0; i < _size; i++) {
-            for (int j = 0; j < _dim; j++) {
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < dim; j++) {
                 int s = Q[j][i];
 //                C.get(s).remove(j); // in original algorithm here
                 if (isRanked[s]) {
@@ -66,7 +64,7 @@ final class SorterBOS extends Sorter {
                 }
                 C.removeFrom(s, j);
             }
-            if (SC == _size) {
+            if (SC == size) {
                 break;
             }
         }
@@ -129,16 +127,16 @@ final class SorterBOS extends Sorter {
     }
 
     private void fillQ() {
-        for (int i = 0; i < _size; ++i) {
+        for (int i = 0; i < size; ++i) {
             scratchByKthObj[i] = i;
         }
-        if (_dim > 0) {
-            sorter.lexSort(scratchByKthObj, 0, _size, input, temp4CompEq);
+        if (dim > 0) {
+            sorter.lexSort(scratchByKthObj, 0, size, input, temp4CompEq);
         }
-        for (int i = 0; i < _dim; i++) {
-            System.arraycopy(sorter.indices, 0, Q[i], 0, _size);
+        for (int i = 0; i < dim; i++) {
+            System.arraycopy(sorter.indices, 0, Q[i], 0, size);
             Arrays.fill(scratchByKthObj, 0);
-            sortIntByTthObj(0, _size, i);
+            sortIntByTthObj(0, size, i);
         }
     }
 
@@ -166,13 +164,13 @@ final class SorterBOS extends Sorter {
     protected void print_info() {
         System.out.println("--------------");
         System.out.println("SorterBOS");
-        System.out.println("N = " + _size + "; M = " + _dim);
+        System.out.println("N = " + size + "; M = " + dim);
     }
 
     private void printQ() {
-        for (int i = 0; i < _dim; i++) {
+        for (int i = 0; i < dim; i++) {
             System.out.print("Q[" + i + "] = ");
-            for (int x = 0; x < _size; x++) {
+            for (int x = 0; x < size; x++) {
                 System.out.print(Q[i][x] + " ");
             }
             System.out.println();
@@ -181,7 +179,7 @@ final class SorterBOS extends Sorter {
 
     private void printC() {
         System.out.print("C = ");
-        for (int x = 0; x < _size; x++) {
+        for (int x = 0; x < size; x++) {
             System.out.print("{ ");
             for(int y: C.get(x)) {
                 System.out.print(y + " ");
@@ -193,7 +191,7 @@ final class SorterBOS extends Sorter {
 
     private void printOutput() {
         System.out.print("output = ");
-        for (int i = 0; i < _size; i++) {
+        for (int i = 0; i < size; i++) {
             System.out.print(output[i] + " ");
         }
         System.out.println();

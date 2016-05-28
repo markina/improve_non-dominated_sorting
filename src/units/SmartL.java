@@ -5,8 +5,8 @@ public class SmartL {
     private int capacity_dim;
     private int capacity_size;
     private RefStruct [] L;
-    int size;
-    int dim;
+    private int size;
+    private int dim;
 
     public SmartL(int capacity_dim, int capacity_size) {
         this.capacity_dim = capacity_dim;
@@ -23,6 +23,10 @@ public class SmartL {
         dim = d;
         if(d > capacity_dim || sz > capacity_size) {
             System.out.println("capacity_dim > capacity_dim || size > capacity_size");
+            System.out.println("size = " + size);
+            System.out.println("dim = " + dim);
+            System.out.println("c_size = " + capacity_size);
+            System.out.println("c_d = " + capacity_dim);
         }
         for (int x = 0; x < d; x++) {
             L[x].init(sz);

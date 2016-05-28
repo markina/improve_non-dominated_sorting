@@ -3,40 +3,9 @@ import java.util.Collections;
 import java.util.Random;
 import java.util.function.BiConsumer;
 
-/**
- * Tests for non-dominated sorting algorithms and implementations.
- *
- * @author Maxim Buzdalov
- */
-public class Tests {
-    static int[] findFrontIndices(double[][] input, FactoryNonDominatedSorting sorterFactory) {
-        int size = input.length;
-        int dim = size == 0 ? 0 : input[0].length;
-        int[] rv = new int[size];
-        sorterFactory.getSorter(size, dim).sort(input, rv);
-        return rv;
-    }
 
-    static int[] findFrontIndices(double[][] input, Sorter srt) {
-        int size = input.length;
-        int[] rv = new int[size];
-        srt.sort(input, rv);
-        return rv;
-    }
-
-    static void checkEqual(int[] expected, int[] found) {
-        if(found == null) {
-            throw new AssertionError("Found a null array");
-        }
-        if(expected.length != found.length) {
-            throw new AssertionError("Arrays have unequal length: expected " + expected.length + " found " + found.length);
-        }
-        for(int i = 0; i < expected.length; ++i) {
-            if(expected[i] != found[i]) {
-                throw new AssertionError("Arrays differ at position " + i + ": expected " + expected[i] + " found " + found[i]);
-            }
-        }
-    }
+public class TestWithAlloc {
+    private static Sorter sorterBOS;
 
     private static void groupCheck(String title, double[][] input, int[] output) {
         int[] output2 = new int[output.length * 2];
@@ -48,31 +17,30 @@ public class Tests {
         System.arraycopy(input, 0, input2, input.length, input.length);
 
         FactoryNonDominatedSorting fastFactory = new FasterNonDominatedSorting();
-        FactoryNonDominatedSorting bosFactory = new BOSNonDominatedSorting();
 
         try {
-            checkEqual(output, findFrontIndices(input, fastFactory));
+            Tests.checkEqual(output, Tests.findFrontIndices(input, fastFactory));
             System.out.println("Raw test '" + title + "' passed");
         } catch(AssertionError er) {
             throw new AssertionError("Fast: Error in raw test '" + title + "': " + er.getMessage());
         }
 
         try {
-            checkEqual(output, findFrontIndices(input, bosFactory));
+            Tests.checkEqual(output, Tests.findFrontIndices(input, sorterBOS));
             System.out.println("Raw test '" + title + "' passed");
         } catch(AssertionError er) {
             throw new AssertionError("BOS: Error in raw test '" + title + "': " + er.getMessage());
         }
 
         try {
-            checkEqual(output2, findFrontIndices(input2, fastFactory));
+            Tests.checkEqual(output2, Tests.findFrontIndices(input2, fastFactory));
             System.out.println("Duplicate test '" + title + "' passed");
         } catch(AssertionError er) {
             throw new AssertionError("Fast: Error in duplicate test '" + title + "': " + er.getMessage());
         }
 
         try {
-            checkEqual(output2, findFrontIndices(input2, bosFactory));
+            Tests.checkEqual(output2, Tests.findFrontIndices(input2, sorterBOS));
             System.out.println("Duplicate test '" + title + "' passed");
         } catch(AssertionError er) {
             throw new AssertionError("BOS: Error in duplicate test '" + title + "': " + er.getMessage());
@@ -119,6 +87,10 @@ public class Tests {
     }
 
     public static void main(String[] args) {
+
+
+        sorterBOS = new BOSNonDominatedSorting().getSorter(20000, 100);
+
         groupCheck("simple test", new double[][]{
                         {1, 5}, {2, 4}, {4, 2}, {7, 8}, {5, 3}, {8, 1}, {6, 7}, {3, 6}},
                 new int[]{0, 0, 0, 3, 1, 0, 2, 1});

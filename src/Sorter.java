@@ -8,11 +8,15 @@ import java.util.function.Consumer;
  * and the method for actual sorting.
  */
 public abstract class Sorter {
-    protected final int size;
-    protected final int dim;
+    protected int size;
+    protected int dim;
+    protected final int capacity_size;
+    protected final int capacity_dim;
     protected Sorter(int size, int dim) {
         this.size = size;
         this.dim = dim;
+        this.capacity_size = size;
+        this.capacity_dim = dim;
     }
 
      /**
@@ -48,6 +52,11 @@ public abstract class Sorter {
      * @param output is array which is filled with the front indices of the corresponding input elements.
      */
     public void sort(double[][] input, int[] output) {
+        if(this instanceof SorterBOS) {
+            sortImpl(input, output);
+            return;
+        }
+
         if (input.length != size) {
             throw new IllegalArgumentException(
                     "Input size (" + input.length + ") does not match the sorter's size (" + size + ")"
