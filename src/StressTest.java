@@ -39,6 +39,8 @@ public class StressTest {
     }
 
     public static void main(String[] args) {
+        long begin = System.nanoTime();
+
         stressTest(6, 2, false);
 
         stressTest(6, 3, false);
@@ -71,6 +73,10 @@ public class StressTest {
 
 
         System.out.println();
+
+        long end = System.nanoTime();
+
         System.out.println("All stress tests passed");
+        System.out.print(end - begin);
     }
 }

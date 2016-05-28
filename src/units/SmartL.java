@@ -8,8 +8,6 @@ public class SmartL {
     int size;
     int dim;
 
-
-
     public SmartL(int capacity_dim, int capacity_size) {
         this.capacity_dim = capacity_dim;
         this.capacity_size = capacity_size;
