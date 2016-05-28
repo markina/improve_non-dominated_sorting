@@ -1,6 +1,10 @@
 import java.util.Random;
 
 public class StressTest {
+    private static Sorter sorterBOS = new BOSNonDominatedSorting().getSorter(100000, 50);
+    private static FactoryNonDominatedSorting fastFactory = new FasterNonDominatedSorting();
+    private static FactoryNonDominatedSorting BOSFactory = new BOSNonDominatedSorting();
+    private static FactoryNonDominatedSorting hybridFactory = new HybridNonDominatedSorting();
 
     private static void stressTest(int N, int M, boolean doRundomNM) {
         Random rnd = new Random();
@@ -18,9 +22,14 @@ public class StressTest {
         }
 
         try {
+
             Tests.checkEqual(
-                    Tests.findFrontIndices(input, new FasterNonDominatedSorting()),
-                    Tests.findFrontIndices(input, new BOSNonDominatedSorting()));
+                    Tests.findFrontIndices(input, fastFactory),
+                    Tests.findFrontIndices(input, sorterBOS));
+
+            Tests.checkEqual(
+                    Tests.findFrontIndices(input, hybridFactory),
+                    Tests.findFrontIndices(input, sorterBOS));
             System.out.println("Stress test passed");
         } catch(AssertionError er) {
             throw new AssertionError("Error in stress test : " + er.getMessage());
@@ -30,8 +39,8 @@ public class StressTest {
     public static void stressTest(double[][] input) {
         try {
             Tests.checkEqual(
-                    Tests.findFrontIndices(input, new FasterNonDominatedSorting()),
-                    Tests.findFrontIndices(input, new BOSNonDominatedSorting()));
+                    Tests.findFrontIndices(input, fastFactory),
+                    Tests.findFrontIndices(input, sorterBOS));
             System.out.println("Stress test passed");
         } catch(AssertionError er) {
             throw new AssertionError("Error in stress test : " + er.getMessage());
@@ -39,6 +48,8 @@ public class StressTest {
     }
 
     public static void main(String[] args) {
+
+
         long begin = System.nanoTime();
 
         stressTest(6, 2, false);
