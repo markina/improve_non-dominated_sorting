@@ -28,24 +28,22 @@ final class SorterBOS extends Sorter {
         output = new int[size];
         Q = new int[dim][size];
         sorter = new MergeSorter(size);
-        initAll();
     }
 
-    private void initAll() {
-        L.init();
-        C.init();
+    private void initAll(int sz, int d) {
+        L.init(sz, d);
+        C.init(sz, d);
         Arrays.fill(isRanked, false);
         Arrays.fill(output, 0);
         SC = 0;
         RC = 1;
-
     }
 
     protected void sortImpl(double[][] input, int[] output) {
         this.input = input;
         this.output = output;
 
-        initAll();
+        initAll(size, dim);
         fillQ();
 
         for (int i = 0; i < size; i++) {

@@ -2,24 +2,32 @@ package units;
 
 // List<List<Set<Integer>>>
 public class SmartL {
-    private int dim;
-    private int size;
+    private int capacity_dim;
+    private int capacity_size;
     private RefStruct [] L;
+    int size;
+    int dim;
 
 
-    public SmartL(int dim, int size) {
-        this.dim = dim;
-        this.size = size;
-        L = new RefStruct[dim];
 
-        for (int x = 0; x < dim; x++) {
-            L[x] = new RefStruct(size);
+    public SmartL(int capacity_dim, int capacity_size) {
+        this.capacity_dim = capacity_dim;
+        this.capacity_size = capacity_size;
+        L = new RefStruct[capacity_dim];
+
+        for (int x = 0; x < capacity_dim; x++) {
+            L[x] = new RefStruct(capacity_size);
         }
     }
 
-    public void init() {
-        for (int x = 0; x < dim; x++) {
-            L[x].init();
+    public void init(int sz, int d) {
+        size = sz;
+        dim = d;
+        if(d > capacity_dim || sz > capacity_size) {
+            System.out.println("capacity_dim > capacity_dim || size > capacity_size");
+        }
+        for (int x = 0; x < d; x++) {
+            L[x].init(sz);
         }
     }
 
@@ -47,20 +55,25 @@ public class SmartL {
     }
 
     private class RefStruct {
-        int[] refToLast; // null == -1
-        int[] pref;      // null == -1
-        int[] elems;
-        int last_id;
+        private int[] refToLast; // null == -1
+        private int[] pref;      // null == -1
+        private int[] elems;
+        private int last_id;
+        private int capacity_size;
 
-        RefStruct(int size) {
-            refToLast = new int[size];
-            pref = new int[size];
-            elems = new int[size]; // empty == -1
-            init();
+        RefStruct(int sz) {
+            capacity_size = sz;
+            refToLast = new int[sz];
+            pref = new int[sz];
+            elems = new int[sz]; // empty == -1
+            init(sz);
         }
 
-        void init() {
-            for (int i = 0; i < size; i++) {
+        void init(int sz) {
+            if(sz > capacity_size) {
+                System.out.println("sz > capacity_size");
+            }
+            for (int i = 0; i < sz; i++) {
                 refToLast[i] = -1;
                 pref[i] = -1;
                 elems[i] = -1;

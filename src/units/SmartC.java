@@ -3,21 +3,25 @@ package units;
 //List<Set<Integer>>
 public class SmartC {
     private SetOnArray [] C = null;
-    private int size;
-//    private int dim;
+    private int capacity_size;
+    private int capacity_dim;
 
-    public SmartC(int size, int dim) {
-        this.size = size;
-//        this.dim = dim;
-        C = new SetOnArray[size];
-        for(int i = 0; i < size; i++) {
-            C[i] = new SetOnArray(dim);
+    public SmartC(int capacity_size, int capacity_dim) {
+        this.capacity_size = capacity_size;
+        this.capacity_dim = capacity_dim;
+        C = new SetOnArray[capacity_size];
+        for(int i = 0; i < capacity_size; i++) {
+            C[i] = new SetOnArray(capacity_dim);
         }
     }
 
-    public void init() {
-        for(int i = 0; i < size; i++) {
-            C[i].init();
+    public void init(int sz, int d) {
+        if(sz > capacity_size || d > capacity_dim) {
+            System.out.print("sz > capacity_size || d > capacity_dim");
+        }
+
+        for(int i = 0; i < sz; i++) {
+            C[i].init(d);
         }
     }
 
@@ -30,21 +34,24 @@ public class SmartC {
     }
 
     private class SetOnArray{
-        int cnt;
-        int [] elems;
-        boolean [] flags;
-        int dim;
+        private int cnt;
+        private int [] elems;
+        private boolean [] flags;
+        private int capacity_dim;
 
-        SetOnArray(int dim) {
-            this.dim = dim;
-            elems = new int[dim];
-            flags = new boolean[dim];
-            init();
+        SetOnArray(int capacity_dim) {
+            this.capacity_dim = capacity_dim;
+            elems = new int[capacity_dim];
+            flags = new boolean[capacity_dim];
+            init(capacity_dim);
         }
 
-        void init() {
-            cnt = dim;
-            for(int i = 0; i < dim; i++) {
+        void init(int d) {
+            if(d > capacity_dim) {
+                System.out.print("d > capacity_dim");
+            }
+            cnt = d;
+            for(int i = 0; i < capacity_dim; i++) {
                 elems[i] = i;
                 flags[i] = true;
             }
