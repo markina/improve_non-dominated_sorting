@@ -39,7 +39,7 @@ final class SorterBOS extends Sorter {
         L.init(sz, d);
         C.init(sz, d);
         Arrays.fill(isRanked, false);
-        Arrays.fill(output, 0);
+
         SC = 0;
         RC = 1;
     }
@@ -74,7 +74,9 @@ final class SorterBOS extends Sorter {
 
     private void findRank(int s, int j) {
         int l = -1;
+//        int l = this.output[s];
         int r = RC - 1;
+//        int r = Math.max(RC - 1, l);
         boolean check;
         while (r - l > 1) {
             int m = (l + r) / 2;
@@ -102,11 +104,13 @@ final class SorterBOS extends Sorter {
             }
         }
         if (!check) {
-            output[s] = r;
+//            output[s] = r;
+            output[s] = Math.max(r, output[s]);
             L.addTo(j, output[s], s);
         } else {
             RC++;
-            output[s] = RC - 1;
+//            output[s] = RC - 1;
+            output[s] = Math.max(RC - 1, output[s]);
             L.addTo(j, output[s], s);
         }
 //        L.printSout();
