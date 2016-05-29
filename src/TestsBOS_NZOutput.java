@@ -9,7 +9,8 @@ import java.util.function.BiConsumer;
  * @author Maxim Buzdalov
  */
 public class TestsBOS_NZOutput {
-    Sorter sorterBOS = new BOSNonDominatedSorting().getSorter(20000, 100);
+
+    static Sorter sorterBOS = new BOSNonDominatedSorting().getSorter(20000, 100);
 
     static int[] findFrontIndices(double[][] input, FactoryNonDominatedSorting sorterFactory, int[] output) {
         int size = input.length;
@@ -152,6 +153,26 @@ public class TestsBOS_NZOutput {
         },
                 new int[]{1, 1, 0, 3, 1, 1, 0, 1, 0, 0},
                 new int[]{0, 0, 0, 3, 0, 0, 0, 0, 0, 0});
+
+//        int [] res = new int[]{-2, -2, -2, -2, -2, -2, -2, -2, 0, 0, 0, 3, 1, 0, 2, 1, -2, -2, -2};
+//        System.out.println(Arrays.toString(res));
+//        res = new int[]{-2, -2, -2, -2, -2, -2, -2, -2, 0, 0, 0, 0, 0, 0, 0, 0, -2, -2, -2};
+//        System.out.println(Arrays.toString(res));
+//        sorterBOS.sortImplSpecial(
+//                new double[][]{{-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}, {1, 5}, {2, 4}, {4, 2}, {7, 8}, {5, 3}, {8, 1}, {6, 7}, {3, 6}, {-1, -1}, {-1, -1}, {-1, -1}},
+//                res, 8, 16, 2);
+//        System.out.println(Arrays.toString(res));
+//
+//        System.out.println("---");
+//
+//        res = new int[]{-2, -2, -2, -2, -2, -2, -2, -2, 0, 0, 0, 3, 1, 0, 2, 1};
+//        System.out.println(Arrays.toString(res));
+//        res = new int[]{-2, -2, -2, -2, -2, -2, -2, -2, 0, 0, 0, 0, 0, 0, 0, 0};
+//        System.out.println(Arrays.toString(res));
+//        sorterBOS.sortImplSpecial(
+//                new double[][]{{-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}, {1, 5}, {2, 4}, {4, 2}, {7, 8}, {5, 3}, {8, 1}, {6, 7}, {3, 6}},
+//                res, 8, 16, 2);
+//        System.out.println(Arrays.toString(res));
 
 //
 //        groupCheck("a tricky random test #2 inherited from old hg-based NGP", new double[][]{

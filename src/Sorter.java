@@ -82,4 +82,8 @@ public abstract class Sorter {
     protected void setParamAnalysis(boolean withLogging, Consumer<double[][]> out) {
         throw new UnsupportedOperationException("setParamAnalysis is not implemented");
     }
+
+    protected void sortImplSpecial(double[][] input, int[] output, int[] indices, int from, int until, int d) {
+        throw new UnsupportedOperationException("sortImplSpecial is not implemented");
+    }
 }

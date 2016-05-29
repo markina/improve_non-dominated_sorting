@@ -27,21 +27,56 @@ final class SorterBOS extends Sorter {
         L = new SmartL(capacity_dim, capacity_size);
         C = new SmartC(capacity_size, capacity_dim);
         isRanked = new boolean[capacity_size];
-        output = new int[capacity_size];
         Q = new int[capacity_dim][capacity_size];
         sorter = new MergeSorter(capacity_size);
         temp4CompEq = new int[capacity_size];
+        input = new double[capacity_size][capacity_dim];
+        output = new int[capacity_size];
     }
 
     private void initAll(int sz, int d) {
         size = sz;
-        dim = d;
-        L.init(sz, d);
-        C.init(sz, d);
-        Arrays.fill(isRanked, false);
-
+        dim = d + 1;
+        L.init(size, dim);
+        C.init(size, dim);
+        Arrays.fill(isRanked, 0, size, false);
         SC = 0;
         RC = 1;
+    }
+
+    public void sortImplSpecial(double[][] input, int[] output, int[] indices, int from, int until, int d) {
+//        this.input = input;
+//        this.output = output;
+
+        for(int i = from; i < until; i++) {
+            System.arraycopy(input[indices[i]], 0, this.input[i-from], 0, d+1);
+            this.output[i-from] = output[indices[i]];
+        }
+
+        initAll(until - from, d);
+        fillQ();
+
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < dim; j++) {
+                int s = Q[j][i];
+//                C.get(s).remove(j); // in original algorithm here
+                if (isRanked[s]) {
+                    L.addTo(j, this.output[s], s);
+                } else {
+                    findRank(s, j);
+                    isRanked[s] = true;
+                    SC++;
+                }
+                C.removeFrom(s, j);
+            }
+            if (SC == size) {
+                break;
+            }
+        }
+
+        for(int i = from; i < until; i++) {
+            output[indices[i]] = this.output[i-from];
+        }
     }
 
     protected void sortImpl(double[][] input, int[] output) {
@@ -68,15 +103,12 @@ final class SorterBOS extends Sorter {
                 break;
             }
         }
-//         printOutput();
     }
 
 
     private void findRank(int s, int j) {
         int l = -1;
-//        int l = this.output[s];
         int r = RC - 1;
-//        int r = Math.max(RC - 1, l);
         boolean check;
         while (r - l > 1) {
             int m = (l + r) / 2;
@@ -96,7 +128,6 @@ final class SorterBOS extends Sorter {
             }
         }
         check = false;
-//        L.printSout();
         for (Integer t : L.get(j, r)) {
             check = dominationCheck(s, t);
             if (check) {
@@ -113,7 +144,6 @@ final class SorterBOS extends Sorter {
             output[s] = Math.max(RC - 1, output[s]);
             L.addTo(j, output[s], s);
         }
-//        L.printSout();
     }
 
     private boolean dominationCheck(int s, int t) {
