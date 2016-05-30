@@ -57,19 +57,19 @@ public class Tests {
         FactoryNonDominatedSorting hybridFactory = new HybridNonDominatedSorting();
 
 
-        try {
-            checkEqual(output, findFrontIndices(input, fastFactory));
-            System.out.println("FAST: Raw test '" + title + "' passed");
-        } catch (AssertionError er) {
-            throw new AssertionError("FAST: Error in raw test '" + title + "': " + er.getMessage());
-        }
-
-        try {
-            checkEqual(output, findFrontIndices(input, bosFactory));
-            System.out.println("BOS: Raw test '" + title + "' passed");
-        } catch (AssertionError er) {
-            throw new AssertionError("BOS: Error in raw test '" + title + "': " + er.getMessage());
-        }
+//        try {
+//            checkEqual(output, findFrontIndices(input, fastFactory));
+//            System.out.println("FAST: Raw test '" + title + "' passed");
+//        } catch (AssertionError er) {
+//            throw new AssertionError("FAST: Error in raw test '" + title + "': " + er.getMessage());
+//        }
+//
+//        try {
+//            checkEqual(output, findFrontIndices(input, bosFactory));
+//            System.out.println("BOS: Raw test '" + title + "' passed");
+//        } catch (AssertionError er) {
+//            throw new AssertionError("BOS: Error in raw test '" + title + "': " + er.getMessage());
+//        }
 
         try {
             checkEqual(output, findFrontIndices(input, hybridFactory));
@@ -78,20 +78,20 @@ public class Tests {
             throw new AssertionError("HYBRID: Error in raw test '" + title + "': " + er.getMessage());
         }
 
-
-        try {
-            checkEqual(output2, findFrontIndices(input2, fastFactory));
-            System.out.println("FAST: Duplicate test '" + title + "' passed");
-        } catch (AssertionError er) {
-            throw new AssertionError("FAST: Error in duplicate test '" + title + "': " + er.getMessage());
-        }
-
-        try {
-            checkEqual(output2, findFrontIndices(input2, bosFactory));
-            System.out.println("BOS: Duplicate test '" + title + "' passed");
-        } catch (AssertionError er) {
-            throw new AssertionError("BOS: Error in duplicate test '" + title + "': " + er.getMessage());
-        }
+//
+//        try {
+//            checkEqual(output2, findFrontIndices(input2, fastFactory));
+//            System.out.println("FAST: Duplicate test '" + title + "' passed");
+//        } catch (AssertionError er) {
+//            throw new AssertionError("FAST: Error in duplicate test '" + title + "': " + er.getMessage());
+//        }
+//
+//        try {
+//            checkEqual(output2, findFrontIndices(input2, bosFactory));
+//            System.out.println("BOS: Duplicate test '" + title + "' passed");
+//        } catch (AssertionError er) {
+//            throw new AssertionError("BOS: Error in duplicate test '" + title + "': " + er.getMessage());
+//        }
 
         try {
             checkEqual(output2, findFrontIndices(input2, hybridFactory));

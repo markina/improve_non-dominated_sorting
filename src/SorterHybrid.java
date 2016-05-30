@@ -256,10 +256,18 @@ final class SorterHybrid extends Sorter {
                     sorterBOS.sortImplSpecial(input, output, indices, from, midL, dimension+1);
 
                     sortHighByLow(from, midL, midL, midH, dimension - 1);
-                    sort(midL, midH, dimension - 1);
+
+//                    sort(midL, midH, dimension - 1);
+                    sorterBOS.sortImplSpecial(input, output, indices, midL, midH, dimension);
+
                     merge(from, midL, midH);
                     sortHighByLow(from, midH, midH, until, dimension - 1);
-                    sort(midH, until, dimension);
+
+
+//                    sort(midH, until, dimension);
+                    sorterBOS.sortImplSpecial(input, output, indices, midH, until, dimension+1);
+
+
                     merge(from, midH, until);
                 }
             }
