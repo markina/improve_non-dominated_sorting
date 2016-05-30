@@ -20,7 +20,7 @@ public class AnalysisTests {
         bean.setThreadCpuTimeEnabled(true);
     }
 
-    private static FactoryNonDominatedSorting fast, bos;
+    private static FactoryNonDominatedSorting fast, bos, hybrid;
 
     static abstract class TestGenerator {
         public abstract double[][] generate(int n, int m);
@@ -113,6 +113,7 @@ public class AnalysisTests {
 
         fast = new FasterNonDominatedSorting();
         bos  = new BOSNonDominatedSorting();
+        hybrid  = new BOSNonDominatedSorting();
 
         List<double[][]> tests = collectTests(generator, N, M);
 
@@ -123,7 +124,15 @@ public class AnalysisTests {
             double[][] test = tests.get(j);
             double fastTime = timing(fast, test);
             double bosTime = timing(bos, test);
-            System.out.print(fastTime > bosTime ? '+' : '-');
+            double hybridTime = timing(hybrid, test);
+            if(fastTime > hybridTime && bosTime > hybridTime) {
+                System.out.print('h');
+            } else if(hybridTime > fastTime && bosTime > fastTime) {
+                System.out.print('f');
+            } else {
+                System.out.print('b');
+            }
+//            System.out.print(fastTime > bosTime ? '+' : '-');
         }
         System.out.println("]");
 
@@ -137,6 +146,7 @@ public class AnalysisTests {
                 tasks.add(() -> {
                     double fastTime = timing(fast, test);
                     double bosTime = timing(bos, test);
+                    double hybridTime = timing(hybrid, test);
                     int localN = test.length;
                     int localM = test[0].length;
                     int[] output = new int[localN];
@@ -146,7 +156,7 @@ public class AnalysisTests {
                         maxK = Math.max(maxK, output[i]);
                     }
                     ++maxK;
-                    out.println(localN + " " + localM + " " + maxK + "\n" + fastTime + "\n" + bosTime);
+                    out.println(localN + " " + localM + " " + maxK + "\n" + fastTime + "\n" + bosTime + "\n" + hybridTime);
                     System.out.println(countDone.incrementAndGet() + "/" + tests.size());
                     return null;
                 });
