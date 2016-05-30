@@ -3,11 +3,7 @@ import java.util.Collections;
 import java.util.Random;
 import java.util.function.BiConsumer;
 
-/**
- * Tests for non-dominated sorting algorithms and implementations.
- *
- * @author Maxim Buzdalov
- */
+
 public class TestsBOS_NZOutput {
 
     static Sorter sorterBOS = new BOSNonDominatedSorting().getSorter(20000, 100);
@@ -21,7 +17,9 @@ public class TestsBOS_NZOutput {
 
     static int[] findFrontIndices(double[][] input, Sorter srt, int [] output) {
         int size = input.length;
+        System.out.println("Output: " + Arrays.toString(output));
         srt.sort(input, output);
+        System.out.println("Result: " + Arrays.toString(output));
         return output;
     }
 
@@ -57,6 +55,7 @@ public class TestsBOS_NZOutput {
 
         FactoryNonDominatedSorting bosFactory = new BOSNonDominatedSorting();
         FactoryNonDominatedSorting hybridFactory = new HybridNonDominatedSorting();
+        FactoryNonDominatedSorting fastFactory = new FasterNonDominatedSorting();
 
 //        try {
 //            checkEqual(expected, findFrontIndices(input, hybridFactory, output));
@@ -68,7 +67,17 @@ public class TestsBOS_NZOutput {
 //        System.arraycopy(startOutput, 0, output, 0, startOutput.length);
 
         try {
-            checkEqual(expected, findFrontIndices(input, bosFactory, output));
+            checkEqual(expected, findFrontIndices(input, fastFactory, output));
+            System.out.println("Fast: Raw test '" + title + "' passed");
+        } catch(AssertionError er) {
+            throw new AssertionError("Fast: Error in raw test '" + title + "': " + er.getMessage());
+        }
+
+        System.arraycopy(startOutput, 0, output, 0, startOutput.length);
+
+
+        try {
+            checkEqual(expected, findFrontIndices(input, sorterBOS, output));
             System.out.println("BOS: Raw test '" + title + "' passed");
         } catch(AssertionError er) {
             throw new AssertionError("BOS: Error in raw test '" + title + "': " + er.getMessage());
@@ -77,7 +86,7 @@ public class TestsBOS_NZOutput {
         System.arraycopy(startOutput, 0, output, 0, startOutput.length);
 
         try {
-            checkEqual(expected, findFrontIndices(input, bosFactory, output));
+            checkEqual(expected, findFrontIndices(input, sorterBOS, output));
             System.out.println("BOS: Raw test '" + title + "' passed");
         } catch(AssertionError er) {
             throw new AssertionError("BOS: Error in raw test '" + title + "': " + er.getMessage());
@@ -147,12 +156,31 @@ public class TestsBOS_NZOutput {
 
     public static void main(String[] args) {
 
-        groupCheck("a tricky random test #1 inherited from old hg-based NGP", new double[][]{
-                {-758, -515, -226}, {-786, -98, -268}, {-876, -264, -655}, {-43, -572, -418}, {-158, -517, -647},
-                {-636, -321, -369}, {-19, -547, -935}, {-571, -866, -524}, {-819, -917, -692}, {-555, -487, -980}
+//        groupCheck("a tricky random test #1 inherited from old hg-based NGP", new double[][]{
+//                {-758, -515, -226}, {-786, -98, -268}, {-876, -264, -655}, {-43, -572, -418}, {-158, -517, -647},
+//                {-636, -321, -369}, {-19, -547, -935}, {-571, -866, -524}, {-819, -917, -692}, {-555, -487, -980}
+//        },
+//                new int[]{1, 1, 0, 2, 1, 1, 0, 1, 0, 0},
+//                new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+        
+        
+        groupCheck("test for fix bug", new double[][]{
+                {0.0, 2.0, 7.0, 4.0, 2.0},
+                {1.0, 0.0, 7.0, 8.0, 2.0},
+                {1.0, 2.0, 5.0, 5.0, 2.0},
+                {2.0, 2.0, 2.0, 8.0, 0.0},
+                {4.0, 5.0, 6.0, 0.0, 0.0},
+                {4.0, 8.0, 4.0, 8.0, 2.0},
+                {4.0, 8.0, 7.0, 9.0, 3.0},
+                {5.0, 0.0, 1.0, 5.0, 2.0},
+                {5.0, 1.0, 1.0, 2.0, 1.0},
+                {5.0, 9.0, 0.0, 5.0, 1.0},
+                {6.0, 2.0, 1.0, 1.0, 1.0},
+                {8.0, 3.0, 9.0, 5.0, 0.0},
+                {8.0, 4.0, 4.0, 4.0, 3.0}
         },
-                new int[]{1, 1, 0, 3, 1, 1, 0, 1, 0, 0},
-                new int[]{0, 0, 0, 3, 0, 0, 0, 0, 0, 0});
+                new int[]{0, 0, 0, 2, 0, 3, 4, 0, 0, 0, 1, 1, 2 },
+                new int[]{0, 0, 0, 2, 0, 2, 2, 0, 0, 0, 1, 1, 2});
 
 //        int [] res = new int[]{-2, -2, -2, -2, -2, -2, -2, -2, 0, 0, 0, 3, 1, 0, 2, 1, -2, -2, -2};
 //        System.out.println(Arrays.toString(res));

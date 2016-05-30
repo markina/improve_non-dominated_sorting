@@ -36,7 +36,8 @@ final class SorterBOS extends Sorter {
 
     private void initAll(int sz, int d) {
         size = sz;
-        dim = d + 1;
+        dim = d;
+
         L.init(size, dim);
         C.init(size, dim);
         Arrays.fill(isRanked, 0, size, false);
@@ -49,7 +50,7 @@ final class SorterBOS extends Sorter {
 //        this.output = output;
 
         for(int i = from; i < until; i++) {
-            System.arraycopy(input[indices[i]], 0, this.input[i-from], 0, d+1);
+            System.arraycopy(input[indices[i]], 0, this.input[i-from], 0, d);
             this.output[i-from] = output[indices[i]];
         }
 
@@ -107,8 +108,10 @@ final class SorterBOS extends Sorter {
 
 
     private void findRank(int s, int j) {
-        int l = -1;
-        int r = RC - 1;
+//        int l = -1;
+        int l = output[s]-1;
+//        int r = RC - 1;
+        int r = Math.max(RC, output[s]+1);
         boolean check;
         while (r - l > 1) {
             int m = (l + r) / 2;
@@ -122,7 +125,7 @@ final class SorterBOS extends Sorter {
             }
 
             if (!check) {
-                r = m;
+                r = Math.max(m, output[s]);
             } else {
                 l = m;
             }
@@ -134,14 +137,16 @@ final class SorterBOS extends Sorter {
                 break;
             }
         }
+
         if (!check) {
-//            output[s] = r;
-            output[s] = Math.max(r, output[s]);
+            RC = Math.max(RC, r + 1);
+            output[s] = r;
+//            output[s] = Math.max(r, output[s]);
             L.addTo(j, output[s], s);
         } else {
             RC++;
-//            output[s] = RC - 1;
-            output[s] = Math.max(RC - 1, output[s]);
+            output[s] = RC - 1;
+//            output[s] = Math.max(RC - 1, output[s]);
             L.addTo(j, output[s], s);
         }
     }

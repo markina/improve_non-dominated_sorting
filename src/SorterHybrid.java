@@ -252,21 +252,8 @@ final class SorterHybrid extends Sorter {
                     split3(from, until, dimension, median);
                     int midL = from + lessThan, midH = midL + equalTo;
 
-
-                    if(from == 173 && midL == 186) {
-                        System.out.println(from + " " + midL);
-                        System.out.println(Arrays.toString(output));
-                        System.out.println(Arrays.toString(indices));
-                    }
-
 //                    sort(from, midL, dimension);
-                    sorterBOS.sortImplSpecial(input, output, indices, from, midL, dimension);
-
-                    if(from == 173 && midL == 186) {
-                        System.out.println(from + " " + midL);
-                        System.out.println(Arrays.toString(output));
-                        System.out.println(Arrays.toString(indices));
-                    }
+                    sorterBOS.sortImplSpecial(input, output, indices, from, midL, dimension+1);
 
                     sortHighByLow(from, midL, midL, midH, dimension - 1);
                     sort(midL, midH, dimension - 1);

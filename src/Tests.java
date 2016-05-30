@@ -57,19 +57,19 @@ public class Tests {
         FactoryNonDominatedSorting hybridFactory = new HybridNonDominatedSorting();
 
 
-//        try {
-//            checkEqual(output, findFrontIndices(input, fastFactory));
-//            System.out.println("FAST: Raw test '" + title + "' passed");
-//        } catch (AssertionError er) {
-//            throw new AssertionError("FAST: Error in raw test '" + title + "': " + er.getMessage());
-//        }
-//
-//        try {
-//            checkEqual(output, findFrontIndices(input, bosFactory));
-//            System.out.println("BOS: Raw test '" + title + "' passed");
-//        } catch (AssertionError er) {
-//            throw new AssertionError("BOS: Error in raw test '" + title + "': " + er.getMessage());
-//        }
+        try {
+            checkEqual(output, findFrontIndices(input, fastFactory));
+            System.out.println("FAST: Raw test '" + title + "' passed");
+        } catch (AssertionError er) {
+            throw new AssertionError("FAST: Error in raw test '" + title + "': " + er.getMessage());
+        }
+
+        try {
+            checkEqual(output, findFrontIndices(input, bosFactory));
+            System.out.println("BOS: Raw test '" + title + "' passed");
+        } catch (AssertionError er) {
+            throw new AssertionError("BOS: Error in raw test '" + title + "': " + er.getMessage());
+        }
 
         try {
             checkEqual(output, findFrontIndices(input, hybridFactory));
@@ -78,27 +78,27 @@ public class Tests {
             throw new AssertionError("HYBRID: Error in raw test '" + title + "': " + er.getMessage());
         }
 
-//
-//        try {
-//            checkEqual(output2, findFrontIndices(input2, fastFactory));
-//            System.out.println("FAST: Duplicate test '" + title + "' passed");
-//        } catch (AssertionError er) {
-//            throw new AssertionError("FAST: Error in duplicate test '" + title + "': " + er.getMessage());
-//        }
-//
-//        try {
-//            checkEqual(output2, findFrontIndices(input2, bosFactory));
-//            System.out.println("BOS: Duplicate test '" + title + "' passed");
-//        } catch (AssertionError er) {
-//            throw new AssertionError("BOS: Error in duplicate test '" + title + "': " + er.getMessage());
-//        }
-//
-//        try {
-//            checkEqual(output2, findFrontIndices(input2, hybridFactory));
-//            System.out.println("HYBRID: Duplicate test '" + title + "' passed");
-//        } catch (AssertionError er) {
-//            throw new AssertionError("HYBRID: Error in duplicate test '" + title + "': " + er.getMessage());
-//        }
+
+        try {
+            checkEqual(output2, findFrontIndices(input2, fastFactory));
+            System.out.println("FAST: Duplicate test '" + title + "' passed");
+        } catch (AssertionError er) {
+            throw new AssertionError("FAST: Error in duplicate test '" + title + "': " + er.getMessage());
+        }
+
+        try {
+            checkEqual(output2, findFrontIndices(input2, bosFactory));
+            System.out.println("BOS: Duplicate test '" + title + "' passed");
+        } catch (AssertionError er) {
+            throw new AssertionError("BOS: Error in duplicate test '" + title + "': " + er.getMessage());
+        }
+
+        try {
+            checkEqual(output2, findFrontIndices(input2, hybridFactory));
+            System.out.println("HYBRID: Duplicate test '" + title + "' passed");
+        } catch (AssertionError er) {
+            throw new AssertionError("HYBRID: Error in duplicate test '" + title + "': " + er.getMessage());
+        }
     }
 
     private static double[][] arrayFill(int dim1, int dim2, double value) {
@@ -141,9 +141,9 @@ public class Tests {
     }
 
     public static void main(String[] args) {
-//        groupCheck("simple test", new double[][]{
-//                        {1, 5}, {2, 4}, {4, 2}, {7, 8}, {5, 3}, {8, 1}, {6, 7}, {3, 6}},
-//                new int[]{0, 0, 0, 3, 1, 0, 2, 1});
+        groupCheck("simple test", new double[][]{
+                        {1, 5}, {2, 4}, {4, 2}, {7, 8}, {5, 3}, {8, 1}, {6, 7}, {3, 6}},
+                new int[]{0, 0, 0, 3, 1, 0, 2, 1});
 
 
         // a0 = {1, 5};
@@ -155,86 +155,86 @@ public class Tests {
         // g6 = {6, 7};
         // h7 = {3, 6};
 
-//        groupCheck("simple test", new double[][]{{2, 4}, {5, 3}, {3, 4}, {3, 6}, {1, 2}},
-//                new int[]{1, 1, 2, 3, 0});
-//
-//        groupCheck("a single 1D point", arrayFill(1, 1, 239), new int[1]);
-//        groupCheck("a single 100D point", arrayFill(1, 100, 239), new int[1]);
-//        groupCheck("a single 0D point", arrayFill(1, 0, 239), new int[1]);
-//        groupCheck("some 0D points", arrayFill(10, 0, 239), new int[10]);
-//
-//        groupCheck("two unequal 1D points ordered decreasing", new double[][]{{2}, {1}}, new int[]{1, 0});
-//        groupCheck("two unequal 1D points ordered increasing", new double[][]{{2}, {3}}, new int[]{0, 1});
-//        groupCheck("two equal 1D points", new double[][]{{2}, {2}}, new int[]{0, 0});
-//
-//        groupCheck("two incomparable 2D points", new double[][]{{2, 1}, {1, 2}}, new int[]{0, 0});
-//        groupCheck("two 2D points dominated increasingly", new double[][]{{1, 1}, {1, 2}}, new int[]{0, 1});
-//        groupCheck("two 2D points dominated decreasingly", new double[][]{{0, 2}, {0, 2}, {0, 1}, {0, 2}, {0, 3}}, new int[]{1, 1, 0, 1, 2});
-//        groupCheck("two 2D points dominated decreasingly", new double[][]{{1, 2}, {1, 1}}, new int[]{1, 0});
-//
-//        hypercube.callOn(2, 10, (i, o) -> groupCheck("2D-hypercube of size 10", i, o));
-//        hypercube.callOn(3, 8, (i, o) -> groupCheck("3D-hypercube of size 8", i, o));
-//        hypercube.callOn(4, 5, (i, o) -> groupCheck("4D-hypercube of size 5", i, o));
-//
-//        groupCheck("two groups of many equal points",
-//                concat(arrayFill(10, 10, 11110), arrayFill(10, 10, 11111)),
-//                concat(arrayFill(10, 0), arrayFill(10, 1))
-//        );
-//
-//        groupCheck("a strange test inherited from old git-based NGP", new double[][]{
-//                {-802722320, -454657628, 225851471}, {-98542905, -152834951, 84118477}, {-914454915, 959085012, -60245822},
-//                {-657036692, -349821749, 311923685}, {-474717265, -445106490, 535962357}, {-815877872, 512265128, 531492492},
-//                {-832876652, 780965133, -262104115}, {-589905879, 725260188, 705639821}, {744492102, 650058155, 902077439},
-//                {916192307, -400878152, -177898421}, {-711082130, 23981619, 723118547}, {289717915, -694022593, -15699066},
-//                {-542792952, 235407179, 957383274}, {-625141817, -839959208, 994536087}, {822035885, 564018861, 571738696}
-//        }, new int[]{
-//                0, 0, 0, 1, 1, 0, 0, 2, 2, 0, 1, 0, 2, 0, 2
-//        });
-//
-//        groupCheck("a tricky random test #1 inherited from old hg-based NGP", new double[][]{
-//                {-758, -515, -226}, {-786, -98, -268}, {-876, -264, -655}, {-43, -572, -418}, {-158, -517, -647},
-//                {-636, -321, -369}, {-19, -547, -935}, {-571, -866, -524}, {-819, -917, -692}, {-555, -487, -980}
-//        }, new int[]{
-//                1, 1, 0, 2, 1, 1, 0, 1, 0, 0
-//        });
-//
-//
-//        groupCheck("test for hybrid algo", new double[][]{
-//                {-75, -51},
-//                {-78, -9},
-//                {-87, -26},
-//                {-4, -57},
-//                {-15, -51}
-//        }, new int[]{
-//                0, 1, 0, 0, 1
-//        });
-//
-//        groupCheck("test for hybrid algo", new double[][]{
-//                {-75, -51, -22},
-//                {-78, -9, -26},
-//                {-87, -26, -65},
-//                {-4, -57, -41},
-//                {-15, -51, -64},
-//        }, new int[]{
-//                0, 1, 0, 0, 0
-//        });
-//
-//
-//        groupCheck("test for hybrid algo", new double[][]{
-//                {-75, -51, -22},
-//                {-78, -9, -26},
-//                {-87, -26, -65},
-//                {-4, -57, -41},
-//                {-15, -51, -64},
-//                {-63, -32, -36},
-//                {-1, -54, -93},
-//                {-57, -86, -52},
-//                {-81, -91, -69},
-//                {-55, -48, -98}
-//        }, new int[]{
-//                1, 1, 0, 2, 1, 1, 0, 1, 0, 0
-//        });
-//
+        groupCheck("simple test", new double[][]{{2, 4}, {5, 3}, {3, 4}, {3, 6}, {1, 2}},
+                new int[]{1, 1, 2, 3, 0});
+
+        groupCheck("a single 1D point", arrayFill(1, 1, 239), new int[1]);
+        groupCheck("a single 100D point", arrayFill(1, 100, 239), new int[1]);
+        groupCheck("a single 0D point", arrayFill(1, 0, 239), new int[1]);
+        groupCheck("some 0D points", arrayFill(10, 0, 239), new int[10]);
+
+        groupCheck("two unequal 1D points ordered decreasing", new double[][]{{2}, {1}}, new int[]{1, 0});
+        groupCheck("two unequal 1D points ordered increasing", new double[][]{{2}, {3}}, new int[]{0, 1});
+        groupCheck("two equal 1D points", new double[][]{{2}, {2}}, new int[]{0, 0});
+
+        groupCheck("two incomparable 2D points", new double[][]{{2, 1}, {1, 2}}, new int[]{0, 0});
+        groupCheck("two 2D points dominated increasingly", new double[][]{{1, 1}, {1, 2}}, new int[]{0, 1});
+        groupCheck("two 2D points dominated decreasingly", new double[][]{{0, 2}, {0, 2}, {0, 1}, {0, 2}, {0, 3}}, new int[]{1, 1, 0, 1, 2});
+        groupCheck("two 2D points dominated decreasingly", new double[][]{{1, 2}, {1, 1}}, new int[]{1, 0});
+
+        hypercube.callOn(2, 10, (i, o) -> groupCheck("2D-hypercube of size 10", i, o));
+        hypercube.callOn(3, 8, (i, o) -> groupCheck("3D-hypercube of size 8", i, o));
+        hypercube.callOn(4, 5, (i, o) -> groupCheck("4D-hypercube of size 5", i, o));
+
+        groupCheck("two groups of many equal points",
+                concat(arrayFill(10, 10, 11110), arrayFill(10, 10, 11111)),
+                concat(arrayFill(10, 0), arrayFill(10, 1))
+        );
+
+        groupCheck("a strange test inherited from old git-based NGP", new double[][]{
+                {-802722320, -454657628, 225851471}, {-98542905, -152834951, 84118477}, {-914454915, 959085012, -60245822},
+                {-657036692, -349821749, 311923685}, {-474717265, -445106490, 535962357}, {-815877872, 512265128, 531492492},
+                {-832876652, 780965133, -262104115}, {-589905879, 725260188, 705639821}, {744492102, 650058155, 902077439},
+                {916192307, -400878152, -177898421}, {-711082130, 23981619, 723118547}, {289717915, -694022593, -15699066},
+                {-542792952, 235407179, 957383274}, {-625141817, -839959208, 994536087}, {822035885, 564018861, 571738696}
+        }, new int[]{
+                0, 0, 0, 1, 1, 0, 0, 2, 2, 0, 1, 0, 2, 0, 2
+        });
+
+        groupCheck("a tricky random test #1 inherited from old hg-based NGP", new double[][]{
+                {-758, -515, -226}, {-786, -98, -268}, {-876, -264, -655}, {-43, -572, -418}, {-158, -517, -647},
+                {-636, -321, -369}, {-19, -547, -935}, {-571, -866, -524}, {-819, -917, -692}, {-555, -487, -980}
+        }, new int[]{
+                1, 1, 0, 2, 1, 1, 0, 1, 0, 0
+        });
+
+
+        groupCheck("test for hybrid algo", new double[][]{
+                {-75, -51},
+                {-78, -9},
+                {-87, -26},
+                {-4, -57},
+                {-15, -51}
+        }, new int[]{
+                0, 1, 0, 0, 1
+        });
+
+        groupCheck("test for hybrid algo", new double[][]{
+                {-75, -51, -22},
+                {-78, -9, -26},
+                {-87, -26, -65},
+                {-4, -57, -41},
+                {-15, -51, -64},
+        }, new int[]{
+                0, 1, 0, 0, 0
+        });
+
+
+        groupCheck("test for hybrid algo", new double[][]{
+                {-75, -51, -22},
+                {-78, -9, -26},
+                {-87, -26, -65},
+                {-4, -57, -41},
+                {-15, -51, -64},
+                {-63, -32, -36},
+                {-1, -54, -93},
+                {-57, -86, -52},
+                {-81, -91, -69},
+                {-55, -48, -98}
+        }, new int[]{
+                1, 1, 0, 2, 1, 1, 0, 1, 0, 0
+        });
+
 
 
         groupCheck("a tricky random test #2 inherited from old hg-based NGP", new double[][]{

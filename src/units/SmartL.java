@@ -1,5 +1,7 @@
 package units;
 
+import java.util.Arrays;
+
 // List<List<Set<Integer>>>
 public class SmartL {
     private int capacity_dim;
@@ -29,7 +31,7 @@ public class SmartL {
             System.out.println("c_d = " + capacity_dim);
         }
         for (int x = 0; x < d; x++) {
-            L[x].init(sz);
+            L[x].init(capacity_size);
         }
     }
 
@@ -75,11 +77,15 @@ public class SmartL {
             if(sz > capacity_size) {
                 System.out.println("sz > capacity_size");
             }
-            for (int i = 0; i < sz; i++) {
-                refToLast[i] = -1;
-                pref[i] = -1;
-                elems[i] = -1;
-            }
+            Arrays.fill(refToLast, -1);
+            Arrays.fill(pref, -1);
+            Arrays.fill(elems, -1);
+
+//            for (int i = 0; i < sz; i++) {
+//                refToLast[i] = -1;
+//                pref[i] = -1;
+//                elems[i] = -1;
+//            }
             last_id = 0;
         }
 

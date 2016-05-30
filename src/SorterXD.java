@@ -42,7 +42,7 @@ final class SorterXD extends SorterFast {
         for(int i = 0; i < size; ++i) {
             indices[i] = i;
         }
-        Arrays.fill(output, 0);
+//        Arrays.fill(output, 0);
         sorter.lexSort(indices, 0, size, input, eqComp);
         this.input = input;
         this.output = output;
