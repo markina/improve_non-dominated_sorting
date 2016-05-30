@@ -1,3 +1,5 @@
+import units.LogD;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
@@ -9,8 +11,9 @@ import java.util.function.BiConsumer;
  * @author Maxim Buzdalov
  */
 public class Tests {
-//    static Sorter sorterBOS = new SorterBOS(20000, 100);
-    static Sorter sorterBOS = new SorterBOS(10, 3);
+    static Sorter sorterBOS = new SorterBOS(20000, 100);
+
+//    static Sorter
 
     static int[] findFrontIndices(double[][] input, FactoryNonDominatedSorting sorterFactory) {
         int size = input.length;
@@ -141,6 +144,8 @@ public class Tests {
     }
 
     public static void main(String[] args) {
+        long begin = System.nanoTime();
+
         groupCheck("simple test", new double[][]{
                         {1, 5}, {2, 4}, {4, 2}, {7, 8}, {5, 3}, {8, 1}, {6, 7}, {3, 6}},
                 new int[]{0, 0, 0, 3, 1, 0, 2, 1});
@@ -352,8 +357,13 @@ public class Tests {
 
         groupCheck("worst case from paper BOS", getForWorstCase3(10000), new int[10000]);
 
+        long end = System.nanoTime();
+
         System.out.println();
+
         System.out.println("Tests passed");
+
+        System.out.println(end - begin);
     }
 
     private static class Hypercube {

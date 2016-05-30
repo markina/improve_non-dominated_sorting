@@ -1,3 +1,5 @@
+import units.LogD;
+
 import java.util.Random;
 
 public class StressTest {
@@ -30,6 +32,10 @@ public class StressTest {
             Tests.checkEqual(
                     Tests.findFrontIndices(input, hybridFactory),
                     Tests.findFrontIndices(input, sorterBOS));
+
+
+
+
             System.out.println("Stress test passed");
         } catch(AssertionError er) {
             throw new AssertionError("Error in stress test : " + er.getMessage());
@@ -49,7 +55,6 @@ public class StressTest {
 
     public static void main(String[] args) {
 
-
         long begin = System.nanoTime();
 
         stressTest(6, 2, false);
@@ -64,23 +69,23 @@ public class StressTest {
         stressTest(10000, 10, false);
         stressTest(10000, 5, false);
 
-        for(int i = 0; i < 10; i++) {
+        for(int i = 0; i < 5; i++) {
             stressTest(100000, 20, true);
         }
 
         stressTest(6, 3, false);
 
-        for(int i = 0; i < 10; i++) {
-            stressTest(100000, 1, true);
-        }
-
-        for(int i = 0; i < 10; i++) {
-            stressTest(100000, 3, true);
-        }
-
-        for(int i = 0; i < 10; i++) {
-            stressTest(100000, 3, false);
-        }
+//        for(int i = 0; i < 5; i++) {
+//            stressTest(100000, 1, true);
+//        }
+//
+//        for(int i = 0; i < 5; i++) {
+//            stressTest(100000, 3, true);
+//        }
+//
+//        for(int i = 0; i < 5; i++) {
+//            stressTest(100000, 3, false);
+//        }
 
 
         System.out.println();

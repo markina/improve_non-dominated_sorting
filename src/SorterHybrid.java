@@ -1,9 +1,11 @@
+import units.LogD;
+
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.*;
 import java.util.function.Consumer;
 
-// XD sorter: the general case.
+// Hybrid sorter
 final class SorterHybrid extends Sorter {
     private final int[] indices;
     private final int[] swap;
@@ -252,26 +254,43 @@ final class SorterHybrid extends Sorter {
                     split3(from, until, dimension, median);
                     int midL = from + lessThan, midH = midL + equalTo;
 
-//                    sort(from, midL, dimension);
-                    sorterBOS.sortImplSpecial(input, output, indices, from, midL, dimension+1);
+                    if(needChooseBOS(from, midL, dimension+1)) {
+                        sorterBOS.sortImplSpecial(input, output, indices, from, midL, dimension+1);
+                    } else {
+                        sort(from, midL, dimension);
+                    }
 
                     sortHighByLow(from, midL, midL, midH, dimension - 1);
 
-//                    sort(midL, midH, dimension - 1);
-                    sorterBOS.sortImplSpecial(input, output, indices, midL, midH, dimension);
+
+                    if(needChooseBOS(midL, midH, dimension)) {
+                        sorterBOS.sortImplSpecial(input, output, indices, midL, midH, dimension);
+                    } else {
+                        sort(midL, midH, dimension-1);
+                    }
 
                     merge(from, midL, midH);
                     sortHighByLow(from, midH, midH, until, dimension - 1);
 
 
-//                    sort(midH, until, dimension);
-                    sorterBOS.sortImplSpecial(input, output, indices, midH, until, dimension+1);
-
+                    if(needChooseBOS(midH, until, dimension+1)) {
+                        sorterBOS.sortImplSpecial(input, output, indices, midH, until, dimension+1);
+                    } else {
+                        sort(midH, until, dimension);
+                    }
 
                     merge(from, midH, until);
                 }
             }
         }
+    }
+
+    private boolean needChooseBOS(int from, int until, int d) {
+        int sz = until - from;
+        if(1.5 * d * LogD.log[d + 1] < sz && sz < 600 * 1.5 * d * (LogD.log[d + 1] - 1.37)) {
+            return true;
+        }
+        return false;
     }
 
     private boolean allValuesEqual(int from, int until, int k) {
