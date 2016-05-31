@@ -113,7 +113,7 @@ public class AnalysisTests {
 
         fast = new FasterNonDominatedSorting();
         bos  = new BOSNonDominatedSorting();
-        hybrid  = new BOSNonDominatedSorting();
+        hybrid  = new HybridNonDominatedSorting();
 
         List<double[][]> tests = collectTests(generator, N, M);
 
