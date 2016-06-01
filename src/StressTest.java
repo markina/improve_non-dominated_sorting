@@ -32,7 +32,7 @@ public class StressTest {
             Tests.checkEqual(
                     Tests.findFrontIndices(input, hybridFactory),
                     Tests.findFrontIndices(input, fastFactory));
-            
+
 
             System.out.println("Stress test passed");
         } catch(AssertionError er) {

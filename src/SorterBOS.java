@@ -50,7 +50,7 @@ final class SorterBOS extends Sorter {
 //        this.output = output;
 
         for(int i = from; i < until; i++) {
-            System.arraycopy(input[indices[i]], 0, this.input[i-from], 0, d);
+            this.input[i-from] = input[indices[i]];
             this.output[i-from] = output[indices[i]];
         }
 
@@ -174,7 +174,6 @@ final class SorterBOS extends Sorter {
         }
         for (int i = 0; i < dim; i++) {
             System.arraycopy(sorter.indices, 0, Q[i], 0, size);
-            Arrays.fill(scratchByKthObj, 0);
             sortIntByTthObj(0, size, i);
         }
     }
