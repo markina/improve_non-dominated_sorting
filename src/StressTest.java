@@ -25,16 +25,14 @@ public class StressTest {
 
         try {
 
-            Tests.checkEqual(
-                    Tests.findFrontIndices(input, fastFactory),
-                    Tests.findFrontIndices(input, sorterBOS));
+//            Tests.checkEqual(
+//                    Tests.findFrontIndices(input, fastFactory),
+//                    Tests.findFrontIndices(input, sorterBOS));
 
             Tests.checkEqual(
                     Tests.findFrontIndices(input, hybridFactory),
-                    Tests.findFrontIndices(input, sorterBOS));
-
-
-
+                    Tests.findFrontIndices(input, fastFactory));
+            
 
             System.out.println("Stress test passed");
         } catch(AssertionError er) {

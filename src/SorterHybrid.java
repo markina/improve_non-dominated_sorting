@@ -230,6 +230,12 @@ final class SorterHybrid extends Sorter {
 
     private void sort(int from, int until, int dimension) {
         int size = until - from;
+
+        if(needChooseBOS(size, dimension+1)) {
+            sorterBOS.sortImplSpecial(input, output, indices, from, until, dimension+1);
+            return;
+        }
+
         if(logging && size >= 2) {
             double[][] test = new double[size][];
             for (int i = 0; i < size; ++i) {
@@ -254,39 +260,19 @@ final class SorterHybrid extends Sorter {
                     split3(from, until, dimension, median);
                     int midL = from + lessThan, midH = midL + equalTo;
 
-                    if(needChooseBOS(from, midL, dimension+1)) {
-                        sorterBOS.sortImplSpecial(input, output, indices, from, midL, dimension+1);
-                    } else {
-                        sort(from, midL, dimension);
-                    }
-
+                    sort(from, midL, dimension);
                     sortHighByLow(from, midL, midL, midH, dimension - 1);
-
-
-                    if(needChooseBOS(midL, midH, dimension)) {
-                        sorterBOS.sortImplSpecial(input, output, indices, midL, midH, dimension);
-                    } else {
-                        sort(midL, midH, dimension-1);
-                    }
-
+                    sort(midL, midH, dimension-1);
                     merge(from, midL, midH);
                     sortHighByLow(from, midH, midH, until, dimension - 1);
-
-
-                    if(needChooseBOS(midH, until, dimension+1)) {
-                        sorterBOS.sortImplSpecial(input, output, indices, midH, until, dimension+1);
-                    } else {
-                        sort(midH, until, dimension);
-                    }
-
+                    sort(midH, until, dimension);
                     merge(from, midH, until);
                 }
             }
         }
     }
 
-    private boolean needChooseBOS(int from, int until, int d) {
-        int sz = until - from;
+    private boolean needChooseBOS(int sz, int d) {
         if(1.5 * d * LogD.log[d + 1] < sz && sz < 600 * 1.5 * d * (LogD.log[d + 1] - 1.37)) {
             return true;
         }
