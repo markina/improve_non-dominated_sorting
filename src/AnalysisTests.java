@@ -20,7 +20,7 @@ public class AnalysisTests {
         bean.setThreadCpuTimeEnabled(true);
     }
 
-    private static FactoryNonDominatedSorting fast, bos, hybrid;
+    private static FactoryNonDominatedSorting fast, bos/*, hybrid*/;
 
     static abstract class TestGenerator {
         public abstract double[][] generate(int n, int m);
@@ -93,38 +93,39 @@ public class AnalysisTests {
     }
 
     public static void main(String[] args) throws Exception {
-        if(args.length < 4) {
-            throw new Exception("Args: (cube|Xfronts) N M threads");
+        if(args.length < 1) {
+            throw new Exception("Args: threads");
         }
 
-        String name = args[0];
-        TestGenerator generator;
-        if (name.equals("cube")) {
-            generator = new CubeGenerator();
-        } else if (name.endsWith("fronts")) {
-            generator = new NFrontGenerator(Integer.parseInt(name.substring(0, name.length() - "fronts".length())));
-        } else {
-            throw new Exception("Unknown generator " + name);
-        }
+        int threads = Integer.parseInt(args[0]);
 
-        int N = Integer.parseInt(args[1]);
-        int M = Integer.parseInt(args[2]);
-        int threads = Integer.parseInt(args[3]);
+        int[] ns = new int[20 - 8 + 1];
+        for (int qpow = 8; qpow <= 20; ++qpow) {
+            ns[qpow - 8] = (int) (Math.pow(10, qpow / 4.0));
+        }
+        int[] ds = { 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30 };
 
         fast = new FasterNonDominatedSorting();
         bos  = new BOSNonDominatedSorting();
-        hybrid  = new HybridNonDominatedSorting();
+//        hybrid  = new HybridNonDominatedSorting();
 
-        List<double[][]> tests = collectTests(generator, N, M);
+        for (int d : ds) {
+            for (int f = 1; f <= 20; ++f) {
+                List<double[][]> tests = new ArrayList<>();
+                for (int n : ns) {
+                    for (int t = 0; t < threads; ++t) {
+                        tests.add(new NFrontGenerator(f).generate(n, d));
+                    }
+                }
 
-        System.out.println(tests.size() + " tests generated.");
-        System.out.print("Warming up at first 10 tests [");
+                System.out.println(tests.size() + " tests generated.");
+                System.out.print("Warming up at first 10 tests [");
 
-        for (int j = 0; j < tests.size() && j < 10; ++j) {
-            double[][] test = tests.get(j);
-            double fastTime = timing(fast, test);
-            double bosTime = timing(bos, test);
-            double hybridTime = timing(hybrid, test);
+                for (int j = 0; j < tests.size() && j < 10; ++j) {
+                    double[][] test = tests.get(j);
+                    double fastTime = timing(fast, test);
+                    double bosTime = timing(bos, test);
+/*            double hybridTime = timing(hybrid, test);
             if(fastTime > hybridTime && bosTime > hybridTime) {
                 System.out.print('h');
             } else if(hybridTime > fastTime && bosTime > fastTime) {
@@ -132,37 +133,40 @@ public class AnalysisTests {
             } else {
                 System.out.print('b');
             }
-//            System.out.print(fastTime > bosTime ? '+' : '-');
-        }
-        System.out.println("]");
+ */
+                    System.out.print(fastTime > bosTime ? '+' : '-');
+                }
+                System.out.println("]");
 
-        System.out.println("Now measuring");
+                System.out.println("Now measuring");
 
-        try (PrintWriter out = new PrintWriter(generator.getName() + "_" + N + "_" + M + "_result.txt")) {
-            ExecutorService service = Executors.newFixedThreadPool(threads);
-            List<Callable<Void>> tasks = new ArrayList<>();
-            AtomicInteger countDone = new AtomicInteger(0);
-            for (double[][] test : tests) {
-                tasks.add(() -> {
-                    double fastTime = timing(fast, test);
-                    double bosTime = timing(bos, test);
-                    double hybridTime = timing(hybrid, test);
-                    int localN = test.length;
-                    int localM = test[0].length;
-                    int[] output = new int[localN];
-                    fast.getSorter(localN, localM).sort(test, output);
-                    int maxK = -1;
-                    for (int i = 0; i < test.length; ++i) {
-                        maxK = Math.max(maxK, output[i]);
+                try (PrintWriter out = new PrintWriter(String.format("result-d-%02d-f-%02d.txt", d, f))) {
+                    ExecutorService service = Executors.newFixedThreadPool(threads);
+                    List<Callable<Void>> tasks = new ArrayList<>();
+                    AtomicInteger countDone = new AtomicInteger(0);
+                    for (double[][] test : tests) {
+                        tasks.add(() -> {
+                            double fastTime = timing(fast, test);
+                            double bosTime = timing(bos, test);
+                            //double hybridTime = timing(hybrid, test);
+                            int localN = test.length;
+                            int localM = test[0].length;
+                            int[] output = new int[localN];
+                            fast.getSorter(localN, localM).sort(test, output);
+                            int maxK = -1;
+                            for (int i = 0; i < test.length; ++i) {
+                                maxK = Math.max(maxK, output[i]);
+                            }
+                            ++maxK;
+                            out.println(localN + " " + localM + " " + maxK + "\n" + fastTime + "\n" + bosTime/* + "\n" + hybridTime*/);
+                            System.out.println(countDone.incrementAndGet() + "/" + tests.size());
+                            return null;
+                        });
                     }
-                    ++maxK;
-                    out.println(localN + " " + localM + " " + maxK + "\n" + fastTime + "\n" + bosTime + "\n" + hybridTime);
-                    System.out.println(countDone.incrementAndGet() + "/" + tests.size());
-                    return null;
-                });
+                    service.invokeAll(tasks);
+                    service.shutdown();
+                }
             }
-            service.invokeAll(tasks);
-            service.shutdown();
         }
     }
 }
