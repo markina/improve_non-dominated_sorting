@@ -2,14 +2,12 @@ import javafx.util.Pair;
 import units.Reader;
 
 import java.util.*;
-import java.util.jar.Pack200;
 
 /**
  * Created by mmarkina on 03/06/16.
  */
 public class Imitation {
-    int l, r;
-    private int Xmin;
+    private int Xmin, id_Xmin;
     private int eps = 2;
     private int N;
     List<Pair<Integer, Double>> med_points = new ArrayList<>();
@@ -59,9 +57,9 @@ public class Imitation {
 
     }
 
-    int find() {
-        l = 0;
-        r = med_points.size()-1;
+    int ternary() {
+        int l = 0;
+        int r = med_points.size()-1;
         while(r - l > eps) {
             int a = (l * 2 + r) / 3;
             int b = (l + r * 2) / 3;
@@ -82,8 +80,50 @@ public class Imitation {
             }
 
         }
+        id_Xmin = r;
         Xmin = med_points.get(r).getKey();
         return Xmin;
+    }
+
+    int binary_down() {
+        int l = 0;
+        int r = id_Xmin;
+
+        while(r - l > 1) {
+            int m = (l+r)/2;
+            double fm = f(m);
+
+            if(-0.05 < fm && fm < 0.05) {
+                return med_points.get(m).getKey();
+            } if (fm < 0) {
+                r = m;
+            } else {
+                l = m;
+            }
+        }
+
+        return med_points.get(r).getKey(); // TODO .get((l+r)/2)
+    }
+
+    int binary_up() {
+
+        int l = id_Xmin;
+        int r = med_points.size()-1;
+
+        while(r - l > 1) {
+            int m = (l+r)/2;
+            double fm = f(m);
+
+            if(-0.05 < fm && fm < 0.05) {
+                return med_points.get(r).getKey();
+            } if (fm > 0) {
+                r = m;
+            } else {
+                l = m;
+            }
+        }
+
+        return med_points.get(r).getKey();  // TODO .get((l+r)/2)
     }
 
     double f(int n) {
