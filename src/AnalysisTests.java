@@ -22,12 +22,12 @@ public class AnalysisTests {
 
     private static FactoryNonDominatedSorting fast, bos, hybrid;
 
-    static abstract class TestGenerator {
+    public static abstract class TestGenerator {
         public abstract double[][] generate(int n, int m);
         public abstract String getName();
     }
 
-    static class CubeGenerator extends TestGenerator {
+    public static class CubeGenerator extends TestGenerator {
         public double[][] generate(int n, int m) {
             double[][] rv = new double[n][m];
             for (int i = 0; i < n; ++i) {
@@ -42,7 +42,7 @@ public class AnalysisTests {
         }
     }
 
-    static class NFrontGenerator extends TestGenerator {
+    public static class NFrontGenerator extends TestGenerator {
         private int nFronts;
         public NFrontGenerator(int nFronts) {
             this.nFronts = nFronts;
@@ -50,12 +50,12 @@ public class AnalysisTests {
         public double[][] generate(int n, int m) {
             double[][] rv = new double[n][m];
             for (int i = 0; i < n; ++i) {
-                double sum = 0;
+                double sum = (double) (i % nFronts) / nFronts;
                 for (int j = 1; j < m; ++j) {
-                    rv[i][j] = rnd.nextDouble();
-                    sum += rv[i][j];
+                    rv[i][j] = (sum / m) + (i / nFronts == 0 ? 0 : rnd.nextGaussian());
+                    sum -= rv[i][j];
                 }
-                rv[i][0] = (double) rnd.nextInt(nFronts) / nFronts - sum;
+                rv[i][0] = sum;
             }
             return rv;
         }
@@ -74,7 +74,7 @@ public class AnalysisTests {
         return rv;
     }
 
-    private static double timing(FactoryNonDominatedSorting sorterFactory, double[][] input) {
+    public static double timing(FactoryNonDominatedSorting sorterFactory, double[][] input) {
         int[] rv = new int[input.length];
         Sorter sorter = sorterFactory.getSorter(input.length, input[0].length);
         int iterations = 1;

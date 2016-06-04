@@ -123,7 +123,7 @@ public class TestsImitationEvalBorders {
 //        Imitation im = new Imitation(100000, 5, "cube", "");
 //        System.out.println(im.ternary());
 
-        BordersEvaluation be = new BordersEvaluation(100000, 4);
+        BordersEvaluation be = new BordersEvaluation(100000, 8, new AnalysisTests.CubeGenerator());
         be.evalBorders();
         System.out.println(be.getXmin());
         System.out.println(be.getLeftBorder());

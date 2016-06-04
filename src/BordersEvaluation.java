@@ -16,9 +16,12 @@ public class BordersEvaluation {
 
     Random rnd = new Random(23);
 
-    BordersEvaluation(int N, int M) throws Exception {
+    private AnalysisTests.TestGenerator generator;
+
+    BordersEvaluation(int N, int M, AnalysisTests.TestGenerator generator) throws Exception {
         this.N = N;
         this.M = M;
+        this.generator = generator;
     }
 
     void evalBorders() {
@@ -104,8 +107,17 @@ public class BordersEvaluation {
     }
 
     double f(int n) {
-        return 0.5 - 1/(1 + (Math.log(n)/3 - 2) * (Math.log(n)/3 - 2)) + new Random().nextGaussian() * 0.02 - 0.01;
-        // TODO return the average time((tb - tf)/max) of 15 runs with n random points
+        double sum = 0.0;
+        int times = 5;
+        for (int i = 0; i < times; ++i) {
+            double[][] test = generator.generate(n, M);
+            double fastTiming = AnalysisTests.timing(new FasterNonDominatedSorting(), test);
+            double bosTiming = AnalysisTests.timing(new BOSNonDominatedSorting(), test);
+            sum += (bosTiming - fastTiming) / Math.max(bosTiming, fastTiming);
+        }
+        // return 0.5 - 1/(1 + (Math.log(n)/3 - 2) * (Math.log(n)/3 - 2)) + new Random().nextGaussian() * 0.02 - 0.01;
+        System.out.println("[" + n + " -> " + (sum / times) + "]");
+        return sum / times;
     }
 }
 
