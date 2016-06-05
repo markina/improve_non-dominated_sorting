@@ -116,7 +116,7 @@ public class BordersEvaluation {
             sum += (bosTiming - fastTiming) / Math.max(bosTiming, fastTiming);
         }
         // return 0.5 - 1/(1 + (Math.log(n)/3 - 2) * (Math.log(n)/3 - 2)) + new Random().nextGaussian() * 0.02 - 0.01;
-        System.out.println("[" + n + " -> " + (sum / times) + "]");
+        System.err.println("[" + n + " -> " + (sum / times) + "]");
         return sum / times;
     }
 }
