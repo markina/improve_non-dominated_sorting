@@ -43,7 +43,7 @@ public class BordersEvaluation {
     }
 
     int ternary() {
-        double l = 1;
+        double l = 0;
         double r = Math.log(N);
         while(r - l > eps) {
             double a = (l * 2 + r) / 3;

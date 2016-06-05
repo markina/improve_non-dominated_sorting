@@ -273,9 +273,13 @@ final class SorterHybrid extends Sorter {
     }
 
     private boolean needChooseBOS(int sz, int d) {
-        if(1.5 * d * LogD.log[d + 1] < sz && sz < 600 * 1.5 * d * (LogD.log[d + 1] - 1.37)) {
+//        if(1.5 * d * LogD.log[d + 1] < sz && sz < 600 * 1.5 * d * (LogD.log[d + 1] - 1.37)) {
+//            return true;
+//        }
+//        return false;
+        if(1.5 * d * LogD.log[d + 1] < sz && sz < ChangePointEvaluation.changePoints[d]) {
             return true;
-        }
+        } 
         return false;
     }
 
