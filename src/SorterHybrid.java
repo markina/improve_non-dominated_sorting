@@ -277,7 +277,9 @@ final class SorterHybrid extends Sorter {
 //            return true;
 //        }
 //        return false;
-        if(1.5 * d * LogD.log[d + 1] < sz && sz < ChangePointEvaluation.changePoints[d]) {
+
+//        if(1.5 * d * LogD.log[d + 1] < sz && sz < ChangePointEvaluation.changePoints[d]) {
+        if(d * LogD.log[d + 1] < sz && sz < 150 * d * (Math.pow(LogD.log[d + 1], 0.9) - 1.5)) {
             return true;
         } 
         return false;
