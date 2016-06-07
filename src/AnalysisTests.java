@@ -1,12 +1,9 @@
 import units.Reader;
 
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadMXBean;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.*;
@@ -92,36 +89,59 @@ public class AnalysisTests {
         }
     }
 
-    public static void main(String[] args) throws Exception {
-        if(args.length < 4) {
-            throw new Exception("Args: (cube|Xfronts) N M threads");
-        }
+    static class Test {
+        double[][] data;
+        int nGeneration;
+    }
 
-        String name = args[0];
-        TestGenerator generator;
-        if (name.equals("cube")) {
-            generator = new CubeGenerator();
-        } else if (name.endsWith("fronts")) {
-            generator = new NFrontGenerator(Integer.parseInt(name.substring(0, name.length() - "fronts".length())));
+    private static void collectTests(File file, List<Test> tests) throws IOException {
+        if (file.isDirectory()) {
+            for (File f : file.listFiles()) {
+                collectTests(f, tests);
+            }
         } else {
-            throw new Exception("Unknown generator " + name);
+            try (Scanner in = new Scanner(file)) {
+                int nPoints = in.nextInt();
+                int nObjectives = in.nextInt();
+                int nGeneration = Integer.parseInt(file.getParentFile().getName());
+                double[][] rv = new double[nPoints][nObjectives];
+                for (int i = 0; i < nPoints; ++i) {
+                    for (int j = 0; j < nObjectives; ++j) {
+                        rv[i][j] = in.nextDouble();
+                    }
+                }
+                Test test = new Test();
+                test.data = rv;
+                test.nGeneration = nGeneration;
+                tests.add(test);
+            } catch (Exception ex) {
+                System.out.println("File " + file.getName() + " has problems opening");
+            }
+        }
+    }
+
+    public static void main(String[] args) throws Exception {
+        if(args.length < 2) {
+            throw new Exception("Args: testRoot threads");
         }
 
-        int N = Integer.parseInt(args[1]);
-        int M = Integer.parseInt(args[2]);
-        int threads = Integer.parseInt(args[3]);
+        Locale.setDefault(Locale.US);
+
+        int threads = Integer.parseInt(args[1]);
 
         fast = new FasterNonDominatedSorting();
         bos  = new BOSNonDominatedSorting();
         hybrid  = new HybridNonDominatedSorting();
 
-        List<double[][]> tests = collectTests(generator, N, M);
+        List<Test> tests = new ArrayList<>();
+        File testRoot = new File(args[0]);
+        collectTests(testRoot, tests);
 
         System.out.println(tests.size() + " tests generated.");
         System.out.print("Warming up at first 10 tests [");
 
         for (int j = 0; j < tests.size() && j < 10; ++j) {
-            double[][] test = tests.get(j);
+            double[][] test = tests.get(j).data;
             double fastTime = timing(fast, test);
             double bosTime = timing(bos, test);
             double hybridTime = timing(hybrid, test);
@@ -138,12 +158,13 @@ public class AnalysisTests {
 
         System.out.println("Now measuring");
 
-        try (PrintWriter out = new PrintWriter(generator.getName() + "_" + N + "_" + M + "_result.txt")) {
+        try (PrintWriter out = new PrintWriter(new File(testRoot, "result.txt"))) {
             ExecutorService service = Executors.newFixedThreadPool(threads);
             List<Callable<Void>> tasks = new ArrayList<>();
             AtomicInteger countDone = new AtomicInteger(0);
-            for (double[][] test : tests) {
+            for (Test test0 : tests) {
                 tasks.add(() -> {
+                    double[][] test = test0.data;
                     double fastTime = timing(fast, test);
                     double bosTime = timing(bos, test);
                     double hybridTime = timing(hybrid, test);
@@ -156,7 +177,7 @@ public class AnalysisTests {
                         maxK = Math.max(maxK, output[i]);
                     }
                     ++maxK;
-                    out.println(localN + " " + localM + " " + maxK + "\n" + fastTime + "\n" + bosTime + "\n" + hybridTime);
+                    out.println(localN + " " + localM + " " + test0.nGeneration + " " + maxK + "\n" + fastTime + "\n" + bosTime + "\n" + hybridTime);
                     System.out.println(countDone.incrementAndGet() + "/" + tests.size());
                     return null;
                 });
