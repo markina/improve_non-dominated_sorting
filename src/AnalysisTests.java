@@ -20,7 +20,7 @@ public class AnalysisTests {
         bean.setThreadCpuTimeEnabled(true);
     }
 
-    private static FactoryNonDominatedSorting fast, bos/*, hybrid*/;
+    private static FactoryNonDominatedSorting fast, bos, hybrid;
 
     static abstract class TestGenerator {
         public abstract double[][] generate(int n, int m);
@@ -50,12 +50,12 @@ public class AnalysisTests {
         public double[][] generate(int n, int m) {
             double[][] rv = new double[n][m];
             for (int i = 0; i < n; ++i) {
-                double sum = 0;
+                double sum = (double) (i % nFronts) / nFronts;
                 for (int j = 1; j < m; ++j) {
-                    rv[i][j] = rnd.nextDouble();
-                    sum += rv[i][j];
+                    rv[i][j] = (sum / m) + (i / nFronts == 0 ? 0 : rnd.nextGaussian());
+                    sum -= rv[i][j];
                 }
-                rv[i][0] = (double) rnd.nextInt(nFronts) / nFronts - sum;
+                rv[i][0] = sum;
             }
             return rv;
         }
@@ -103,17 +103,18 @@ public class AnalysisTests {
         for (int qpow = 8; qpow <= 20; ++qpow) {
             ns[qpow - 8] = (int) (Math.pow(10, qpow / 4.0));
         }
-        int[] ds = { 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30 };
+        int[] ds = { 3, 5, 7, 10, 15, 20, 25, 30 };
+        int[] fs = { 1, 2, 3, 5, 10, 20 };
 
         fast = new FasterNonDominatedSorting();
         bos  = new BOSNonDominatedSorting();
-//        hybrid  = new HybridNonDominatedSorting();
+        hybrid  = new HybridNonDominatedSorting();
 
         for (int d : ds) {
-            for (int f = 1; f <= 20; ++f) {
+            for (int f : fs) {
                 List<double[][]> tests = new ArrayList<>();
                 for (int n : ns) {
-                    for (int t = 0; t < threads; ++t) {
+                    for (int t = 0; t < 10; ++t) {
                         tests.add(new NFrontGenerator(f).generate(n, d));
                     }
                 }
@@ -125,15 +126,14 @@ public class AnalysisTests {
                     double[][] test = tests.get(j);
                     double fastTime = timing(fast, test);
                     double bosTime = timing(bos, test);
-/*            double hybridTime = timing(hybrid, test);
-            if(fastTime > hybridTime && bosTime > hybridTime) {
-                System.out.print('h');
-            } else if(hybridTime > fastTime && bosTime > fastTime) {
-                System.out.print('f');
-            } else {
-                System.out.print('b');
-            }
- */
+                    double hybridTime = timing(hybrid, test);
+                    if(fastTime > hybridTime && bosTime > hybridTime) {
+                        System.out.print('h');
+                    } else if(hybridTime > fastTime && bosTime > fastTime) {
+                        System.out.print('f');
+                    } else {
+                        System.out.print('b');
+                    }
                     System.out.print(fastTime > bosTime ? '+' : '-');
                 }
                 System.out.println("]");
@@ -148,7 +148,7 @@ public class AnalysisTests {
                         tasks.add(() -> {
                             double fastTime = timing(fast, test);
                             double bosTime = timing(bos, test);
-                            //double hybridTime = timing(hybrid, test);
+                            double hybridTime = timing(hybrid, test);
                             int localN = test.length;
                             int localM = test[0].length;
                             int[] output = new int[localN];
@@ -158,7 +158,7 @@ public class AnalysisTests {
                                 maxK = Math.max(maxK, output[i]);
                             }
                             ++maxK;
-                            out.println(localN + " " + localM + " " + maxK + "\n" + fastTime + "\n" + bosTime/* + "\n" + hybridTime*/);
+                            out.println(localN + " " + localM + " " + maxK + "\n" + fastTime + "\n" + bosTime + "\n" + hybridTime);
                             System.out.println(countDone.incrementAndGet() + "/" + tests.size());
                             return null;
                         });
