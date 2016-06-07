@@ -8,5 +8,6 @@ else
     biber thesis
     pdflatex thesis.tex
     pdflatex thesis.tex
+    pdflatex presentation.tex
 
 fi
