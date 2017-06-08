@@ -1,10 +1,7 @@
 import units.SmartC;
 import units.SmartL;
 
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.util.*;
-import java.util.function.Consumer;
+import java.util.Arrays;
 
 // Best Order Sort sorter
 final class SorterBOS extends Sorter {
@@ -113,6 +110,7 @@ final class SorterBOS extends Sorter {
 //        int r = RC - 1;
         int r = Math.max(RC, output[s]+1);
         boolean check;
+        boolean done = false;
         while (r - l > 1) {
             int m = (l + r) / 2;
             check = false;
@@ -126,19 +124,12 @@ final class SorterBOS extends Sorter {
 
             if (!check) {
                 r = Math.max(m, output[s]);
+                done = true;
             } else {
                 l = m;
             }
         }
-        check = false;
-        for (Integer t : L.get(j, r)) {
-            check = dominationCheck(s, t);
-            if (check) {
-                break;
-            }
-        }
-
-        if (!check) {
+        if (done) {
             RC = Math.max(RC, r + 1);
             output[s] = r;
 //            output[s] = Math.max(r, output[s]);
