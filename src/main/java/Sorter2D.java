@@ -1,4 +1,4 @@
-import java.io.PrintWriter;
+package main.java;
 
 // 2D sorter: binary search on layer tails; should be faster than the general one.
 final class Sorter2D extends SorterFast {
@@ -15,7 +15,7 @@ final class Sorter2D extends SorterFast {
         sorter = new MergeSorter(size);
     }
 
-    protected void sortImpl(double[][] input, int[] output) {
+    public void sortImpl(double[][] input, int[] output) {
         for (int i = 0; i < size; ++i) {
             indices[i] = i;
         }

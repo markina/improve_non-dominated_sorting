@@ -1,4 +1,6 @@
-import units.LogD;
+package test.java;
+
+import main.java.*;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -6,14 +8,14 @@ import java.util.Random;
 import java.util.function.BiConsumer;
 
 /**
- * Tests for non-dominated sorting algorithms and implementations.
+ * test.java.Tests for non-dominated sorting algorithms and implementations.
  *
  * @author Maxim Buzdalov
  */
 public class Tests {
     static Sorter sorterBOS = new SorterBOS(20000, 100);
 
-//    static Sorter
+//    static main.java.Sorter
 
     static int[] findFrontIndices(double[][] input, FactoryNonDominatedSorting sorterFactory) {
         int size = input.length;
@@ -361,7 +363,7 @@ public class Tests {
 
         System.out.println();
 
-        System.out.println("Tests passed");
+        System.out.println("test.java.Tests passed");
 
         System.out.println(end - begin);
     }

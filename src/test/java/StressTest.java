@@ -1,4 +1,6 @@
-import units.LogD;
+package test.java;
+
+import main.java.*;
 
 import java.util.Random;
 
@@ -25,9 +27,9 @@ public class StressTest {
 
         try {
 
-//            Tests.checkEqual(
-//                    Tests.findFrontIndices(input, fastFactory),
-//                    Tests.findFrontIndices(input, sorterBOS));
+//            test.java.Tests.checkEqual(
+//                    test.java.Tests.findFrontIndices(input, fastFactory),
+//                    test.java.Tests.findFrontIndices(input, sorterBOS));
 
             Tests.checkEqual(
                     Tests.findFrontIndices(input, hybridFactory),

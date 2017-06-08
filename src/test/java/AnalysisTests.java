@@ -1,14 +1,17 @@
-import units.Reader;
+package test.java;
 
-import java.io.*;
+import main.java.*;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadMXBean;
 import java.util.*;
-
-import java.util.concurrent.*;
-import java.util.concurrent.atomic.*;
-
-import static units.Assert.check;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class AnalysisTests {
     private static final Random rnd = new Random(366239);

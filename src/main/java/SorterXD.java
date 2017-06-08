@@ -1,12 +1,10 @@
-import units.LogD;
+package main.java;
 
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 import java.util.*;
 import java.util.function.Consumer;
 
-// Hybrid sorter
-final class SorterHybrid extends Sorter {
+// XD sorter: the general case.
+final class SorterXD extends SorterFast {
     private final int[] indices;
     private final int[] swap;
     private final int[] eqComp;
@@ -20,8 +18,6 @@ final class SorterHybrid extends Sorter {
     private boolean logging = false;
     private Consumer<double[][]> out = null;
 
-    private Sorter sorterBOS;
-
     private final TreeSet<Integer> set = new TreeSet<>(new Comparator<Integer>() {
         public int compare(Integer lhs, Integer rhs) {
             int ilhs = lhs, irhs = rhs;
@@ -34,20 +30,19 @@ final class SorterHybrid extends Sorter {
         }
     });
 
-    SorterHybrid(int size, int dim) {
+    SorterXD(int size, int dim) {
         super(size, dim);
         indices = new int[size];
         eqComp = new int[size];
         swap = new int[size];
         sorter = new MergeSorter(size);
-        sorterBOS = new BOSNonDominatedSorting().getSorter(size, dim);
     }
 
-    protected void sortImpl(double[][] input, int[] output) {
+    public void sortImpl(double[][] input, int[] output) {
         for(int i = 0; i < size; ++i) {
             indices[i] = i;
         }
-        Arrays.fill(output, 0);
+//        Arrays.fill(output, 0);
         sorter.lexSort(indices, 0, size, input, eqComp);
         this.input = input;
         this.output = output;
@@ -55,7 +50,6 @@ final class SorterHybrid extends Sorter {
         this.input = null;
         this.output = null;
     }
-
 
     private void updateFront(int target, int source) {
         if(eqComp[target] == eqComp[source]) {
@@ -230,12 +224,6 @@ final class SorterHybrid extends Sorter {
 
     private void sort(int from, int until, int dimension) {
         int size = until - from;
-
-        if(needChooseBOS(size, dimension+1)) {
-            sorterBOS.sortImplSpecial(input, output, indices, from, until, dimension+1);
-            return;
-        }
-
         if(logging && size >= 2) {
             double[][] test = new double[size][];
             for (int i = 0; i < size; ++i) {
@@ -262,7 +250,7 @@ final class SorterHybrid extends Sorter {
 
                     sort(from, midL, dimension);
                     sortHighByLow(from, midL, midL, midH, dimension - 1);
-                    sort(midL, midH, dimension-1);
+                    sort(midL, midH, dimension - 1);
                     merge(from, midL, midH);
                     sortHighByLow(from, midH, midH, until, dimension - 1);
                     sort(midH, until, dimension);
@@ -270,19 +258,6 @@ final class SorterHybrid extends Sorter {
                 }
             }
         }
-    }
-
-    private boolean needChooseBOS(int sz, int d) {
-//        if(1.5 * d * LogD.log[d + 1] < sz && sz < 600 * 1.5 * d * (LogD.log[d + 1] - 1.37)) {
-//            return true;
-//        }
-//        return false;
-
-//        if(1.5 * d * LogD.log[d + 1] < sz && sz < ChangePointEvaluation.changePoints[d]) {
-        if(d * LogD.log[d + 1] < sz && sz < 150 * d * (Math.pow(LogD.log[d + 1], 0.9) - 1.5)) {
-            return true;
-        } 
-        return false;
     }
 
     private boolean allValuesEqual(int from, int until, int k) {
@@ -323,16 +298,8 @@ final class SorterHybrid extends Sorter {
     }
 
     @Override
-    protected void setParamAnalysis(boolean withLogging, Consumer<double[][]> out) {
+    public void setParamAnalysis(boolean withLogging, Consumer<double[][]> out) {
         logging = withLogging;
         this.out = out;
     }
-
-    @Override
-    protected void print_info() {
-        System.out.println("--------------");
-        System.out.println("SorterHybrid");
-        System.out.println("N = " + size + "; M = " + dim);
-    }
-
 }

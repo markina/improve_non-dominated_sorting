@@ -1,4 +1,4 @@
-import java.io.PrintWriter;
+package main.java;
 
 // 1D sorter: do the sorting and uniquification.
 final class Sorter1D extends SorterFast {
@@ -11,7 +11,7 @@ final class Sorter1D extends SorterFast {
         sorter = new MergeSorter(size);
     }
 
-    protected void sortImpl(double[][] input, int[] output) {
+    public void sortImpl(double[][] input, int[] output) {
         for (int i = 0; i < size; ++i) {
             indices[i] = i;
         }

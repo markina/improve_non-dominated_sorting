@@ -1,3 +1,7 @@
+package test.java;
+
+import main.java.*;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
@@ -319,7 +323,7 @@ public class TestsBOS_NZOutput {
 //        groupCheck("worst case from paper BOS", getForWorstCase3(10000), new int[10000]);
 
         System.out.println();
-        System.out.println("Tests passed");
+        System.out.println("test.java.Tests passed");
     }
 
     private static class Hypercube {

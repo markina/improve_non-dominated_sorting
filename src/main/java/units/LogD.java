@@ -1,4 +1,4 @@
-package units;
+package main.java.units;
 
 /**
  * Created by mmarkina on 31/05/16.

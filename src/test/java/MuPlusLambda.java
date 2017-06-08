@@ -1,3 +1,10 @@
+package test.java;
+
+import main.java.BOSNonDominatedSorting;
+import main.java.FasterNonDominatedSorting;
+import main.java.HybridNonDominatedSorting;
+import main.java.Sorter;
+
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.lang.management.ManagementFactory;

@@ -1,10 +1,12 @@
-import units.SmartC;
-import units.SmartL;
+package main.java;
+
+import main.java.units.SmartC;
+import main.java.units.SmartL;
 
 import java.util.Arrays;
 
 // Best Order Sort sorter
-final class SorterBOS extends Sorter {
+final public class SorterBOS extends Sorter {
     private SmartL L = null;
     private SmartC C = null;
     private boolean[] isRanked = null;
@@ -18,7 +20,7 @@ final class SorterBOS extends Sorter {
     MergeSorter sorter;
     private int[] temp4CompEq;
 
-    SorterBOS(int capacity_size, int capacity_dim) {
+    public SorterBOS(int capacity_size, int capacity_dim) {
         super(capacity_size, capacity_dim);
         scratchByKthObj = new int[capacity_size];
         L = new SmartL(capacity_dim, capacity_size);
@@ -77,7 +79,7 @@ final class SorterBOS extends Sorter {
         }
     }
 
-    protected void sortImpl(double[][] input, int[] output) {
+    public void sortImpl(double[][] input, int[] output) {
         this.input = input;
         this.output = output;
 
@@ -192,7 +194,7 @@ final class SorterBOS extends Sorter {
     @Override
     protected void print_info() {
         System.out.println("--------------");
-        System.out.println("SorterBOS");
+        System.out.println("main.java.SorterBOS");
         System.out.println("N = " + size + "; M = " + dim);
     }
 

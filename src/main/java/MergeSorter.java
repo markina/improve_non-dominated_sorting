@@ -1,3 +1,5 @@
+package main.java;
+
 class MergeSorter {
     final int[] scratch;
     int[] indices = null;

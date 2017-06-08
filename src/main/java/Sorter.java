@@ -1,5 +1,5 @@
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+package main.java;
+
 import java.util.function.Consumer;
 
 /**
@@ -77,9 +77,9 @@ public abstract class Sorter {
         }
         sortImpl(input, output);
     }
-    protected abstract void sortImpl(double[][] input, int[] output);
+    public abstract void sortImpl(double[][] input, int[] output);
     protected abstract void print_info();
-    protected void setParamAnalysis(boolean withLogging, Consumer<double[][]> out) {
+    public void setParamAnalysis(boolean withLogging, Consumer<double[][]> out) {
         throw new UnsupportedOperationException("setParamAnalysis is not implemented");
     }
 

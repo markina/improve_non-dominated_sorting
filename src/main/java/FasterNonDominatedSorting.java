@@ -1,4 +1,6 @@
-public class HybridNonDominatedSorting extends FactoryNonDominatedSorting {
+package main.java;
+
+public class FasterNonDominatedSorting extends FactoryNonDominatedSorting {
 
     @Override
     public Sorter getSorter(int size, int dim) {
@@ -17,7 +19,7 @@ public class HybridNonDominatedSorting extends FactoryNonDominatedSorting {
             case 2:
                 return new Sorter2D(size);
             default:
-                return new SorterHybrid(size, dim);
+                return new SorterXD(size, dim);
         }
     }
 }

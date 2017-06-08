@@ -1,11 +1,11 @@
-import java.io.PrintWriter;
+package main.java;
 
 // Empty sorter: to rule out the case of empty input array.
 final class SorterEmpty extends SorterFast {
     SorterEmpty(int dim) {
         super(0, dim);
     }
-    protected void sortImpl(double[][] input, int[] output) {
+    public void sortImpl(double[][] input, int[] output) {
         // do nothing
     }
 }
