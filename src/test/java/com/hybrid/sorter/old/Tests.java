@@ -1,6 +1,6 @@
-package test.java;
+package com.hybrid.sorter.old;
 
-import main.java.*;
+import com.hybrid.sorter.*;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -8,14 +8,14 @@ import java.util.Random;
 import java.util.function.BiConsumer;
 
 /**
- * test.java.Tests for non-dominated sorting algorithms and implementations.
+ * Tests for non-dominated sorting algorithms and implementations.
  *
  * @author Maxim Buzdalov
  */
 public class Tests {
     static Sorter sorterBOS = new SorterBOS(20000, 100);
 
-//    static main.java.Sorter
+//    static Sorter
 
     static int[] findFrontIndices(double[][] input, FactoryNonDominatedSorting sorterFactory) {
         int size = input.length;
@@ -188,7 +188,7 @@ public class Tests {
                 concat(arrayFill(10, 0), arrayFill(10, 1))
         );
 
-        groupCheck("a strange test inherited from old git-based NGP", new double[][]{
+        groupCheck("a strange test inherited from com.hybrid.sorter.old git-based NGP", new double[][]{
                 {-802722320, -454657628, 225851471}, {-98542905, -152834951, 84118477}, {-914454915, 959085012, -60245822},
                 {-657036692, -349821749, 311923685}, {-474717265, -445106490, 535962357}, {-815877872, 512265128, 531492492},
                 {-832876652, 780965133, -262104115}, {-589905879, 725260188, 705639821}, {744492102, 650058155, 902077439},
@@ -198,7 +198,7 @@ public class Tests {
                 0, 0, 0, 1, 1, 0, 0, 2, 2, 0, 1, 0, 2, 0, 2
         });
 
-        groupCheck("a tricky random test #1 inherited from old hg-based NGP", new double[][]{
+        groupCheck("a tricky random test #1 inherited from com.hybrid.sorter.old hg-based NGP", new double[][]{
                 {-758, -515, -226}, {-786, -98, -268}, {-876, -264, -655}, {-43, -572, -418}, {-158, -517, -647},
                 {-636, -321, -369}, {-19, -547, -935}, {-571, -866, -524}, {-819, -917, -692}, {-555, -487, -980}
         }, new int[]{
@@ -244,7 +244,7 @@ public class Tests {
 
 
 
-        groupCheck("a tricky random test #2 inherited from old hg-based NGP", new double[][]{
+        groupCheck("a tricky random test #2 inherited from com.hybrid.sorter.old hg-based NGP", new double[][]{
                 {1, 4, 3, 3, 1, 1}, {3, 5, 4, 6, 7, 1}, {1, 2, 2, 3, 8, 0}, {0, 2, 4, 8, 3, 5}, {0, 2, 7, 4, 2, 9},
                 {1, 3, 9, 4, 0, 1}, {7, 6, 7, 1, 7, 4}, {6, 0, 9, 3, 7, 1}, {7, 0, 7, 8, 3, 0}, {4, 7, 6, 4, 0, 3},
                 {9, 2, 7, 0, 8, 8}, {5, 5, 3, 3, 6, 1}, {0, 7, 4, 1, 9, 2}, {1, 2, 0, 3, 9, 6}, {2, 8, 2, 6, 9, 3},
@@ -294,7 +294,7 @@ public class Tests {
                 1, 1, 0, 3, 2, 0, 0, 1, 2, 0, 2, 1, 2, 0, 1
         });
 
-        groupCheck("a tricky random test #3 inherited from old hg-based NGP", new double[][]{
+        groupCheck("a tricky random test #3 inherited from com.hybrid.sorter.old hg-based NGP", new double[][]{
                 {923, 565, 773}, {444, 591, 756}, {272, 974, 743}, {962, 736, 763}, {957, 562, 957}, {995, 334, 950},
                 {925, 43, 100}, {550, 727, 269}, {360, 67, 428}, {728, 395, 315}, {88, 558, 283}, {8, 550, 45},
                 {184, 308, 822}, {666, 955, 90}, {551, 370, 277}, {338, 142, 269}, {770, 757, 11}, {46, 882, 761},
@@ -363,7 +363,7 @@ public class Tests {
 
         System.out.println();
 
-        System.out.println("test.java.Tests passed");
+        System.out.println("Tests passed");
 
         System.out.println(end - begin);
     }

@@ -1,6 +1,6 @@
-package main.java;
+package com.hybrid.sorter;
 
-import main.java.units.LogD;
+import com.hybrid.sorter.units.LogD;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -278,7 +278,7 @@ final class SorterHybrid extends Sorter {
 //        }
 //        return false;
 
-//        if(1.5 * d * LogD.log[d + 1] < sz && sz < main.java.ChangePointEvaluation.changePoints[d]) {
+//        if(1.5 * d * LogD.log[d + 1] < sz && sz < ChangePointEvaluation.changePoints[d]) {
         if(d * LogD.log[d + 1] < sz && sz < 150 * d * (Math.pow(LogD.log[d + 1], 0.9) - 1.5)) {
             return true;
         } 
@@ -331,7 +331,7 @@ final class SorterHybrid extends Sorter {
     @Override
     protected void print_info() {
         System.out.println("--------------");
-        System.out.println("main.java.SorterHybrid");
+        System.out.println("SorterHybrid");
         System.out.println("N = " + size + "; M = " + dim);
     }
 

@@ -1,3 +1,16 @@
+# Hybridizing Non-dominated Sorting Algorithms: Divide-and-Conquer Meets Best Order Sort
+
+##The Divide-and-Conquer Approach
+
+Алгоритм Буздалова использует подход "разделяй и властвуй" и имеет время работы 
+O(N(logM)^{M-1}). Опишем его в кратце:
+В каждый момент времени 
+
+
+
+##Best Order Sort
+
+
 - сбор данных для проверки (NAMETEST_N_M_data.txt)
     Формат вывода:
     id N M

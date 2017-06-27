@@ -1,6 +1,7 @@
-package test.java;
+package com.hybrid.sorter.old;
 
-import main.java.*;
+
+import com.hybrid.sorter.*;
 
 import java.io.File;
 import java.io.IOException;

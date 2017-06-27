@@ -1,7 +1,7 @@
-package main.java;
+package com.hybrid.sorter;
 
-import main.java.units.SmartC;
-import main.java.units.SmartL;
+import com.hybrid.sorter.units.SmartC;
+import com.hybrid.sorter.units.SmartL;
 
 import java.util.Arrays;
 
@@ -194,7 +194,7 @@ final public class SorterBOS extends Sorter {
     @Override
     protected void print_info() {
         System.out.println("--------------");
-        System.out.println("main.java.SorterBOS");
+        System.out.println("SorterBOS");
         System.out.println("N = " + size + "; M = " + dim);
     }
 

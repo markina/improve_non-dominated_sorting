@@ -1,4 +1,4 @@
-package main.java;
+package com.hybrid.sorter;
 
 public class BOSNonDominatedSorting extends FactoryNonDominatedSorting {
 

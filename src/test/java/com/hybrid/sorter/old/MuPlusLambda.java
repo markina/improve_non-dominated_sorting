@@ -1,9 +1,9 @@
-package test.java;
+package com.hybrid.sorter.old;
 
-import main.java.BOSNonDominatedSorting;
-import main.java.FasterNonDominatedSorting;
-import main.java.HybridNonDominatedSorting;
-import main.java.Sorter;
+import com.hybrid.sorter.FasterNonDominatedSorting;
+import com.hybrid.sorter.HybridNonDominatedSorting;
+import com.hybrid.sorter.Sorter;
+import com.hybrid.sorter.BOSNonDominatedSorting;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -15,6 +15,7 @@ import java.util.Random;
 
 /**
  * Created by mmarkina on 06/06/16.
+ * TODO delete
  */
 public class MuPlusLambda {
     int M = 10;

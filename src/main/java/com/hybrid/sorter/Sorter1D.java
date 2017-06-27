@@ -1,4 +1,4 @@
-package main.java;
+package com.hybrid.sorter;
 
 // 1D sorter: do the sorting and uniquification.
 final class Sorter1D extends SorterFast {

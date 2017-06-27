@@ -1,6 +1,6 @@
-package test.java;
+package com.hybrid.sorter.old;
 
-import main.java.*;
+import com.hybrid.sorter.*;
 
 import java.util.Random;
 
@@ -27,9 +27,9 @@ public class StressTest {
 
         try {
 
-//            test.java.Tests.checkEqual(
-//                    test.java.Tests.findFrontIndices(input, fastFactory),
-//                    test.java.Tests.findFrontIndices(input, sorterBOS));
+//            Tests.checkEqual(
+//                    Tests.findFrontIndices(input, fastFactory),
+//                    Tests.findFrontIndices(input, sorterBOS));
 
             Tests.checkEqual(
                     Tests.findFrontIndices(input, hybridFactory),
