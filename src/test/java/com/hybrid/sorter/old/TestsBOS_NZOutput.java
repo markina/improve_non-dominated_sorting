@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.Random;
 import java.util.function.BiConsumer;
 
-
+// TODO uncomment
 public class TestsBOS_NZOutput {
 
     static Sorter sorterBOS = new BOSNonDominatedSorting().getSorter(20000, 100);
@@ -65,7 +65,7 @@ public class TestsBOS_NZOutput {
 //            checkEqual(expected, findFrontIndices(input, hybridFactory, output));
 //            System.out.println("Hybrid: Raw test '" + title + "' passed");
 //        } catch(AssertionError er) {
-//            throw new AssertionError("Hybrid: Error in raw test '" + title + "': " + er.getMessage());
+//            throw nnew AssertionError("Hybrid: Error in raw test '" + title + "': " + er.getMessage());
 //        }
 //
 //        System.arraycopy(startOutput, 0, output, 0, startOutput.length);
@@ -102,7 +102,7 @@ public class TestsBOS_NZOutput {
 //            checkEqual(expected2, findFrontIndices(input2, hybridFactory, output2));
 //            System.out.println("Hybrid: Duplicate test '" + title + "' passed");
 //        } catch(AssertionError er) {
-//            throw new AssertionError("Hybrid: Error in duplicate test '" + title + "': " + er.getMessage());
+//            throw nnew AssertionError("Hybrid: Error in duplicate test '" + title + "': " + er.getMessage());
 //        }
 //
 //        System.arraycopy(startOutput, 0, output2, 0, startOutput.length);
@@ -160,12 +160,12 @@ public class TestsBOS_NZOutput {
 
     public static void main(String[] args) {
 
-//        groupCheck("a tricky random test #1 inherited from com.hybrid.sorter.old hg-based NGP", new double[][]{
+//        groupCheck("a tricky random test #1 inherited from com.hybrid.sorter.old hg-based NGP", nnew double[][]{
 //                {-758, -515, -226}, {-786, -98, -268}, {-876, -264, -655}, {-43, -572, -418}, {-158, -517, -647},
 //                {-636, -321, -369}, {-19, -547, -935}, {-571, -866, -524}, {-819, -917, -692}, {-555, -487, -980}
 //        },
-//                new int[]{1, 1, 0, 2, 1, 1, 0, 1, 0, 0},
-//                new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+//                nnew int[]{1, 1, 0, 2, 1, 1, 0, 1, 0, 0},
+//                nnew int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
         
         
         groupCheck("test for fix bug", new double[][]{
@@ -186,28 +186,28 @@ public class TestsBOS_NZOutput {
                 new int[]{0, 0, 0, 2, 0, 3, 4, 0, 0, 0, 1, 1, 2 },
                 new int[]{0, 0, 0, 2, 0, 2, 2, 0, 0, 0, 1, 1, 2});
 
-//        int [] res = new int[]{-2, -2, -2, -2, -2, -2, -2, -2, 0, 0, 0, 3, 1, 0, 2, 1, -2, -2, -2};
+//        int [] res = nnew int[]{-2, -2, -2, -2, -2, -2, -2, -2, 0, 0, 0, 3, 1, 0, 2, 1, -2, -2, -2};
 //        System.out.println(Arrays.toString(res));
-//        res = new int[]{-2, -2, -2, -2, -2, -2, -2, -2, 0, 0, 0, 0, 0, 0, 0, 0, -2, -2, -2};
+//        res = nnew int[]{-2, -2, -2, -2, -2, -2, -2, -2, 0, 0, 0, 0, 0, 0, 0, 0, -2, -2, -2};
 //        System.out.println(Arrays.toString(res));
 //        sorterBOS.sortImplSpecial(
-//                new double[][]{{-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}, {1, 5}, {2, 4}, {4, 2}, {7, 8}, {5, 3}, {8, 1}, {6, 7}, {3, 6}, {-1, -1}, {-1, -1}, {-1, -1}},
+//                nnew double[][]{{-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}, {1, 5}, {2, 4}, {4, 2}, {7, 8}, {5, 3}, {8, 1}, {6, 7}, {3, 6}, {-1, -1}, {-1, -1}, {-1, -1}},
 //                res, 8, 16, 2);
 //        System.out.println(Arrays.toString(res));
 //
 //        System.out.println("---");
 //
-//        res = new int[]{-2, -2, -2, -2, -2, -2, -2, -2, 0, 0, 0, 3, 1, 0, 2, 1};
+//        res = nnew int[]{-2, -2, -2, -2, -2, -2, -2, -2, 0, 0, 0, 3, 1, 0, 2, 1};
 //        System.out.println(Arrays.toString(res));
-//        res = new int[]{-2, -2, -2, -2, -2, -2, -2, -2, 0, 0, 0, 0, 0, 0, 0, 0};
+//        res = nnew int[]{-2, -2, -2, -2, -2, -2, -2, -2, 0, 0, 0, 0, 0, 0, 0, 0};
 //        System.out.println(Arrays.toString(res));
 //        sorterBOS.sortImplSpecial(
-//                new double[][]{{-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}, {1, 5}, {2, 4}, {4, 2}, {7, 8}, {5, 3}, {8, 1}, {6, 7}, {3, 6}},
+//                nnew double[][]{{-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}, {-1, -1}, {1, 5}, {2, 4}, {4, 2}, {7, 8}, {5, 3}, {8, 1}, {6, 7}, {3, 6}},
 //                res, 8, 16, 2);
 //        System.out.println(Arrays.toString(res));
 
 //
-//        groupCheck("a tricky random test #2 inherited from com.hybrid.sorter.old hg-based NGP", new double[][]{
+//        groupCheck("a tricky random test #2 inherited from com.hybrid.sorter.old hg-based NGP", nnew double[][]{
 //                {1, 4, 3, 3, 1, 1}, {3, 5, 4, 6, 7, 1}, {1, 2, 2, 3, 8, 0}, {0, 2, 4, 8, 3, 5}, {0, 2, 7, 4, 2, 9},
 //                {1, 3, 9, 4, 0, 1}, {7, 6, 7, 1, 7, 4}, {6, 0, 9, 3, 7, 1}, {7, 0, 7, 8, 3, 0}, {4, 7, 6, 4, 0, 3},
 //                {9, 2, 7, 0, 8, 8}, {5, 5, 3, 3, 6, 1}, {0, 7, 4, 1, 9, 2}, {1, 2, 0, 3, 9, 6}, {2, 8, 2, 6, 9, 3},
@@ -248,7 +248,7 @@ public class TestsBOS_NZOutput {
 //                {1, 4, 1, 5, 7, 7}, {2, 2, 1, 8, 0, 4}, {4, 9, 0, 2, 5, 1}, {8, 4, 4, 7, 9, 9}, {8, 2, 2, 0, 9, 1},
 //                {4, 1, 0, 2, 9, 8}, {4, 6, 0, 5, 3, 5}, {8, 6, 0, 8, 7, 3}, {6, 6, 5, 5, 9, 4}, {1, 5, 0, 6, 2, 2},
 //                {4, 1, 7, 7, 8, 7}, {7, 4, 4, 6, 5, 4}, {6, 7, 6, 2, 2, 7}, {4, 1, 3, 5, 0, 0}, {1, 5, 9, 5, 6, 7}
-//        }, new int[]{
+//        }, nnew int[]{
 //                0, 1, 0, 1, 0, 0, 2, 0, 0, 1, 2, 1, 0, 0, 1, 1, 3, 2, 2, 1, 0, 3, 3, 0, 2, 2, 0, 3, 2, 0, 3, 0, 3, 1, 0, 0, 0,
 //                1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 2, 1, 1, 1, 1, 2, 0, 0, 0, 3, 2, 2, 0, 0, 0, 3, 0, 1, 2, 1, 1, 1, 1, 0, 1, 1, 1,
 //                3, 0, 2, 0, 1, 0, 0, 2, 1, 0, 1, 0, 0, 0, 1, 1, 1, 2, 0, 2, 0, 2, 2, 1, 0, 2, 0, 1, 2, 1, 0, 0, 0, 1, 1, 1, 0,
@@ -257,7 +257,7 @@ public class TestsBOS_NZOutput {
 //                1, 1, 0, 3, 2, 0, 0, 1, 2, 0, 2, 1, 2, 0, 1
 //        });
 //
-//        groupCheck("a tricky random test #3 inherited from com.hybrid.sorter.old hg-based NGP", new double[][]{
+//        groupCheck("a tricky random test #3 inherited from com.hybrid.sorter.old hg-based NGP", nnew double[][]{
 //                {923, 565, 773}, {444, 591, 756}, {272, 974, 743}, {962, 736, 763}, {957, 562, 957}, {995, 334, 950},
 //                {925, 43, 100}, {550, 727, 269}, {360, 67, 428}, {728, 395, 315}, {88, 558, 283}, {8, 550, 45},
 //                {184, 308, 822}, {666, 955, 90}, {551, 370, 277}, {338, 142, 269}, {770, 757, 11}, {46, 882, 761},
@@ -308,7 +308,7 @@ public class TestsBOS_NZOutput {
 //                {307, 243, 454}, {697, 725, 836}, {511, 200, 476}, {615, 584, 735}, {552, 248, 952}, {402, 297, 425},
 //                {508, 457, 618}, {812, 921, 60}, {481, 5, 510}, {891, 177, 7}, {882, 197, 224}, {544, 849, 242},
 //                {633, 593, 375}, {676, 808, 628}, {964, 821, 755}, {887, 461, 205}, {778, 31, 941}, {69, 774, 75}
-//        }, new int[]{
+//        }, nnew int[]{
 //                7, 5, 5, 8, 9, 8, 0, 3, 0, 4, 1, 0, 2, 3, 2, 1, 0, 2, 0, 4, 8, 0, 1, 1, 3, 6, 3, 1, 5, 0, 2, 6, 3, 5, 4, 3, 5, 12,
 //                4, 2, 1, 0, 0, 7, 0, 6, 4, 1, 6, 2, 1, 1, 1, 3, 1, 4, 3, 3, 7, 1, 3, 2, 2, 1, 2, 2, 8, 5, 2, 4, 4, 1, 3, 7, 2, 1,
 //                4, 0, 0, 9, 5, 3, 8, 6, 5, 2, 8, 2, 4, 5, 8, 1, 6, 5, 0, 6, 0, 0, 4, 5, 0, 0, 7, 4, 6, 3, 4, 4, 6, 2, 2, 6, 5, 1,
@@ -320,7 +320,7 @@ public class TestsBOS_NZOutput {
 //        });
 //
 //
-//        groupCheck("worst case from paper BOS", getForWorstCase3(10000), new int[10000]);
+//        groupCheck("worst case from paper BOS", getForWorstCase3(10000), nnew int[10000]);
 
         System.out.println();
         System.out.println("Tests passed");

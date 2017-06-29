@@ -4,16 +4,20 @@ import com.hybrid.sorter.*;
 
 import java.util.Random;
 
+import static com.hybrid.sorter.old.Tests.findFrontIndices;
+import static com.hybrid.sorter.old.TestsBOS_NZOutput.checkEqual;
+
+
 public class StressTest {
     private static Sorter sorterBOS = new BOSNonDominatedSorting().getSorter(100000, 50);
     private static FactoryNonDominatedSorting fastFactory = new FasterNonDominatedSorting();
     private static FactoryNonDominatedSorting BOSFactory = new BOSNonDominatedSorting();
     private static FactoryNonDominatedSorting hybridFactory = new HybridNonDominatedSorting();
 
-    private static void stressTest(int N, int M, boolean doRundomNM) {
+    private static void stressTest(int N, int M, boolean doRandomNM) {
         Random rnd = new Random();
 
-        if(doRundomNM) {
+        if(doRandomNM) {
             N = rnd.nextInt(N);
             M = Math.max(rnd.nextInt(M), 1);
         }
@@ -31,9 +35,9 @@ public class StressTest {
 //                    Tests.findFrontIndices(input, fastFactory),
 //                    Tests.findFrontIndices(input, sorterBOS));
 
-            Tests.checkEqual(
-                    Tests.findFrontIndices(input, hybridFactory),
-                    Tests.findFrontIndices(input, fastFactory));
+            checkEqual(
+                    findFrontIndices(input, hybridFactory),
+                    findFrontIndices(input, fastFactory));
 
 
             System.out.println("Stress test passed");
@@ -44,9 +48,9 @@ public class StressTest {
 
     public static void stressTest(double[][] input) {
         try {
-            Tests.checkEqual(
-                    Tests.findFrontIndices(input, fastFactory),
-                    Tests.findFrontIndices(input, sorterBOS));
+            checkEqual(
+                    findFrontIndices(input, fastFactory),
+                    findFrontIndices(input, sorterBOS));
             System.out.println("Stress test passed");
         } catch(AssertionError er) {
             throw new AssertionError("Error in stress test : " + er.getMessage());
